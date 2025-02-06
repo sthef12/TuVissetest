@@ -39,6 +39,7 @@ header {
     font-size: 10px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 5px;
 }
 .product img {
@@ -48,7 +49,7 @@ header {
 }
 
 .product button {
-    
+    width: 300px;
 }
 footer {
     background-color: black;
