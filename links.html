@@ -1,3 +1,33 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart_checkout" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=chat" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <h2>Cadastro</h2>
+    <input type="text" id="nome" placeholder="Nome"><br><br>
+    <input type="text" id="sobrenome" placeholder="Sobrenome"><br><br>
+    <button onclick="salvarUsuario()">Salvar</button>
+
+    <p id="mensagem"></p> <!-- Para mostrar a resposta do servidor -->
+<script>src="app.js"</script>
+    <script>
+        async function salvarUsuario() {
+            let nome1 = document.getElementById('nome').value;
+            let sobrenome1 = document.getElementById('sobrenome').value;
+
+            const resposta = await fetch('http://localhost:3000/salvar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome: nome1, sobrenome: sobrenome1 })
+            });
+
+            const resultado = await resposta.json();
+            document.getElementById('mensagem').innerText = resultado.mensagem;
+        }
+    </script>
+</body>
+</html>
