@@ -3,3 +3,42 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #f1f1f1;
+    width: 100%;
+}
+
+.menuL{
+    margin-left: 2rem;
+    padding: 20px;
+    width: 20rem;
+    display: flex;
+    justify-content:left;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.carrossel__container img{
+    height: 400px;
+    width: 100%;
+}
+
+.catalogo{
+    display: flex;
+    flex-wrap:;
+    gap: 10px;
+    justify-content: center;
+}
+
+.produtos img{
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+}
