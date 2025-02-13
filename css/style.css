@@ -60,3 +60,70 @@ header{
     gap: 2rem;
     align-items: center;
 }
+
+main{
+    display: flex;
+}
+.carrossel__container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.carrossel{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.indicator{
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 75vh;
+}
+.indicator span{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.indicator span.active {
+    background-color: #333;
+}
+.arrows{
+    position: relative;
+}
+.fa-arrow-left, .fa-arrow-right{
+    color: white;
+    position: absolute;
+    top: 30vh;
+}
+.fa-arrow-left{
+    right: 20vw;
+}
+.fa-arrow-right{
+    left: 20vw;
+}
+.carrossel__container img{
+    width: 50vw;
+    height: 60vh;
+}
+.img-normal{
+    z-index: -1;
+}
+
+.img-sepia, .img-grayscale{
+    display: none;
+    z-index: -1;
+}
+
+.img-sepia{
+    filter: sepia(100%);
+}
+
+.img-grayscale{
+    filter: grayscale(100%);
+}
