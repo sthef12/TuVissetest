@@ -3,6 +3,64 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* header */
+header{
+    width: 100vw;
+}
+/* header contato */
+.contato{
+    background-color: #9BDE87;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.3rem;
+}
+.contato span a{
+    color: #000;
+    text-decoration: none;
+    margin-left: 0.1rem;
+    font-size: 1rem;
+}
+/* header main */
+.header_main{
+    background-color: #FEFAAB;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.5rem;
+}
+.header_main img{
+    width: 7%;
+}
+.barra-de-pesquisa{
+    background-color: #DCDBDB;
+    padding: 0.3rem;
+    width: 40%;
+}
+.barra-de-pesquisa input{
+    background-color: transparent;
+    border: none;
+    outline: 0;
+    width: 37%;
+}
+.barra-de-pesquisa input::placeholder{
+    color: #928D8D;
+}
+.outros{
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+.outros a{
+    color: #000;
+    text-decoration: none;
+}
+.usuario_carrinho{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
 
 main{
     width: 100%;
