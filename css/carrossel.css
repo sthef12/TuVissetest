@@ -1,10 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-.carrossel_container{
+
+.carrossel__container{
     width: 100%;
     align-items: center;
     display: flex;

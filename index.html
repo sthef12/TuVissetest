@@ -8,7 +8,8 @@
       rel="stylesheet"
       href="//use.fontawesome.com/releases/v6.7.2/css/all.css"
     />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css" >
+    <link rel="stylesheet" href="script/carrossel.js">
   </head>
   <body>
     <header>
@@ -42,76 +43,141 @@
       </div>
     </header>
     <main>
-      <section>
-        <div class="menuL">
-          <ul>
-            <h1>Categorias</h1>
-            <li><a href="#" class="links-categoria">Camisetas</a></li>
-            <li><a href="#" class="links-categoria">Canecas</a></li>
-            <li><a href="#" class="links-categoria">Bordados</a></li>
-            <li><a href="#" class="links-categoria">Sublimação</a></li>
-          </ul>
-        </div>
-      </section>
-      <section>
-        <div class="container">
-          <div class="carrossel__container">
-            <img src="/img/dog.jpg" alt="" />
+      <section id="Banner">
+        <div class="carrossel__container">
+        <div class="carrossel">
+          <div class="indicator">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
           </div>
+          <div class="arrows">
+            <span><i class="fa-solid fa-arrow-left" id="arrow-left"></i></span>
+            <span><i class="fa-solid fa-arrow-right" id="arrow-right"></i></span>
+          </div>
+          <img src="img/banner.png" alt="Dog 1" class="img-normal"/>
+          <img src="img/banner2.png" alt="Dog 2" class="img-sepia"/>
+          <img src="img/banner3.png" alt="Dog 3" class="img-grayscale"/>
+        </div>
+        </div>
+        <script async src="script/carrossel.js"></script>
+      </section>
 
+      <div class="corpo">
+        <section id="corpo_categorias">
+          <div class="menuL">
+            <h1>Categorias</h1>
+            <ul>
+              <li><a href="#" class="links-categoria">Camisetas</a></li>
+              <li><a href="#" class="links-categoria">Canecas</a></li>
+              <li><a href="#" class="links-categoria">Bordados</a></li>
+              <li><a href="#" class="links-categoria">Sublimação</a></li>
+            </ul>
+          </div>
+        </section>
+        <section id="corpo_catalogo">
           <div class="catalogo">
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
-              <h1>Produto A</h1>
-              <h2>R$20,00</h2>
-              <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
-              <h1>Produto B</h1>
-              <h2>R$30,00</h2>
-              <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/2.png" alt="" />
+                <h1>Produto A</h1>
+                <h2>R$20,00</h2>
+                <button>Comprar</button>
+              </div>
+            </a>
+            <a href="#">  
+              <div class="produtos">
+                <img src="/img/3.png" alt="" />
+                <h1>Produto B</h1>
+                <h2>R$30,00</h2>
+                <button>Comprar</button>
+              </div></a>
+            <a href="#">  
+              <div class="produtos">
+              <img src="/img/4.png" alt="" />
               <h1>Produto C</h1>
               <h2>R$10,00</h2>
               <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
+              </div></a>
+            <a href="#">  
+              <div class="produtos">
+              <img src="/img/5.png" alt="" />
               <h1>Produto D</h1>
               <h2>R$15,00</h2>
               <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
+              </div></a>
+            <a href="#">  
+              <div class="produtos">
+              <img src="/img/6.png" alt="" />
               <h1>Produto E</h1>
               <h2>R$25,00</h2>
               <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
+              </div></a>
+            <a href="#">  
+              <div class="produtos">
+              <img src="/img/7.png" alt="" />
               <h1>Produto F</h1>
               <h2>R$56,00</h2>
               <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
+              </div></a>
+            <a href="#">  
+              <div class="produtos">
+              <img src="/img/8.png" alt="" />
               <h1>Produto G</h1>
               <h2>R$70,00</h2>
               <button>Comprar</button>
-            </div>
-            <div class="produtos">
-              <img src="/img/produto1.jpeg" alt="" />
+              </div></a>
+            <a href="#">  
+              <div class="produtos">
+              <img src="/img/9.png" alt="" />
               <h1>Produto H</h1>
               <h2>R$7,70</h2>
               <button>Comprar</button>
-            </div>
+              </div></a>
+            
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="footerFundo">
+        <div class="footercoluns">
+          <div class="footer_colun1">
+        <div class="logo_footer">
+        <img src="img/Logo_com_fundo.png" alt="Logo">
+        </div>
+        <div class="info">
+          <label for="">E-mail:</label>
+          <a href="#" class="contatoFooter">tuvisseperssonalizacao@gmail.com</a><br>
+          <label for="">Contato:</label>
+          <a href="#" class="contatoFooter">(81) 98888-8888</a><br>
+          <label for="">Endereço:</label>
+          <a href="#" class="contatoFooter">Rua exemplo, 00 - Cidade/PE</a>
+        </div>
+          </div>  
+          <div class="footer_colun2">
+        <div class="nossaHistoria">
+          <h1>Nossa História</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus deserunt, adipisci ratione exercitationem ab beatae commodi sunt rerum tempore reiciendis fuga perspiciatis nesciunt provident minima neque eius eaque ex? Magni. 
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae, excepturi molestiae architecto officiis deleniti suscipit sequi dolorem. Voluptates minima, nam, consectetur exercitationem aspernatur voluptatum maiores, debitis aliquid pariatur repudiandae dolorem!</p>
+        </div>
+        <div class="redesFooter">
+          <h1>Nossas Redes Sociais</h1>
+          <div class="img_redes">
+          <a href="#" class="redeLink"><img src="/img/instagram.jpeg" alt="Instagram"></a>
+          <a href="#" class="redeLink"><img src="/img/facebook.jpeg" alt="Instagram"></a>
+          <a href="#" class="redeLink"><img src="/img/youtube.png" alt="Instagram"></a>
+          </div>
+
+        </div>
           </div>
         </div>
-      </section>
-    </main>
-    <footer></footer>
+      </div> 
+      <div class="copyright">
+       <label for=""><a href="#">Tu Visse Perssonalização</a></label>
+       &nbsp; &copy; &nbsp;
+       <label for="">by "<a href="#">nome</a>" All Rights Reserved.</label>
+        </div>
+    </footer>
   </body>
 </html>

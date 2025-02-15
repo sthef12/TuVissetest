@@ -3,14 +3,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+body {
+    
+}
+
 /* header */
 header{
-    width: 100vw;
+    width: 100%;
 }
 /* header contato */
 .contato{
-    background-color: #9BDE87;
-    width: 100vw;
+    background-color: #F4821F;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     padding: 0.3rem;
@@ -23,7 +27,7 @@ header{
 }
 /* header main */
 .header_main{
-    background-color: #FEFAAB;
+    background-color: #FECB02;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -63,23 +67,27 @@ header{
 
 main{
     display: flex;
+    flex-direction: column;
 }
 .carrossel__container{
     align-items: center;
     display: flex;
     justify-content: center;
+
 }
 .carrossel{
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 200px;
+    width: 100%;
 }
 .indicator{
     display: flex;
     gap: 10px;
     position: absolute;
-    top: 75vh;
+    top: 45vh;
 }
 .indicator span{
     display: inline-block;
@@ -99,17 +107,17 @@ main{
 .fa-arrow-left, .fa-arrow-right{
     color: white;
     position: absolute;
-    top: 30vh;
+    top: 12vh;
 }
 .fa-arrow-left{
-    right: 20vw;
+    right: 45vw;
 }
 .fa-arrow-right{
-    left: 20vw;
+    left: 45vw;
 }
 .carrossel__container img{
-    width: 50vw;
-    height: 60vh;
+    width: 100%;
+    height: 100%;
 }
 .img-normal{
     z-index: -1;
@@ -126,4 +134,164 @@ main{
 
 .img-grayscale{
     filter: grayscale(100%);
+}
+/*corpo*/
+
+.corpo {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+#corpo_categorias {
+    padding: 30px;
+    background-color: #F4821F;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.menuL {
+    padding: 15px;
+}
+
+.menuL ul {
+    list-style-type: none;
+}
+.menuL li{
+   padding: 5px;
+}
+.links-categoria {
+    text-decoration: none;
+    color: black;
+    margin-left: 15px;
+    
+}
+
+#corpo_catalogo {
+    width: 75%;
+    padding: 10px;
+    background-color: #ffffe6;
+
+}
+
+.catalogo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: left;
+}
+.catalogo a {
+    text-decoration: none;
+}
+
+.produtos{
+    width: 300px;;
+    color: #ffffe6;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(162,86,65, 0.8);
+    border-radius: 10px;
+    gap: 10px;
+    
+}
+.produtos img {
+    width: 100%;
+    border-radius: 10px;
+    z-index: 2;
+}
+.produtos button {
+    color: #3d3b87;
+    font-size: larger;
+    width: 150px;
+    height: 50px;
+    border-style: none;
+    background-color: #FECB02;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/*footer*/
+footer {
+
+    background-image: url('../img/canecaPreta.png'); 
+    background-size: 100%;
+
+}
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+.footerFundo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    gap: 40px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 40px;
+    
+
+}
+
+.footercoluns {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+}
+.footer_colun1 {
+    display: flex;
+    flex-direction: column;
+    align-items: initial;
+    justify-content: space-between;
+    width: 50%;
+}
+.footer_colun2 {
+    display: flex;
+    flex-direction: column;
+    align-items: initial;
+    justify-content: space-between;
+    width: 50%;
+    
+}
+
+.redesFooter img {
+    width: 50px;
+    border-radius: 10px;
+}
+.img_redes{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+}
+
+.redesFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.logo_footer img {
+    width: 100px;
+    border-radius: 50%;
+
+}
+
+.copyright {
+    background-color: black;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: white;
 }
