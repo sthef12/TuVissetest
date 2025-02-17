@@ -216,7 +216,7 @@ main {
 }
 
 /*footer*/
-footer {
+.background {
   background-image: url("../img/canecaPreta.png");
   background-size: 100%;
 }
@@ -231,11 +231,11 @@ footer a {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 500px;
+  height: 31rem;
   gap: 40px;
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
-  padding: 40px;
+  padding: 10px;
 }
 
 .footercoluns {
@@ -292,24 +292,24 @@ footer a {
 
 @media (max-width: 767px) {
   /* header */
-  .contato span a{
+  .contato span a {
     font-size: 0.8rem;
   }
-  .header_main{
+  .header_main {
     height: 10vh;
     display: flex;
     gap: 10px;
   }
-  .header_main img{
+  .header_main img {
     width: 20%;
   }
   .menu_header {
     display: block;
   }
-  .barra-de-pesquisa{
+  .barra-de-pesquisa {
     width: 60%;
   }
-  .outros{
+  .outros {
     display: none;
   }
   /* carrossel */
@@ -330,7 +330,41 @@ footer a {
     justify-content: center;
   }
   /* botao do whatsapp */
-  .whats_button img{
+  .whats_button img {
     width: 4rem;
+  }
+
+  /* footer */
+  .footercoluns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  .footer_colun1 {
+    gap: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .footer_colun2 {
+    gap: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .redesFooter {
+    gap: 10px;
+  }
+  .copyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
