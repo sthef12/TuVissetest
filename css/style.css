@@ -219,8 +219,10 @@ main {
 .background {
   background-image: url("../img/canecaPreta.png");
   background-size: 100%;
+  background-position: -0.2rem;
+  
 }
-footer a {
+.background a {
   text-decoration: none;
   color: white;
 }
@@ -231,43 +233,50 @@ footer a {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 31rem;
+  height: 20rem;
   gap: 40px;
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
-  padding: 10px;
+  padding: 50px;
 }
 
 .footercoluns {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
-.footer_colun1 {
+.logo_footer {
   display: flex;
-  flex-direction: column;
+
   align-items: initial;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20px;
   width: 50%;
 }
 .footer_colun2 {
   display: flex;
   flex-direction: column;
-  align-items: initial;
-  justify-content: space-between;
+  align-items: left;
+  justify-content: center;
   width: 50%;
+  gap: 20px;
 }
 
-.redesFooter img {
-  width: 50px;
+/* .img_redes a i {
+  width: 5rem;
   border-radius: 10px;
-}
+} */
+
 .img_redes {
   display: flex;
   justify-content: left;
   align-items: center;
   gap: 10px;
+}
+.img_redes a i {
+    font-size: 40px;
 }
 
 .redesFooter {
@@ -288,6 +297,11 @@ footer a {
   display: flex;
   justify-content: center;
   color: white;
+  
+}
+.copyright a {
+    text-decoration: none;
+    color: white;
 }
 
 @media (max-width: 767px) {
@@ -308,16 +322,51 @@ footer a {
     display: flex;
     justify-content: center;
   }
-  .background {
-    background-size: 250%;
-    background-position: -16rem;
+
+  .footerFundo {
+    height: 31rem;
   }
- 
+  .background {
+    
+    background-size: 250%;
+    background-position: -22rem;
+  }
   .footercoluns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .logo_footer {
+    gap: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer_colun2 {
+    gap: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .redesFooter {
+    gap: 10px;
+  }
+  .img_redes {
+        display: flex;
+        justify-content: center;
+    }
+ 
+/*  .footercoluns {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+  }
+  .logo_footer {
+    display: flex;
+    flex-direction: column;
   }
   .footer_colun1 {
     gap: 30px;
@@ -340,6 +389,7 @@ footer a {
   .redesFooter {
     gap: 10px;
   }
+    */
   .copyright {
     display: flex;
     
