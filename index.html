@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="script/carrossel.js" />
   </head>
   <body>
+    <!-- header -->
     <header>
+      <!-- contatos -->
       <div class="contato">
         <span class="instagram">
           <i class="fa-brands fa-instagram"></i>
@@ -27,18 +29,27 @@
           <a href="">facebook_name</a>
         </span>
       </div>
+      <!-- header principal (menu, logo e barra de pesquisa)-->
       <div class="header_main">
-        <img src="img/logo-sem-fundo.png" alt="" />
-        <div class="barra-de-pesquisa">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Pesquisar" />
+        <div class="menu_header">
+          <span>
+            <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+          </span>
         </div>
-        <div class="outros">
-          <a href="">Tabela de medidas</a>
+          <img src="img/logo-sem-fundo.png" alt="" />
+          <div class="barra-de-pesquisa">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Pesquisar" />
+          </div>
+          <div class="outros">
+            <a href="">Tabela de medidas</a>
+          </div>
         </div>
       </div>
     </header>
+    <!-- main -->
     <main>
+      <!-- carrossel -->
       <section id="Banner">
         <div class="carrossel__container">
           <div class="carrossel">
@@ -61,9 +72,10 @@
           </div>
         </div>
       </section>
-      
+
+      <!-- menu/barra lateral -->
       <div class="corpo">
-        <section class="corpo_categorias">
+        <section id="corpo_categorias">
           <div class="menuL">
             <h1>Categorias</h1>
             <ul>
@@ -74,6 +86,8 @@
             </ul>
           </div>
         </section>
+
+        <!-- produtos -->
         <section class="corpo_catalogo">
           <div class="catalogo">
             <a href="#">
@@ -91,24 +105,24 @@
                 <h2>R$30,00</h2>
                 <button>Comprar</button>
               </div></a
-              >
-              <a href="#">
-                <div class="produtos">
-                  <img src="/img/4.png" alt="" />
-                  <h1>Produto C</h1>
-                  <h2>R$10,00</h2>
-                  <button>Comprar</button>
-                </div></a
-                >
-                <a href="#">
-                  <div class="produtos">
-                    <img src="/img/5.png" alt="" />
-                    <h1>Produto D</h1>
-                    <h2>R$15,00</h2>
-                    <button>Comprar</button>
-                  </div></a
-                  >
-                  <a href="#">
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/4.png" alt="" />
+                <h1>Produto C</h1>
+                <h2>R$10,00</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/5.png" alt="" />
+                <h1>Produto D</h1>
+                <h2>R$15,00</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+            <a href="#">
               <div class="produtos">
                 <img src="/img/6.png" alt="" />
                 <h1>Produto E</h1>
@@ -143,18 +157,20 @@
                   </div>
                 </section>
               </div>
-              <div class="whats-container">
-                <span class="whats">
-                  <a href="https://www.whatsapp.com/">
-                    <img src="img/whatsapp.jpeg" alt="Logo do whatsapp">
-                  </a>
-                </span>
-              </div>
+              <!-- botão whatsapp -->
+      <div class="whats-container">
+        <span class="whats_button">
+          <a href="https://www.whatsapp.com/">
+            <img src="img/whatsapp.jpeg" alt="Logo do whatsapp" />
+          </a>
+        </span>
+      </div>
             </main>
-      <footer>
-        <div class="background">
-        <div class="footerFundo">
-          <div class="footercoluns">
+            <!-- footer -->
+            <footer>
+              <div class="background">
+              <div class="footerFundo">
+                <div class="footercoluns">
                   <div class="footer_colun1">
                     <div class="logo_footer">
                       <img src="img/Logo_com_fundo.png" alt="Logo" />
@@ -173,8 +189,6 @@
                   <div class="footer_colun2">
                     <div class="nossaHistoria">
                       <a href="#"><h3>Nossa História</h3></a>
-                      
-                      
             </div>
             <div class="redesFooter">
               <h3>Nossas Redes Sociais</h3>
@@ -197,6 +211,8 @@
         <a href="#">LS</a> &nbsp;All Rights Reserved.</label>
       </div>
     </footer>
+    <!-- scripts -->
     <script async src="script/carrossel.js"></script>
+    <script src="script/script.js"></script>
   </body>
 </html>
