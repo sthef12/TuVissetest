@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="script/carrossel.js" />
   </head>
   <body>
+    <!-- header -->
     <header>
+      <!-- contatos -->
       <div class="contato">
         <span class="instagram">
           <i class="fa-brands fa-instagram"></i>
@@ -27,18 +29,27 @@
           <a href="">facebook_name</a>
         </span>
       </div>
+      <!-- header principal (menu, logo e barra de pesquisa)-->
       <div class="header_main">
-        <img src="img/logo-sem-fundo.png" alt="" />
-        <div class="barra-de-pesquisa">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Pesquisar" />
+        <div class="menu_header">
+          <span>
+            <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+          </span>
         </div>
-        <div class="outros">
-          <a href="">Tabela de medidas</a>
+          <img src="img/logo-sem-fundo.png" alt="" />
+          <div class="barra-de-pesquisa">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Pesquisar" />
+          </div>
+          <div class="outros">
+            <a href="">Tabela de medidas</a>
+          </div>
         </div>
       </div>
     </header>
+    <!-- main -->
     <main>
+      <!-- carrossel -->
       <section id="Banner">
         <div class="carrossel__container">
           <div class="carrossel">
@@ -61,9 +72,10 @@
           </div>
         </div>
       </section>
-      
+
+      <!-- menu/barra lateral -->
       <div class="corpo">
-        <section class="corpo_categorias">
+        <section id="corpo_categorias">
           <div class="menuL">
             <h1>Categorias</h1>
             <ul>
@@ -74,6 +86,8 @@
             </ul>
           </div>
         </section>
+
+        <!-- produtos -->
         <section class="corpo_catalogo">
           <div class="catalogo">
             <a href="#">
@@ -91,89 +105,93 @@
                 <h2>R$30,00</h2>
                 <button>Comprar</button>
               </div></a
-              >
-              <a href="#">
-                <div class="produtos">
-                  <img src="/img/4.png" alt="" />
-                  <h1>Produto C</h1>
-                  <h2>R$10,00</h2>
-                  <button>Comprar</button>
-                </div></a
-                >
-                <a href="#">
-                  <div class="produtos">
-                    <img src="/img/5.png" alt="" />
-                    <h1>Produto D</h1>
-                    <h2>R$15,00</h2>
-                    <button>Comprar</button>
-                  </div></a
-                  >
-                  <a href="#">
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/4.png" alt="" />
+                <h1>Produto C</h1>
+                <h2>R$10,00</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/5.png" alt="" />
+                <h1>Produto D</h1>
+                <h2>R$15,00</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+            <a href="#">
               <div class="produtos">
                 <img src="/img/6.png" alt="" />
                 <h1>Produto E</h1>
                 <h2>R$25,00</h2>
                 <button>Comprar</button>
               </div></a
-              >
-              <a href="#">
-                <div class="produtos">
-                  <img src="/img/7.png" alt="" />
-                  <h1>Produto F</h1>
-                  <h2>R$56,00</h2>
-                  <button>Comprar</button>
-                </div></a
-                >
-                <a href="#">
-                  <div class="produtos">
-                    <img src="/img/8.png" alt="" />
-                    <h1>Produto G</h1>
-                    <h2>R$70,00</h2>
-                    <button>Comprar</button>
-                  </div></a
-                  >
-                  <a href="#">
-                    <div class="produtos">
-                      <img src="/img/9.png" alt="" />
-                      <h1>Produto H</h1>
-                      <h2>R$7,70</h2>
-                      <button>Comprar</button>
-                    </div></a
-                    >
-                  </div>
-                </section>
-              </div>
-              <div class="whats-container">
-                <span class="whats">
-                  <a href="https://www.whatsapp.com/">
-                    <img src="img/whatsapp.jpeg" alt="Logo do whatsapp">
-                  </a>
-                </span>
-              </div>
-            </main>
-            <footer>
-              <div class="footerFundo">
-                <div class="footercoluns">
-                  <div class="footer_colun1">
-                    <div class="logo_footer">
-                      <img src="img/Logo_com_fundo.png" alt="Logo" />
-                    </div>
-                    <div class="info">
-                      <label for="">E-mail:</label>
-                      <a href="#" class="contatoFooter"
-                      >tuvisseperssonalizacao@gmail.com</a
-                      ><br />
-                      <label for="">Contato:</label>
-                      <a href="#" class="contatoFooter">(81) 98888-8888</a><br />
-                      <label for="">Endereço:</label>
-                      <a href="#" class="contatoFooter">Rua exemplo, 00 - Cidade/PE</a>
-                    </div>
-                  </div>
-                  <div class="footer_colun2">
-                    <div class="nossaHistoria">
-                      <h1>Nossa História</h1>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/7.png" alt="" />
+                <h1>Produto F</h1>
+                <h2>R$56,00</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/8.png" alt="" />
+                <h1>Produto G</h1>
+                <h2>R$70,00</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+            <a href="#">
+              <div class="produtos">
+                <img src="/img/9.png" alt="" />
+                <h1>Produto H</h1>
+                <h2>R$7,70</h2>
+                <button>Comprar</button>
+              </div></a
+            >
+          </div>
+        </section>
+      </div>
+
+      <!-- botão whatsapp -->
+      <div class="whats-container">
+        <span class="whats_button">
+          <a href="https://www.whatsapp.com/">
+            <img src="img/whatsapp.jpeg" alt="Logo do whatsapp" />
+          </a>
+        </span>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+      <div class="footerFundo">
+        <div class="footercoluns">
+          <div class="footer_colun1">
+            <div class="logo_footer">
+              <img src="img/Logo_com_fundo.png" alt="Logo" />
+            </div>
+            <div class="info">
+              <label for="">E-mail:</label>
+              <a href="#" class="contatoFooter"
+                >tuvisseperssonalizacao@gmail.com</a
+              ><br />
+              <label for="">Contato:</label>
+              <a href="#" class="contatoFooter">(81) 98888-8888</a><br />
+              <label for="">Endereço:</label>
+              <a href="#" class="contatoFooter">Rua exemplo, 00 - Cidade/PE</a>
+            </div>
+          </div>
+          <div class="footer_colun2">
+            <div class="nossaHistoria">
+              <h1>Nossa História</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
                 deserunt, adipisci ratione exercitationem ab beatae commodi sunt
                 rerum tempore reiciendis fuga perspiciatis nesciunt provident
                 minima neque eius eaque ex? Magni. Lorem ipsum dolor sit amet
@@ -187,13 +205,13 @@
               <h1>Nossas Redes Sociais</h1>
               <div class="img_redes">
                 <a href="#" class="redeLink"
-                ><img src="/img/instagram.jpeg" alt="Instagram"
+                  ><img src="/img/instagram.jpeg" alt="Instagram"
                 /></a>
                 <a href="#" class="redeLink"
-                ><img src="/img/facebook.jpeg" alt="Instagram"
+                  ><img src="/img/facebook.jpeg" alt="Instagram"
                 /></a>
                 <a href="#" class="redeLink"
-                ><img src="/img/youtube.png" alt="Instagram"
+                  ><img src="/img/youtube.png" alt="Instagram"
                 /></a>
               </div>
             </div>
@@ -206,6 +224,8 @@
         <label for="">by "<a href="#">nome</a>" All Rights Reserved.</label>
       </div>
     </footer>
+    <!-- scripts -->
     <script async src="script/carrossel.js"></script>
+    <script src="script/script.js"></script>
   </body>
 </html>

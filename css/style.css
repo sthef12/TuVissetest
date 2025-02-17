@@ -3,9 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* body {
-    
-} */
 
 /* header */
 header {
@@ -45,15 +42,17 @@ header {
   background-color: transparent;
   border: none;
   outline: 0;
-  width: 37%;
+  width: 90%;
 }
 .barra-de-pesquisa input::placeholder {
   color: #928d8d;
 }
 .outros {
   display: flex;
-  gap: 3rem;
   align-items: center;
+}
+.menu_header {
+  display: none;
 }
 .outros a {
   color: #000;
@@ -86,7 +85,7 @@ main {
   display: flex;
   gap: 10px;
   position: absolute;
-  top: 45vh;
+  top: 48%;
 }
 .indicator span {
   display: inline-block;
@@ -206,11 +205,12 @@ main {
 
 .whats-container {
   position: fixed;
-  right: 0.5%;
   bottom: 0;
-  z-index: 1;
+  right: 0.5%;
+  padding: 5px;
 }
-.whats img {
+
+.whats_button img {
   width: 5rem;
   border-radius: 50%;
 }
@@ -291,21 +291,46 @@ footer a {
 }
 
 @media (max-width: 767px) {
+  /* header */
+  .contato span a{
+    font-size: 0.8rem;
+  }
+  .header_main{
+    height: 10vh;
+    display: flex;
+    gap: 10px;
+  }
+  .header_main img{
+    width: 20%;
+  }
+  .menu_header {
+    display: block;
+  }
+  .barra-de-pesquisa{
+    width: 60%;
+  }
+  .outros{
+    display: none;
+  }
   /* carrossel */
   .indicator {
     position: absolute;
-    top: 40vh;
+    top: 30vh;
   }
   /* produtos */
   .corpo {
     display: flex;
     justify-content: center;
   }
-  .corpo_categorias {
+  #corpo_categorias {
     display: none;
   }
   .catalogo {
     display: flex;
     justify-content: center;
+  }
+  /* botao do whatsapp */
+  .whats_button img{
+    width: 4rem;
   }
 }
