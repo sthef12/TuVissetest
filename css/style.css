@@ -59,11 +59,6 @@ header {
   color: #000;
   text-decoration: none;
 }
-.usuario_carrinho {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
 
 main {
   display: flex;
@@ -118,15 +113,6 @@ main {
 .carrossel__container img {
   width: 100%;
   height: 100%;
-}
-.img-normal {
-  z-index: -1;
-}
-
-.img-sepia,
-.img-grayscale {
-  display: none;
-  z-index: -1;
 }
 /*corpo*/
 
@@ -194,25 +180,25 @@ main {
   z-index: 2;
 }
 .produtos button {
-  color: #3d3b87;
+  color: #fff;
   font-size: larger;
   width: 150px;
   height: 50px;
   border-style: none;
-  background-color: #fecb02;
+  background-color: #3d3b87;
   padding: 5px;
   border-radius: 5px;
 }
 
-.whats-container{
-    position: fixed;
-    right: 0.5%;
-    bottom: 0;
-    z-index: 1;
+.whats-container {
+  position: fixed;
+  right: 0.5%;
+  bottom: 0;
+  z-index: 1;
 }
-.whats img{
-    width: 5rem;
-    border-radius: 50%;
+.whats img {
+  width: 5rem;
+  border-radius: 50%;
 }
 
 /*footer*/
