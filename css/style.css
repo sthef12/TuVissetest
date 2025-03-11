@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
 }
 
 :root {
@@ -201,7 +202,7 @@ main {
 .produtos img {
   width: 100%;
   border-radius: 10px;
-  z-index: 2;
+  
 }
 .produtos button {
   color: var(--lab2-color);
@@ -244,6 +245,7 @@ main {
   color: var(--lab2-color);
   background-color: var(--footer-color);
   padding: 50px;
+  
 }
 
 .footercoluns {
