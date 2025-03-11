@@ -35,7 +35,7 @@ header {
 }*/
 /* header main */
 .header_main {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   display: flex;
   align-items: center;
   justify-content: space-around;
