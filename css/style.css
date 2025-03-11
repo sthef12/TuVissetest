@@ -4,13 +4,24 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #f4821f;
+  --secondary-color: #fecb02;
+  --tertiary-color: #3d3b87;
+  --footer-color: #A25641;
+  --lab1-color: #000;
+  --lab2-color :#fff;
+  --lab3-color :#dcdbdb;
+  --lab4-color :#928d8d;
+}
+
 /* header */
 header {
   width: 100%;
 }
-/* header contato */
+/* header contato 
 .contato {
-  background-color: #f4821f;
+  background-color: var(--primary-color);
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -21,10 +32,10 @@ header {
   text-decoration: none;
   margin-left: 0.1rem;
   font-size: 1rem;
-}
+}*/
 /* header main */
 .header_main {
-  background-color: #fecb02;
+  background-color: var(--secondary-color);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -34,7 +45,7 @@ header {
   width: 7%;
 }
 .barra-de-pesquisa {
-  background-color: #dcdbdb;
+  background-color: var(--lab3-color);
   padding: 0.3rem;
   width: 40%;
 }
@@ -45,7 +56,7 @@ header {
   width: 90%;
 }
 .barra-de-pesquisa input::placeholder {
-  color: #928d8d;
+  color: var(--lab4-color);
 }
 .outros {
   display: flex;
@@ -55,7 +66,7 @@ header {
   display: none;
 }
 .outros a {
-  color: #000;
+  color: var(--lab1-color);
   text-decoration: none;
 }
 .usuario_carrinho {
@@ -91,20 +102,20 @@ main {
   display: inline-block;
   width: 10px;
   height: 10px;
-  background-color: #ccc;
+  background-color: var(--lab3-color);
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
 }
 .indicator span.active {
-  background-color: #333;
+  background-color: var(--lab4-color);
 }
 .arrows {
   position: relative;
 }
 .fa-arrow-left,
 .fa-arrow-right {
-  color: white;
+  color: var(--lab2-color);
   position: absolute;
   top: 12vh;
 }
@@ -137,7 +148,7 @@ main {
 
 #corpo_categorias {
   padding: 30px;
-  background-color: #f4821f;
+  background-color: var(--primary-color);
   width: 25%;
   display: flex;
   flex-direction: column;
@@ -155,14 +166,14 @@ main {
 }
 .links-categoria {
   text-decoration: none;
-  color: black;
+  color: var(--lab1-color);
   margin-left: 15px;
 }
 
 .corpo_catalogo {
   width: 75%;
   padding: 10px;
-  background-color: #ffffe6;
+  background-color: var(--lab2-color);
 }
 
 .catalogo {
@@ -193,12 +204,12 @@ main {
   z-index: 2;
 }
 .produtos button {
-  color: #fff;
+  color: var(--lab2-color);
   font-size: larger;
   width: 150px;
   height: 50px;
   border-style: none;
-  background-color: #3d3b87;
+  background-color: var(--tertiary-color);
   padding: 5px;
   border-radius: 5px;
 }
@@ -216,15 +227,10 @@ main {
 }
 
 /*footer*/
-.background {
-  background-image: url("../img/canecaPreta.png");
-  background-size: 100%;
-  background-position: -0.2rem;
-  
-}
+
 .background a {
   text-decoration: none;
-  color: white;
+  color: var(--lab2-color);
 }
 
 .footerFundo {
@@ -235,8 +241,8 @@ main {
   width: 100%;
   height: 20rem;
   gap: 40px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.8);
+  color: var(--lab2-color);
+  background-color: var(--footer-color);
   padding: 50px;
 }
 
@@ -291,17 +297,17 @@ main {
 }
 
 .copyright {
-  background-color: black;
+  background-color: var(--lab1-color);
   padding: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
-  color: white;
+  color: var(--lab2-color);
   
 }
 .copyright a {
     text-decoration: none;
-    color: white;
+    color: var(--lab2-color);
 }
 
 @media (max-width: 767px) {
