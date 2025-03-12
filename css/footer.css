@@ -17,6 +17,7 @@ footer {
     color: var(--lab2-color);
     background-color: var(--footer-color);
     padding: 40px;
+    font-size: 20px;
   }
   
   
@@ -63,6 +64,11 @@ footer {
   }
   .img_redes a i {
       font-size: 40px;
+      
+  }
+
+  .footerFundo a:hover {
+    color: var(--lab4-color);
   }
   
   .redesFooter {
@@ -70,6 +76,7 @@ footer {
     flex-direction: column;
     gap: 5px;
   }
+
   
   
   

@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Pacifico";
+  src: url('../img/icons/Pacifico-Regular.ttf');
+}
+@font-face {
+  font-family:"FunnelSans";
+  src: url('../img/icons/FunnelSans-Regular.ttf');
+}
+
+
 :root {
     --primary-color: #f4821f;
     --secondary-color: #fecb02;
