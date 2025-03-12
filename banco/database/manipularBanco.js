@@ -5,7 +5,7 @@ import { open } from 'sqlite';
 
 async function criarEPopularTabelaUsuarios(nome, sobrenome) {
     const db = await open({
-        filename: './banco.db',
+        filename: '../banco.db',
         driver: sqlite3.Database,
     });
 
