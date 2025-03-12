@@ -1,0 +1,45 @@
+@import url(./variaveis.css);
+*{
+    margin: 0;
+    scrollbar-width: thin;
+    
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 100vh;
+    background-color: var(--lab2-color);
+    font-size: 20px;
+}
+
+.container_sobre {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    padding: 40px;
+    gap: 15px;
+}
+
+.cards_container {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    gap: 25px;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--footer-color);
+    width: 20rem;
+    padding: 25px;
+    border-radius: 25px;
+    color: var(--lab2-color);
+    gap: 20px;
+}
