@@ -1,0 +1,87 @@
+@import url(./variaveis.css);
+
+.footerFundo a {
+    text-decoration: none;
+    color: var(--lab2-color);
+  }
+  
+  .footerFundo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 40px;
+    color: var(--lab2-color);
+    background-color: var(--footer-color);
+    padding: 40px;
+  }
+  
+  
+  
+  .logo_footer {
+    display: flex;
+    align-items: center;
+    height: auto;
+    width: auto;
+  }
+  .logo_footer img{
+    width: 10rem;
+    height: 10rem;
+  }
+  
+  .footer_colun1 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    /*align-items: left;*/
+    font-size: 20px;
+  }
+  .footer_colun2 {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 50%;
+    gap: 20px;
+    font-size: 20px;
+  }
+  
+  /* .img_redes a i {
+    width: 5rem;
+    border-radius: 10px;
+  } */
+  
+  .img_redes {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    
+  }
+  .img_redes a i {
+      font-size: 40px;
+  }
+  
+  .redesFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  
+  
+  .copyright {
+    background-color: var(--lab1-color);
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: var(--lab2-color);
+    
+  }
+  .copyright a {
+      text-decoration: none;
+      color: var(--lab2-color);
+  }
+  

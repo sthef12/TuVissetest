@@ -1,0 +1,64 @@
+@import url(./variaveis.css);
+
+header {
+  width: 100%;
+}
+/* header contato 
+.contato {
+  background-color: var(--primary-color);
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.3rem;
+}
+.contato span a {
+  color: #000;
+  text-decoration: none;
+  margin-left: 0.1rem;
+  font-size: 1rem;
+}*/
+/* header main */
+.header_main {
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem;
+  box-shadow: 0px 0px 10px 0px #000;
+}
+.header_main img {
+  width: 8%;
+}
+.barra-de-pesquisa {
+  background-color: var(--lab3-color);
+  padding: 0.3rem;
+  width: 50%;
+}
+.barra-de-pesquisa input {
+  background-color: transparent;
+  border: none;
+  outline: 0;
+  width: 95%;
+}
+.barra-de-pesquisa input::placeholder {
+  color: var(--lab4-color);
+}
+.outros {
+  display: flex;
+  align-items: center;
+}
+.outros i{
+  font-size: 1.5rem;
+}
+.menu_header {
+  display: none;
+}
+.outros a {
+  color: var(--lab1-color);
+  text-decoration: none;
+}
+.usuario_carrinho {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
