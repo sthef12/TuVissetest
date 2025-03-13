@@ -20,35 +20,10 @@ main {
   gap: 30px;
 }
 
-#corpo_categorias {
-  padding: 30px;
-  background-color: var(--primary-color);
-  width: 25%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.menuL {
-  padding: 15px;
-}
-
-.menuL ul {
-  list-style-type: none;
-}
-.menuL li {
-  padding: 5px;
-}
-.links-categoria {
-  text-decoration: none;
-  color: var(--lab1-color);
-  margin-left: 15px;
-}
-
 .corpo_catalogo {
   width: 75%;
   padding: 10px;
   background-color: var(--lab2-color);
-  
 }
 
 .catalogo {
@@ -64,7 +39,7 @@ main {
 .produtos {
   width: 13rem;
   color: #000;
-  padding: 5px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -81,12 +56,13 @@ main {
 .produtos button {
   color: var(--lab2-color);
   font-size: larger;
-  width: 150px;
-  height: 50px;
+  width: 90%;
+  height: 3rem;
   border-style: none;
   background-color: var(--tertiary-color);
   padding: 5px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .whats-container {
@@ -105,32 +81,6 @@ main {
 
 
 @media (max-width: 767px) {
-  /* header */
-  .contato span a {
-    font-size: 0.8rem;
-  }
-  .header_main {
-    height: 10vh;
-    display: flex;
-    gap: 10px;
-  }
-  .header_main img {
-    width: 20%;
-  }
-  .menu_header {
-    display: block;
-  }
-  .barra-de-pesquisa {
-    width: 60%;
-  }
-  .outros {
-    display: none;
-  }
-  /* carrossel */
-  .indicator {
-    position: absolute;
-    top: 30vh;
-  }
   /* produtos */
   .corpo {
     display: flex;
@@ -143,84 +93,14 @@ main {
     display: flex;
     justify-content: center;
   }
-    /* botao do whatsapp */
-    .whats_button img {
-        width: 4rem;
-      }
-    
-      /* footer */
-  
-      .footerFundo {
-        height: 31rem;
-      }
-  
-  .background {
-    background-size: 250%;
-    background-position: -16rem;
-  }
- 
-  .footercoluns {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .logo_footer {
-    gap: 30px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .footer_colun2 {
-    gap: 20px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .redesFooter {
-    gap: 10px;
-  }
-  .img_redes {
-        display: flex;
-        justify-content: center;
-    }
- 
-/*  .footercoluns {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
-  .logo_footer {
-    display: flex;
-    flex-direction: column;
-  }
-  .footer_colun1 {
-    gap: 30px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-  }
-  .footer_colun2 {
-    gap: 20px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .info {
-    display: flex;
-    flex-direction: column;
+
+  .produtos {
+    width: 20rem;
   }
 
-  .redesFooter {
-    gap: 10px;
-  }
-    */
-  .copyright {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* botao do whatsapp */
+  .whats_button img {
+    width: 4rem;
   }
 }
+      

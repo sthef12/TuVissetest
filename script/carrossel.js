@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const images = document.querySelectorAll('.carrossel img');
-  const indicators = document.querySelectorAll('.indicator span');
+  const indicators = document.querySelectorAll('.indicador span');
   let currentIndex = 0;
 
   const showImage = (index) => {

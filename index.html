@@ -7,6 +7,7 @@
   <title>TuVisse</title>
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
   <link rel="stylesheet" href="./css/main.css" />
+  <link rel="stylesheet" href="./css/menuL.css">
   <link rel="stylesheet" href="./css/header.css" />
   <link rel="stylesheet" href="./css/carrossel.css" />
   <link rel="stylesheet" href="./css/footer.css" />
@@ -17,11 +18,7 @@
   <header>
     <!-- header principal (menu, logo e barra de pesquisa)-->
     <div class="header_main">
-      <div class="menu_header">
-        <span>
-          <i class="fa-solid fa-bars" onclick="openMenu()"></i>
-        </span>
-      </div>
+      
       <img src="img/logo-sem-fundo.png" alt="Logo do site" />
       <div class="barra-de-pesquisa">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -29,6 +26,11 @@
       </div>
       <div class="outros">
         <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <div class="menu_header">
+        <span>
+          <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+        </span>
       </div>
     </div>
     </div>
@@ -39,15 +41,17 @@
     <section id="Banner">
       <div class="carrossel__container">
         <div class="carrossel">
-          <div class="indicator">
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="arrows">
-            <span><i class="fa-solid fa-arrow-left" id="arrow-left"></i></span>
-            <span><i class="fa-solid fa-arrow-right" id="arrow-right"></i></span>
-          </div>
+          <div class="indicador_container">
+            <div class="indicador">
+              <span class="active"></span>
+              <span></span>
+              <span></span>
+            </div></div>
+            <div class="arrows">
+              <span><i class="fa-solid fa-arrow-left" id="arrow-left"></i></span>
+              <span><i class="fa-solid fa-arrow-right" id="arrow-right"></i></span>
+            </div>
+          
           <img src="img/banner.png" alt="Dog 1" class="img-normal" />
           <img src="img/banner2.png" alt="Dog 2" class="img-sepia" />
           <img src="img/banner3.png" alt="Dog 3" class="img-grayscale" />
@@ -59,12 +63,18 @@
       <section id="corpo_categorias">
         <div class="menuL">
           <h1>Categorias</h1>
-          <ul>
-            <li><a href="#" class="links-categoria">Camisetas</a></li>
-            <li><a href="#" class="links-categoria">Canecas</a></li>
-            <li><a href="#" class="links-categoria">Bordados</a></li>
-            <li><a href="#" class="links-categoria">Sublimação</a></li>
-          </ul>
+          <details class="links-categoria"><summary>Camisetas</summary>
+            <li><a href="./sobre.html" class="sub_itens">Modelos Personalizados</a></li>
+            <li><a href="#"class="sub_itens">Modelos prontos</a></li>
+          </details>
+          <details class="links-categoria"><summary>Canecas</summary>
+            <li><a href="#" class="sub_itens">Modelos Personalizados</a></li>
+            <li><a href="#"class="sub_itens">Modelos prontos</a></li>
+          </details>
+          <details class="links-categoria"><summary>Bordados</summary>
+            <li><a href="#" class="sub_itens">Modelos Personalizados</a></li>
+            <li><a href="#"class="sub_itens">Modelos prontos</a></li>
+          </details>
         </div>
       </section>
       <!-- produtos -->
