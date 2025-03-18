@@ -13,26 +13,31 @@
     height: 200px;
     width: 100%;
   }
-  .indicator {
+  .indicador_container {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
     position: relative;
     top: 90%;
   }
-  .indicator span {
+  .indicador {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+  }
+  .indicador span {
     display: inline-block;
     width: 10px;
     height: 10px;
     background-color: var(--lab3-color);
     border-radius: 50%;
     margin: 0 5px;
-    cursor: pointer;
   }
-  .indicator span.active {
+  .indicador span.active {
     background-color: var(--lab4-color);
   }
   .arrows {
     position: relative;
+    cursor: pointer;
   }
   .fa-arrow-left,
   .fa-arrow-right {

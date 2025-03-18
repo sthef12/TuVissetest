@@ -39,6 +39,7 @@ header {
 .outros {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .outros i {
@@ -47,6 +48,11 @@ header {
 
 .menu_header {
   display: none;
+  cursor: pointer;
+}
+ 
+.menu_header i {
+  font-size: 1.5rem;
 }
 
 .outros a {
@@ -58,4 +64,28 @@ header {
   display: flex;
   gap: 2rem;
   align-items: center;
+}
+
+@media (max-width: 767px) {
+
+  .contato span a {
+    font-size: 0.8rem;
+  }
+  .header_main {
+    height: 15vh;
+    display: flex;
+    gap: 10px;
+  }
+  .header_main img {
+    width: 15%;
+  }
+  .menu_header {
+    display: block;
+  }
+  .barra-de-pesquisa {
+    width: 60%;
+  }
+  .outros {
+    
+  }
 }
