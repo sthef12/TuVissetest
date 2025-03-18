@@ -5,14 +5,67 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    padding: 40px;
+    
 }
 
 .imagem_principal {
     width: 50%;
+    height: 80vh;
+    background-color: rgba(217, 217, 217, 0.8);
+    border-radius: 20px;
 }
 
 .carrossel_view {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
+    width: 10%;
+    height: 80vh;
+}
+
+.imagem_view {
+    width: 100%;
+    background-color: rgba(217, 217, 217, 0.8);
+    border-radius: 10px;
+}
+.imagem_view2 {
+    display: none;
+}
+
+.descricao {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 80vh;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.nome_descricao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.valor_button {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 30px;
+    align-items: center;
+    text-align: center;
+}
+
+.valor_button button {
+    color: var(--lab2-color);
+    width: 90%;
+    height: 3rem;
+    border-style: none;
+    background-color: var(--tertiary-color);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large;
 }
