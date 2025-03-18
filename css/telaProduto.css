@@ -1,0 +1,18 @@
+@import url("./variaveis.css");
+
+.produto_view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.imagem_principal {
+    width: 50%;
+}
+
+.carrossel_view {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
