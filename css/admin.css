@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.opcoes-container {
+    width: 50%;
+    margin: auto;
+}
+
+input,
+button,
+select {
+    margin: 5px;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.opcoes{
+    display: flex;
+    justify-content: center;
+}

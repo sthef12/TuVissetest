@@ -1,65 +1,65 @@
 [
-    {
-        "id": 1,
-        "nome": "Camisa tipo polo",
-        "imagem": "../img/produtos_imagens/camisa_tipo_polo/azul_claro_FRENTE.jpg",
-        "tipo": "Camisa",
-        "composição": "50% poliéster e 50% algodão",
-        "cores": [
-            "Branco",
-            "Preto",
-            "Azul royal",
-            "Azul escuro"
-        ],
-        "cores-imagens": [
-            {
-                "cor": "Branco",
-                "img-frente": "../img/produtos_imagens/camisa_tipo_polo/branco_FRENTE.jpg",
-                "img-costas": "../img/produtos_imagens/camisa_tipo_polo/branco_COSTAS.jpg"
-            },
-            {
-                "cor": "Preto",
-                "img-frente": "../img/produtos_imagens/camisa_tipo_polo/preto_FRENTE.jpg",
-                "img-costas": "../img/produtos_imagens/camisa_tipo_polo/preto_COSTAS.jpg"
-            },
-            {
-                "cor": "Azul claro",
-                "img-frente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_FRENTE.jpg",
-                "img-costas": "../img/produtos_imagens/camisa_tipo_polo/azul_claro_COSTAS.jpg"
-            },
-            {
-                "cor": "Azul escuro",
-                "img-frente": "../img/produtos_imagens/camisa_tipo_polo/azul_escuro_FRENTE.jpg",
-                "img-costas": "../img/produtos_imagens/camisa_tipo_polo/azul_escuro_COSTAS.jpg"
-            }
-        ],
-        "tamanhos": [
-            "P",
-            "M",
-            "G",
-            "GG"
-        ],
-        "medidas": [
-            {
-                "tamanho": "P",
-                "medida": "54cm x 65cm"
-            },
-            {
-                "tamanho": "M",
-                "medida": "56cm x 67cm"
-            },
-            {
-                "tamanho": "G",
-                "medida": "58cm x 71cm"
-            },
-            {
-                "tamanho": "GG",
-                "medida": "60cm x 72cm"
-            }
-        ],
-        "medidas-imagem": "../img/produtos_imagens/camisa_tipo_polo/medidas.jpg",
-        "estoque": 100,
-        "descrição": "Camisa tipo polo customizável com logo",
-        "preço": 50.00
-    }
+  {
+    "id": 1,
+    "nome": "Camisa tipo polo",
+    "imagemprincipal": "../img/produtos_imagens/camisa_tipo_polo/azul_claro_FRENTE.jpg",
+    "categoria": "Camisa",
+    "composicao": "50% poliéster e 50% algodão",
+    "cores": [
+      "Branco",
+      "Preto",
+      "Azul royal",
+      "Azul escuro"
+    ],
+    "cores-imagens": [
+      {
+        "cor": "Branco",
+        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/branco_FRENTE.jpg",
+        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/branco_COSTAS.jpg"
+      },
+      {
+        "cor": "Preto",
+        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/preto_FRENTE.jpg",
+        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/preto_COSTAS.jpg"
+      },
+      {
+        "cor": "Azul claro",
+        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_FRENTE.jpg",
+        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/azul_claro_COSTAS.jpg"
+      },
+      {
+        "cor": "Azul escuro",
+        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/azul_escuro_FRENTE.jpg",
+        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/azul_escuro_COSTAS.jpg"
+      }
+    ],
+    "tamanhos": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "medidas": [
+      {
+        "tamanho": "P",
+        "medida": "54cm x 65cm"
+      },
+      {
+        "tamanho": "M",
+        "medida": "56cm x 67cm"
+      },
+      {
+        "tamanho": "G",
+        "medida": "58cm x 71cm"
+      },
+      {
+        "tamanho": "GG",
+        "medida": "60cm x 72cm"
+      }
+    ],
+    "medidas-imagem": "../img/produtos_imagens/camisa_tipo_polo/medidas.jpg",
+    "estoque": 100,
+    "descricao": "Camisa tipo polo customizável com logo",
+    "preco": 50.00
+  }
 ]
