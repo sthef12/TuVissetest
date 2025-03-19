@@ -1,2 +1,109 @@
 @import url("./variaveis.css");
 
+.carrinho_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    gap: 10px;
+    width: 100%;
+}
+
+.nome_carrinho {
+    text-align: left;
+    width: 50%;
+    padding-left: 25px;
+}
+
+.itens_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    width: 60%;
+}
+
+.itens_list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.itens_list tbody {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.itens_list tr {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+}
+
+.itens_list tr td {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#imput_qnt {
+    width: 30%;
+    text-align: center;
+    border: none;
+}
+
+.cont {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    width: 100%;
+}
+
+.button {
+    background-color: var(--tertiary-color);
+    color: var(--lab2-color);
+    border: none;
+    height: 5vh;
+    width: 20vw;
+    padding: 5px;
+    font-size: large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media (max-width: 767px) {
+    .itens_container {
+        width: 100%;
+    }
+    .nome_carrinho{
+        padding-left: 0;
+        text-align: center;
+    }
+    .cont {
+        flex-direction: column;
+    }
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .button {
+        width: 45vw;
+    }
+}

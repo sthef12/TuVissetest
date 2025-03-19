@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/carrossel.css" />
     <link rel="stylesheet" href="./css/footer.css" />
     <link rel="stylesheet" href="./css/telaProduto.css" />
+    <link rel="stylesheet" href="css/carrinho.css">
 </head>
 <body>
     <header>
@@ -21,7 +22,7 @@
             <input type="text" placeholder="Pesquisar" />
           </div>
           <div class="outros">
-            <i class="fa-solid fa-cart-shopping"></i>
+            
           </div>
           <div class="menu_header">
             <span>
@@ -31,7 +32,54 @@
         </div>
         </div>
     </header>
-    <main></main>
+    <main>
+      
+      <div class="carrinho_container">
+        <div class="nome_carrinho">
+          <h2>Carrinho</h2>
+        </div>
+        <div class="itens_container">
+          <table class="itens_list">
+            <tr>
+              <td>Produto</td>
+              <td>Quantidade</td>
+              <td>Preço</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="produto">
+                  <img src="img/camisa1.jpg" alt="Camisa" />
+                  <label id="nome_produto">Produto 1</label>
+                </div>
+              </td>
+              <td>
+                <input id="imput_qnt" type="number" value="1" />
+              </td>
+              <td>
+                <label>R$ 50,00</label>
+              </td>
+            </tr>
+          </table>
+          <div class="cont">
+            <div class="total_itens">
+              <label>Total de Itens:</label>
+              <label id="total_itens">1</label>
+            </div>
+            <div class="valor_total">
+              <label>Valor total:</label>
+              <label id="valor_total">1</label>
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="button" id="finalizar">Finalizar Pedido</button>
+            <button class="button" id="contunuar">Continuar Comprando</button>
+          </div>
+        </div>
+        <div class="direction">
+          <p>Ao clicar no botão “Finalizar produto”, você será redirecionado para o whatsapp da loja.</p>
+        </div>
+      </div>
+    </main>
     <footer>
         <div class="footerFundo">
           <div class="footer_colun1">
