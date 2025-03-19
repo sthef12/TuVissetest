@@ -2,7 +2,7 @@
   {
     "id": 1,
     "nome": "Camisa tipo polo",
-    "imagem": "../img/produtos_imagens/camisa_tipo_polo/azul_claro_FRENTE.jpg",
+    "imagem": "../img/produtos_imagens/camisa_tipo_polo/1742407623265.jpg",
     "categoria": "Camisas",
     "composicao": "50% poliéster e 50% algodão",
     "cores": [
@@ -13,24 +13,36 @@
     ],
     "imagens_cores": [
       {
-        "cor": "Branco",
-        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/branco_FRENTE.jpg",
-        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/branco_COSTAS.jpg"
+        "cor": "preta_FRENTE",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623273.jpg"
       },
       {
-        "cor": "Preto",
-        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/preto_FRENTE.jpg",
-        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/preto_COSTAS.jpg"
+        "cor": "azul_claro_COSTAS",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623275.jpg"
       },
       {
-        "cor": "Azul claro",
-        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_FRENTE.jpg",
-        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/azul_claro_COSTAS.jpg"
+        "cor": "azul_claro_FRENTE",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623278.jpg"
       },
       {
-        "cor": "Azul escuro",
-        "img-frente": "../img/produtos_imagens/camisa_tipo_polo/azul_escuro_FRENTE.jpg",
-        "img-costas": "../img/produtos_imagens/camisa_tipo_polo/azul_escuro_COSTAS.jpg"
+        "cor": "azul_escura_COSTAS",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623281.jpg"
+      },
+      {
+        "cor": "azul_escuro_FRENTE",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623283.jpg"
+      },
+      {
+        "cor": "branca_COSTAS",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623285.jpg"
+      },
+      {
+        "cor": "branca_FRENTE",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623287.jpg"
+      },
+      {
+        "cor": "preta_COSTAS",
+        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623288.jpg"
       }
     ],
     "tamanhos": [
@@ -57,10 +69,11 @@
         "medida": "60cm x 72cm"
       }
     ],
-    "medidasimagem": "../img/produtos_imagens/camisa_tipo_polo/medidas.jpg",
+    "medidasimagem": "../img/produtos_imagens/camisa_tipo_polo/1742407623269.jpg",
     "estoque": 100,
     "descricao": "Camisa tipo polo customizável com logo",
-    "preco": 50
+    "preco": 50.8,
+    "imagem_medidas": "undefined"
   },
   {
     "nome": "Camisa Básica",
@@ -100,76 +113,37 @@
       "Azul claro"
     ],
     "id": 2,
-    "imagem": "../img/produtos_imagens/camisa_básica/1742395695744.jpg",
-    "medidasimagem": "../img/produtos_imagens/camisa_básica/1742395140883.jpg",
+    "imagem": "../img/produtos_imagens/camisa_básica/1742404844154.jpg",
+    "medidasimagem": "../img/produtos_imagens/camisa_básica/1742404844158.jpg",
     "imagens_cores": [
       {
         "cor": "azul_claro_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140885.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844161.jpg"
       },
       {
         "cor": "branco_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140888.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844164.jpg"
       },
       {
         "cor": "branco_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140891.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844166.jpg"
       },
       {
         "cor": "preto_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140894.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844169.jpg"
       },
       {
         "cor": "azul_claro_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140895.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844172.jpg"
       },
       {
         "cor": "azul_escuro_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140897.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844174.jpg"
       },
       {
         "cor": "azul_escuro_FRENTE[",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742395140898.jpg"
+        "caminho": "../img/produtos_imagens/camisa_básica/1742404844175.jpg"
       }
-    ],
-    "imagem_medidas": "undefined"
-  },
-  {
-    "nome": "Camisa Básica",
-    "composicao": "100% Algodão",
-    "descricao": "Camisa Básica 100% algodão e customizável",
-    "preco": 100,
-    "estoque": 100,
-    "tamanhos": [
-      "P",
-      "M",
-      "G",
-      "GG"
-    ],
-    "medidas": [
-      {
-        "tamanho": "P",
-        "medida": "49cm x 65cm"
-      },
-      {
-        "tamanho": "M",
-        "medida": "52cm x 66cm"
-      },
-      {
-        "tamanho": "G",
-        "medida": "54cm x 70cm"
-      },
-      {
-        "tamanho": "GG",
-        "medida": "57cm x 72cm"
-      }
-    ],
-    "categoria": "",
-    "imagem": "undefined",
-    "imagem_medidas": "undefined",
-    "cores": [
-      ""
-    ],
-    "id": 3
+    ]
   }
 ]

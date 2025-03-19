@@ -54,6 +54,27 @@ const verificarToken = (req, res, next) => {
     });
 };
 
+// Função para remover arquivos antigos
+const removerArquivo = (caminho) => {
+    if (fs.existsSync(caminho)) {
+        try {
+            fs.unlinkSync(caminho);
+        } catch (err) {
+            if (err.code === 'EBUSY') {
+                setTimeout(() => {
+                    try {
+                        fs.unlinkSync(caminho);
+                    } catch (err) {
+                        console.error(`Erro ao remover arquivo: ${err.message}`);
+                    }
+                }, 100);
+            } else {
+                console.error(`Erro ao remover arquivo: ${err.message}`);
+            }
+        }
+    }
+};
+
 // Rota de login
 app.post("/login", (req, res) => {
     const { usuario, senha } = req.body;
@@ -114,12 +135,15 @@ app.put("/produtos/:id", verificarToken, upload.fields([{ name: 'imagem' }, { na
         const produtoAtualizado = { ...produtos[index], ...req.body };
         const nomeProduto = req.body.nome.replace(/\s+/g, '_').toLowerCase();
         if (req.files['imagem']) {
+            removerArquivo(path.join(__dirname, produtoAtualizado.imagem));
             produtoAtualizado.imagem = `../img/produtos_imagens/${nomeProduto}/${req.files['imagem'][0].filename}`;
         }
         if (req.files['imagem_medidas']) {
+            removerArquivo(path.join(__dirname, produtoAtualizado.medidasimagem));
             produtoAtualizado.medidasimagem = `../img/produtos_imagens/${nomeProduto}/${req.files['imagem_medidas'][0].filename}`;
         }
         if (req.files['imagens_cores']) {
+            produtoAtualizado.imagens_cores.forEach(img => removerArquivo(path.join(__dirname, img.caminho)));
             produtoAtualizado.imagens_cores = Array.from(req.files['imagens_cores']).map(file => ({
                 cor: file.originalname.split('.')[0], // Assuming the color is part of the filename
                 caminho: `../img/produtos_imagens/${nomeProduto}/${file.filename}`
