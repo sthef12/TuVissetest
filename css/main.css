@@ -9,14 +9,17 @@ main {
 
 .corpo {
   display: flex;
-  justify-content: space-between;
+}
+
+.content {
+  width: 75%;
   gap: 30px;
 }
 
+
 .corpo_catalogo {
-  width: 75%;
-  padding: 10px;
   background-color: var(--lab2-color);
+  padding: 30px;
 }
 
 .catalogo {
@@ -78,6 +81,10 @@ main {
   .corpo {
     display: flex;
     justify-content: center;
+    width: 100%;
+  }
+  .content {
+    width: 100%;
   }
   #corpo_categorias {
     display: none;
