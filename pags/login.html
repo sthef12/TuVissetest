@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login do Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 300px; margin: auto; padding: 20px; border: 1px solid black; }
+        input, button { width: 100%; margin: 5px 0; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login do Admin</h2>
+        <input type="text" id="usuario" placeholder="Usuário" autocomplete="username">
+        <input type="password" id="senha" placeholder="Senha" autocomplete="current-password">
+        <button onclick="fazerLogin()">Entrar</button>
+        <p id="mensagem"></p>
+    </div>
+
+    <script>
+        async function fazerLogin() {
+            const usuario = document.getElementById("usuario").value;
+            const senha = document.getElementById("senha").value;
+            const res = await fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ usuario, senha })
+            });
+            const data = await res.json();
+            const mensagemEl = document.getElementById("mensagem");
+            if (data.sucesso) {
+                localStorage.setItem("token", data.token);
+                mensagemEl.textContent = "Login bem-sucedido!";
+                window.location.href = "admin.html";
+            } else {
+                mensagemEl.textContent = "Usuário ou senha incorretos";
+            }
+        }
+    </script>
+</body>
+</html>
