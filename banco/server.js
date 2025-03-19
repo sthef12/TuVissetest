@@ -24,7 +24,12 @@ app.use('/produtos_imagens', express.static(path.join(__dirname, '../img/produto
 // Configuração do multer para salvar arquivos na pasta 'produtos_imagens'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../img/produtos_imagens'));
+        const nomeProduto = req.body.nome.replace(/\s+/g, '_').toLowerCase();
+        const dir = path.join(__dirname, `../img/produtos_imagens/${nomeProduto}`);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -69,29 +74,65 @@ app.get("/produtos", (req, res) => {
 });
 
 // Adicionar um novo produto (apenas admin)
-app.post("/produtos", verificarToken, upload.single('imagem'), (req, res) => {
+app.post("/produtos", verificarToken, upload.fields([{ name: 'imagem' }, { name: 'imagem_medidas' }, { name: 'imagens_cores' }]), (req, res) => {
     const produtos = lerProdutos();
     const novoProduto = req.body;
     novoProduto.id = produtos.length ? produtos[produtos.length - 1].id + 1 : 1;
-    if (req.file) {
-        novoProduto.imagem = `../img/produtos_imagens/${req.file.filename}`;
+    const nomeProduto = req.body.nome.replace(/\s+/g, '_').toLowerCase();
+    if (req.files['imagem']) {
+        novoProduto.imagem = `../img/produtos_imagens/${nomeProduto}/${req.files['imagem'][0].filename}`;
     }
+    if (req.files['imagem_medidas']) {
+        novoProduto.medidasimagem = `../img/produtos_imagens/${nomeProduto}/${req.files['imagem_medidas'][0].filename}`;
+    }
+    if (req.files['imagens_cores']) {
+        novoProduto.imagens_cores = Array.from(req.files['imagens_cores']).map(file => ({
+            cor: file.originalname.split('.')[0], // Assuming the color is part of the filename
+            caminho: `../img/produtos_imagens/${nomeProduto}/${file.filename}`
+        }));
+    }
+    novoProduto.cores = Array.isArray(novoProduto.cores) ? novoProduto.cores : novoProduto.cores.split(',').map(c => c.trim());
+    novoProduto.tamanhos = Array.isArray(novoProduto.tamanhos) ? novoProduto.tamanhos : novoProduto.tamanhos.split(',').map(t => t.trim());
+    novoProduto.medidas = Array.isArray(novoProduto.medidas) ? novoProduto.medidas : novoProduto.medidas.split(',').map(m => {
+        const [tamanho, medida] = m.split(':').map(part => part.trim());
+        return { tamanho, medida };
+    });
+    novoProduto.preco = parseFloat(novoProduto.preco);
+    novoProduto.estoque = parseInt(novoProduto.estoque, 10);
     produtos.push(novoProduto);
     fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
     res.json({ message: "Produto adicionado!" });
 });
 
 // Atualizar um produto (apenas admin)
-app.put("/produtos/:id", verificarToken, upload.single('imagem'), (req, res) => {
+app.put("/produtos/:id", verificarToken, upload.fields([{ name: 'imagem' }, { name: 'imagem_medidas' }, { name: 'imagens_cores' }]), (req, res) => {
     const produtos = lerProdutos();
     const id = parseInt(req.params.id);
     const index = produtos.findIndex(p => p.id === id);
 
     if (index !== -1) {
         const produtoAtualizado = { ...produtos[index], ...req.body };
-        if (req.file) {
-            produtoAtualizado.imagem = `../img/produtos_imagens/${req.file.filename}`;
+        const nomeProduto = req.body.nome.replace(/\s+/g, '_').toLowerCase();
+        if (req.files['imagem']) {
+            produtoAtualizado.imagem = `../img/produtos_imagens/${nomeProduto}/${req.files['imagem'][0].filename}`;
         }
+        if (req.files['imagem_medidas']) {
+            produtoAtualizado.medidasimagem = `../img/produtos_imagens/${nomeProduto}/${req.files['imagem_medidas'][0].filename}`;
+        }
+        if (req.files['imagens_cores']) {
+            produtoAtualizado.imagens_cores = Array.from(req.files['imagens_cores']).map(file => ({
+                cor: file.originalname.split('.')[0], // Assuming the color is part of the filename
+                caminho: `../img/produtos_imagens/${nomeProduto}/${file.filename}`
+            }));
+        }
+        produtoAtualizado.cores = Array.isArray(produtoAtualizado.cores) ? produtoAtualizado.cores : produtoAtualizado.cores.split(',').map(c => c.trim());
+        produtoAtualizado.tamanhos = Array.isArray(produtoAtualizado.tamanhos) ? produtoAtualizado.tamanhos : produtoAtualizado.tamanhos.split(',').map(t => t.trim());
+        produtoAtualizado.medidas = Array.isArray(produtoAtualizado.medidas) ? produtoAtualizado.medidas : produtoAtualizado.medidas.split(',').map(m => {
+            const [tamanho, medida] = m.split(':').map(part => part.trim());
+            return { tamanho, medida };
+        });
+        produtoAtualizado.preco = parseFloat(produtoAtualizado.preco);
+        produtoAtualizado.estoque = parseInt(produtoAtualizado.estoque, 10);
         produtos[index] = produtoAtualizado;
         fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
         res.json({ message: "Produto atualizado!" });

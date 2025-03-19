@@ -30,7 +30,7 @@
                     <label for="file">Imagem Principal do Produto</label>
                     <input type="file" id="imagem" placeholder="Imagem Principal do Produto" accept=".jpg, .jpeg, .png" required title="Fazer upload da imagem principal do produto">
                 </div>
-                <input type="text" id="cor" placeholder="Cores do Produto (ex: Preto, Branco, Azul)" title="Cores disponíveis do produto">
+                <input type="text" id="cores" placeholder="Cores do Produto (ex: Preto, Branco, Azul)" title="Cores disponíveis do produto">
                 <div class="anexar_imagens_cores">
                     <label for="file">Imagens das demais cores</label>
                     <input type="file" id="imagens_cores" placeholder="Imagens das demais cores" accept=".jpg, .jpeg, .png" multiple title="Fazer upload das imagens das demais cores do produto">
@@ -90,6 +90,7 @@
                             <th>Cores</th>
                             <th>Tamanhos</th>
                             <th>Medidas</th>
+                            <th>Imagem Medidas</th>
                             <th>Estoque</th>
                             <th>Preço</th>
                             <th>Ações</th>
@@ -102,14 +103,15 @@
                                 <td>${produto.nome}</td>
                                 <td>${produto.composicao}</td>
                                 <td>${produto.descricao}</td>
-                                <td><img src="${produto.imagemprincipal}" alt="${produto.nome}" width="50"></td>
-                                <td>${produto.cores}</td>
+                                <td><img src="${produto.imagem}" alt="${produto.nome}" width="50"></td>
+                                <td>${produto.cores.join(", ")}<br>${produto.imagens_cores.map(img => `<img src="${img.caminho}" alt="${img.cor}" width="30">`).join(" ")}</td>
                                 <td>${produto.tamanhos.join(", ")}</td>
                                 <td>${produto.medidas.map(m => `${m.tamanho}: ${m.medida}`).join(", ")}</td>
+                                <td><img src="${produto.medidasimagem}" alt="Medidas" width="50"></td>
                                 <td>${produto.estoque}</td>
                                 <td>${produto.preco ? `R$ ${produto.preco.toFixed(2)}` : 'N/A'}</td>
                                 <td>
-                                    <button onclick="editarProduto(${produto.id}, '${produto.nome}', '${produto.composicao}', '${produto.descricao}', ${produto.estoque}, '${produto.tamanhos.join(", ")}', '${produto.medidas.map(m => `${m.tamanho}: ${m.medida}`).join(", ")}', '${produto.categoria}')">Editar</button>
+                                    <button onclick="editarProduto(${produto.id}, '${produto.nome}', '${produto.composicao}', '${produto.descricao}', ${produto.estoque}, '${produto.tamanhos.join(", ")}', '${produto.medidas.map(m => `${m.tamanho}: ${m.medida}`).join(", ")}', '${produto.categoria}', '${produto.cores.join(", ")}', ${produto.preco})">Editar</button>
                                     <button onclick="removerProduto(${produto.id})">Excluir</button>
                                 </td>
                             </tr>
@@ -151,12 +153,17 @@
             formData.append("nome", document.getElementById("nome").value);
             formData.append("composicao", document.getElementById("composicao").value);
             formData.append("descricao", document.getElementById("descricao").value);
-            formData.append("preco", document.getElementById("preco").value);
-            formData.append("estoque", document.getElementById("estoque").value);
+            formData.append("preco", parseFloat(document.getElementById("preco").value));
+            formData.append("estoque", parseInt(document.getElementById("estoque").value, 10));
             formData.append("tamanhos", document.getElementById("tamanhos").value.split(",").map(t => t.trim()));
             formData.append("medidas", document.getElementById("medidas").value.split(",").map(m => m.trim()));
             formData.append("categoria", document.getElementById("categoria-select").value);
             formData.append("imagem", document.getElementById("imagem").files[0]);
+            formData.append("imagem_medidas", document.getElementById("imagem_medidas").files[0]);
+            Array.from(document.getElementById("imagens_cores").files).forEach(file => {
+                formData.append("imagens_cores", file);
+            });
+            formData.append("cores", document.getElementById("cores").value.split(",").map(c => c.trim()));
 
             const token = localStorage.getItem("token");
             await fetch("http://localhost:3000/produtos", {
@@ -180,7 +187,7 @@
             carregarProdutos();
         }
 
-        function editarProduto(id, nome, composicao, descricao, estoque, tamanhos, medidas, categoria) {
+        function editarProduto(id, nome, composicao, descricao, estoque, tamanhos, medidas, categoria, cores, preco) {
             document.getElementById("nome").value = nome;
             document.getElementById("composicao").value = composicao;
             document.getElementById("descricao").value = descricao;
@@ -188,11 +195,13 @@
             document.getElementById("estoque").value = estoque;
             document.getElementById("tamanhos").value = tamanhos;
             document.getElementById("medidas").value = medidas;
+            document.getElementById("cores").value = cores;
             document.getElementById("categoria-select").value = categoria;
             document.getElementById("nova-categoria").value = "";
             document.getElementById("nome").dataset.id = id;
             document.getElementById("adicionar-btn").style.display = "none";
             document.getElementById("atualizar-btn").style.display = "inline-block";
+            console.log(document.getElementById("atualizar-btn").style.display);
             document.getElementById("voltar-btn").style.display = "inline-block";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -203,12 +212,17 @@
             formData.append("nome", document.getElementById("nome").value);
             formData.append("composicao", document.getElementById("composicao").value);
             formData.append("descricao", document.getElementById("descricao").value);
-            formData.append("preco", document.getElementById("preco").value);
-            formData.append("estoque", document.getElementById("estoque").value);
+            formData.append("preco", parseFloat(document.getElementById("preco").value));
+            formData.append("estoque", parseInt(document.getElementById("estoque").value, 10));
             formData.append("tamanhos", document.getElementById("tamanhos").value.split(",").map(t => t.trim()));
             formData.append("medidas", document.getElementById("medidas").value.split(",").map(m => m.trim()));
             formData.append("categoria", document.getElementById("categoria-select").value);
             formData.append("imagem", document.getElementById("imagem").files[0]);
+            formData.append("imagem_medidas", document.getElementById("imagem_medidas").files[0]);
+            Array.from(document.getElementById("imagens_cores").files).forEach(file => {
+                formData.append("imagens_cores", file);
+            });
+            formData.append("cores", document.getElementById("cores").value.split(",").map(c => c.trim()));
 
             const token = localStorage.getItem("token");
             await fetch(`http://localhost:3000/produtos/${id}`, {
@@ -226,6 +240,7 @@
             document.getElementById("estoque").value = "";
             document.getElementById("tamanhos").value = "";
             document.getElementById("medidas").value = "";
+            document.getElementById("cores").value = "";
             document.getElementById("categoria-select").value = "";
             document.getElementById("nova-categoria").value = "";
             document.getElementById("adicionar-btn").style.display = "inline-block";
@@ -241,6 +256,7 @@
             document.getElementById("estoque").value = "";
             document.getElementById("tamanhos").value = "";
             document.getElementById("medidas").value = "";
+            document.getElementById("cores").value = "";
             document.getElementById("categoria-select").value = "";
             document.getElementById("nova-categoria").value = "";
             document.getElementById("adicionar-btn").style.display = "inline-block";
