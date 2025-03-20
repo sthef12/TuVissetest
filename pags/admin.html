@@ -6,265 +6,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja - Administração</title>
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
 </head>
 
 <body>
-    <div class="opcoes-container">
-        <h1>Administração da Loja</h1>
-        <div class="opcoes">
-            <div class="nome_descricao">
-                <h2>Nome e descrições</h2>
-                <input type="text" id="nome" placeholder="Nome do Produto" title="Nome do Produto">
-                <input type="text" id="composicao" placeholder="Composição do Produto" title="Composição do Produto (ex: 100% algodão)">
-                <input type="text" id="descricao" placeholder="Descrição do Produto" title="Descrição resumida do produto">
-                <select id="categoria-select" onchange="verificarCategoria()" title="Selecionar a categoria do produto">
-                    <option value="">Selecione uma categoria</option>
-                    <option value="nova">Adicionar uma nova categoria</option>
-                </select>
-                <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;">
+    <header>
+        <div class="header_main">
+            <div onclick="window.location.href='login.html'" class="outros">
+                <i class="fa-solid fa-arrow-left"></i>
+                <p>Voltar para Login</p>
             </div>
-
-            <div class="imagens_cores">
-                <h2>Imagens e Cores</h2>
-                <div class="anexar_imagem_padrao">
-                    <label for="file">Imagem Principal do Produto</label>
-                    <input type="file" id="imagem" placeholder="Imagem Principal do Produto" accept=".jpg, .jpeg, .png" required title="Fazer upload da imagem principal do produto">
-                </div>
-                <input type="text" id="cores" placeholder="Cores do Produto (ex: Preto, Branco, Azul)" title="Cores disponíveis do produto">
-                <div class="anexar_imagens_cores">
-                    <label for="file">Imagens das demais cores</label>
-                    <input type="file" id="imagens_cores" placeholder="Imagens das demais cores" accept=".jpg, .jpeg, .png" multiple title="Fazer upload das imagens das demais cores do produto">
-                </div>
+            <div class="titulo">
+                <h1>Administração da Loja</h1>
             </div>
-            <div class="numeros_medidas">
-                <h2>Números e Medidas</h2>
-                <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)" title="Tamanhos disponíveis do produto">
-                <input type="text" id="medidas" placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)" title="Medidas dos tamanhos disponíveis">
-                <div class="anexar_imagem_medidas">
-                    <label for="file">Imagem das medidas</label>
-                    <input type="file" id="imagem_medidas" placeholder="Imagem das medidas" accept=".jpg, .jpeg, .png" title="Fazer upload da imagem das medidas do produto">
-                </div>
-                <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
-                <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
-            </div>
+            <img src="../img/logo-sem-fundo.png" alt="Logo do site" />
+          <div class="menu_header">
+            <span>
+              <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+            </span>
+          </div>
         </div>
-        <div class="opcoes-botoes">
-            <button id="adicionar-btn" onclick="adicionarProduto()">Adicionar Produto</button>
-            <button id="atualizar-btn" onclick="atualizarProduto()" style="display: none;">Atualizar Produto</button>
-            <button id="voltar-btn" onclick="voltarProduto()" style="display: none;">Voltar</button>
         </div>
-        <div id="lista-produtos"></div>
-    </div>
-    <script>
-        let categorias = [];
-        console.log()
-        async function carregarProdutos() {
-            console.log("carregarProdutos");
-            const res = await fetch("http://localhost:3000/produtos");
-            const produtos = await res.json();
-            const produtosPorCategoria = produtos.reduce((acc, produto) => {
-                if (!acc[produto.categoria]) {
-                    acc[produto.categoria] = [];
-                }
-                acc[produto.categoria].push(produto);
-                return acc;
-            }, {});
-
-            categorias = Object.keys(produtosPorCategoria);
-            atualizarCategorias();
-
-            const container = document.getElementById("lista-produtos");
-            container.innerHTML = "";
-            for (const categoria in produtosPorCategoria) {
-                const categoriaDiv = document.createElement("div");
-                categoriaDiv.innerHTML = `<h2>${categoria}</h2>`;
-                const tabela = document.createElement("table");
-                tabela.innerHTML = `
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Composição</th>
-                            <th>Descrição</th>
-                            <th>Imagem Principal</th>
-                            <th>Cores</th>
-                            <th>Tamanhos</th>
-                            <th>Medidas</th>
-                            <th>Imagem Medidas</th>
-                            <th>Estoque</th>
-                            <th>Preço</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${produtosPorCategoria[categoria].map(produto => `
-                            <tr>
-                                <td>${produto.id}</td>
-                                <td>${produto.nome}</td>
-                                <td>${produto.composicao}</td>
-                                <td>${produto.descricao}</td>
-                                <td><img src="${produto.imagem}" alt="${produto.nome}" width="50"></td>
-                                <td>${produto.cores.join(", ")}<br>${produto.imagens_cores.map(img => `<img src="${img.caminho}" alt="${img.cor}" width="30">`).join(" ")}</td>
-                                <td>${produto.tamanhos.join(", ")}</td>
-                                <td>${produto.medidas.map(m => `${m.tamanho}: ${m.medida}`).join(", ")}</td>
-                                <td><img src="${produto.medidasimagem}" alt="Medidas" width="50"></td>
-                                <td>${produto.estoque}</td>
-                                <td>${produto.preco ? `R$ ${produto.preco.toFixed(2)}` : 'N/A'}</td>
-                                <td>
-                                    <button onclick="editarProduto(${produto.id}, '${produto.nome}', '${produto.composicao}', '${produto.descricao}', ${produto.estoque}, '${produto.tamanhos.join(", ")}', '${produto.medidas.map(m => `${m.tamanho}: ${m.medida}`).join(", ")}', '${produto.categoria}', '${produto.cores.join(", ")}', ${produto.preco})">Editar</button>
-                                    <button onclick="removerProduto(${produto.id})">Excluir</button>
-                                </td>
-                            </tr>
-                        `).join("")}
-                    </tbody>
-                `;
-                categoriaDiv.appendChild(tabela);
-                container.appendChild(categoriaDiv);
-            }
-        }
-
-        function atualizarCategorias() {
-            const categoriaSelect = document.getElementById("categoria-select");
-            categoriaSelect.innerHTML = '<option value="">Selecione uma categoria</option>';
-            categorias.forEach(categoria => {
-                const option = document.createElement("option");
-                option.value = categoria;
-                option.textContent = categoria;
-                categoriaSelect.appendChild(option);
-            });
-            const novaOption = document.createElement("option");
-            novaOption.value = "nova";
-            novaOption.textContent = "Adicionar uma nova categoria";
-            categoriaSelect.appendChild(novaOption);
-        }
-
-        function verificarCategoria() {
-            const categoriaSelect = document.getElementById("categoria-select");
-            const novaCategoriaInput = document.getElementById("nova-categoria");
-            if (categoriaSelect.value === "nova") {
-                novaCategoriaInput.style.display = "block";
-            } else {
-                novaCategoriaInput.style.display = "none";
-            }
-        }
-
-        async function adicionarProduto() {
-            const formData = new FormData();
-            formData.append("nome", document.getElementById("nome").value);
-            formData.append("composicao", document.getElementById("composicao").value);
-            formData.append("descricao", document.getElementById("descricao").value);
-            formData.append("preco", parseFloat(document.getElementById("preco").value));
-            formData.append("estoque", parseInt(document.getElementById("estoque").value, 10));
-            formData.append("tamanhos", document.getElementById("tamanhos").value.split(",").map(t => t.trim()));
-            formData.append("medidas", document.getElementById("medidas").value.split(",").map(m => m.trim()));
-            formData.append("categoria", document.getElementById("categoria-select").value);
-            formData.append("imagem", document.getElementById("imagem").files[0]);
-            formData.append("imagem_medidas", document.getElementById("imagem_medidas").files[0]);
-            Array.from(document.getElementById("imagens_cores").files).forEach(file => {
-                formData.append("imagens_cores", file);
-            });
-            formData.append("cores", document.getElementById("cores").value.split(",").map(c => c.trim()));
-
-            const token = localStorage.getItem("token");
-            await fetch("http://localhost:3000/produtos", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                body: formData
-            });
-            carregarProdutos();
-        }
-
-        async function removerProduto(id) {
-            const token = localStorage.getItem("token");
-            await fetch(`http://localhost:3000/produtos/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            carregarProdutos();
-        }
-
-        function editarProduto(id, nome, composicao, descricao, estoque, tamanhos, medidas, categoria, cores, preco) {
-            document.getElementById("nome").value = nome;
-            document.getElementById("composicao").value = composicao;
-            document.getElementById("descricao").value = descricao;
-            document.getElementById("preco").value = preco;
-            document.getElementById("estoque").value = estoque;
-            document.getElementById("tamanhos").value = tamanhos;
-            document.getElementById("medidas").value = medidas;
-            document.getElementById("cores").value = cores;
-            document.getElementById("categoria-select").value = categoria;
-            document.getElementById("nova-categoria").value = "";
-            document.getElementById("nome").dataset.id = id;
-            document.getElementById("adicionar-btn").style.display = "none";
-            document.getElementById("atualizar-btn").style.display = "inline-block";
-            console.log(document.getElementById("atualizar-btn").style.display);
-            document.getElementById("voltar-btn").style.display = "inline-block";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        async function atualizarProduto() {
-            const id = document.getElementById("nome").dataset.id;
-            const formData = new FormData();
-            formData.append("nome", document.getElementById("nome").value);
-            formData.append("composicao", document.getElementById("composicao").value);
-            formData.append("descricao", document.getElementById("descricao").value);
-            formData.append("preco", parseFloat(document.getElementById("preco").value));
-            formData.append("estoque", parseInt(document.getElementById("estoque").value, 10));
-            formData.append("tamanhos", document.getElementById("tamanhos").value.split(",").map(t => t.trim()));
-            formData.append("medidas", document.getElementById("medidas").value.split(",").map(m => m.trim()));
-            formData.append("categoria", document.getElementById("categoria-select").value);
-            formData.append("imagem", document.getElementById("imagem").files[0]);
-            formData.append("imagem_medidas", document.getElementById("imagem_medidas").files[0]);
-            Array.from(document.getElementById("imagens_cores").files).forEach(file => {
-                formData.append("imagens_cores", file);
-            });
-            formData.append("cores", document.getElementById("cores").value.split(",").map(c => c.trim()));
-
-            const token = localStorage.getItem("token");
-            await fetch(`http://localhost:3000/produtos/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                body: formData
-            });
-            carregarProdutos();
-            document.getElementById("nome").value = "";
-            document.getElementById("composicao").value = "";
-            document.getElementById("descricao").value = "";
-            document.getElementById("preco").value = "";
-            document.getElementById("estoque").value = "";
-            document.getElementById("tamanhos").value = "";
-            document.getElementById("medidas").value = "";
-            document.getElementById("cores").value = "";
-            document.getElementById("categoria-select").value = "";
-            document.getElementById("nova-categoria").value = "";
-            document.getElementById("adicionar-btn").style.display = "inline-block";
-            document.getElementById("atualizar-btn").style.display = "none";
-            document.getElementById("voltar-btn").style.display = "none";
-        }
-
-        function voltarProduto() {
-            document.getElementById("nome").value = "";
-            document.getElementById("composicao").value = "";
-            document.getElementById("descricao").value = "";
-            document.getElementById("preco").value = "";
-            document.getElementById("estoque").value = "";
-            document.getElementById("tamanhos").value = "";
-            document.getElementById("medidas").value = "";
-            document.getElementById("cores").value = "";
-            document.getElementById("categoria-select").value = "";
-            document.getElementById("nova-categoria").value = "";
-            document.getElementById("adicionar-btn").style.display = "inline-block";
-            document.getElementById("atualizar-btn").style.display = "none";
-            document.getElementById("voltar-btn").style.display = "none";
-        }
-        carregarProdutos();
-    </script>
+      </header>
+      <main>
+          <div class="opcoes-container">
+              <div class="opcoes">
+                  <div class="nome_descricao">
+                      <h2>Nome e descrições</h2>
+                      <input type="text" id="nome" placeholder="Nome do Produto" title="Nome do Produto">
+                      <input type="text" id="composicao" placeholder="Composição do Produto"
+                          title="Composição do Produto (ex: 100% algodão)">
+                      <input type="text" id="descricao" placeholder="Descrição do Produto"
+                          title="Descrição resumida do produto">
+                      <select id="categoria-select" onchange="verificarCategoria()" title="Selecionar a categoria do produto">
+                          <option value="">Selecione uma categoria</option>
+                          <option value="nova">Adicionar uma nova categoria</option>
+                      </select>
+                      <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;">
+                      <select id="subcategoria-select" title="Selecionar a subcategoria do produto">
+                          <option value="Pronto">Produto Pronto</option>
+                          <option value="Personalizado">Personalizado</option>
+                      </select>
+                  </div>
+      
+                  <div class="imagens_cores">
+                      <h2>Imagens e Cores</h2>
+                      <div class="anexar_imagem_padrao">
+                          <label for="file">Imagem Principal do Produto</label>
+                          <input type="file" id="imagem" placeholder="Imagem Principal do Produto" accept=".jpg, .jpeg, .png"
+                              required title="Fazer upload da imagem principal do produto">
+                      </div>
+                      <input type="text" id="cores" placeholder="Cores do Produto (ex: Preto, Branco, Azul)"
+                          title="Cores disponíveis do produto">
+                      <div class="anexar_imagens_cores">
+                          <label for="file">Imagens das demais cores</label>
+                          <input type="file" id="imagens_cores" placeholder="Imagens das demais cores"
+                              accept=".jpg, .jpeg, .png" multiple
+                              title="Fazer upload das imagens das demais cores do produto">
+                      </div>
+                  </div>
+                  <div class="numeros_medidas">
+                      <h2>Números e Medidas</h2>
+                      <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
+                          title="Tamanhos disponíveis do produto">
+                      <input type="text" id="medidas" placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)"
+                          title="Medidas dos tamanhos disponíveis">
+                      <div class="anexar_imagem_medidas">
+                          <label for="file">Imagem das medidas</label>
+                          <input type="file" id="imagem_medidas" placeholder="Imagem das medidas" accept=".jpg, .jpeg, .png"
+                              title="Fazer upload da imagem das medidas do produto">
+                      </div>
+                      <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
+                      <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
+                  </div>
+              </div>
+              <div class="opcoes-botoes">
+                  <button id="adicionar-btn" onclick="adicionarProduto()">Adicionar Produto</button>
+                  <button id="atualizar-btn" onclick="atualizarProduto()" style="display: none;">Atualizar Produto</button>
+                  <button id="voltar-btn" onclick="voltarProduto()" style="display: none;">Voltar</button>
+              </div>
+              <div id="lista-produtos"></div>
+          </div>
+      </main>
+    <script src="../script/admin.js"></script>
 </body>
 
 </html>

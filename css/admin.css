@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    align-items: center;
 }
 
 .opcoes-container {
@@ -21,13 +22,40 @@ table {
     border-collapse: collapse;
 }
 
+thead {
+    background-color: #f2f2f2;
+    font-size: 15px;
+}
+
+tbody {
+    font-size: 15px;
+}
+
 th,
 td {
     border: 1px solid black;
     padding: 10px;
 }
 
-.opcoes{
+.outros {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.outros p {
+    font-weight: bold;
+}
+
+.opcoes-container {
+    margin-top: 10vh;
+}
+
+.opcoes {
     display: flex;
     justify-content: center;
 }
+
+.opcoes-botoes {
+    margin-bottom: 10vh;
+}  
