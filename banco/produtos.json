@@ -2,7 +2,7 @@
   {
     "id": 1,
     "nome": "Camisa tipo polo",
-    "imagem": "../img/produtos_imagens/camisa_tipo_polo/1742407623265.jpg",
+    "imagem": "../img/produtos_imagens/camisa_tipo_polo/1742475461958.jpg",
     "categoria": "Camisas",
     "composicao": "50% poliéster e 50% algodão",
     "cores": [
@@ -73,7 +73,7 @@
     "estoque": 100,
     "descricao": "Camisa tipo polo customizável com logo",
     "preco": 50.8,
-    "imagem_medidas": "undefined"
+    "subcategoria": "Personalizado"
   },
   {
     "nome": "Camisa Básica",
@@ -113,7 +113,7 @@
       "Azul claro"
     ],
     "id": 2,
-    "imagem": "../img/produtos_imagens/camisa_básica/1742404844154.jpg",
+    "imagem": "../img/produtos_imagens/camisa_básica/1742475432078.jpg",
     "medidasimagem": "../img/produtos_imagens/camisa_básica/1742404844158.jpg",
     "imagens_cores": [
       {
@@ -141,9 +141,11 @@
         "caminho": "../img/produtos_imagens/camisa_básica/1742404844174.jpg"
       },
       {
-        "cor": "azul_escuro_FRENTE[",
+        "cor": "azul_escuro_FRENTE",
         "caminho": "../img/produtos_imagens/camisa_básica/1742404844175.jpg"
       }
-    ]
+    ],
+    "subcategoria": "Personalizado",
+    "imagem_medidas": "undefined"
   }
 ]

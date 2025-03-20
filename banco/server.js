@@ -120,6 +120,7 @@ app.post("/produtos", verificarToken, upload.fields([{ name: 'imagem' }, { name:
     });
     novoProduto.preco = parseFloat(novoProduto.preco);
     novoProduto.estoque = parseInt(novoProduto.estoque, 10);
+    novoProduto.subcategoria = req.body.subcategoria;
     produtos.push(novoProduto);
     fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
     res.json({ message: "Produto adicionado!" });
@@ -157,6 +158,7 @@ app.put("/produtos/:id", verificarToken, upload.fields([{ name: 'imagem' }, { na
         });
         produtoAtualizado.preco = parseFloat(produtoAtualizado.preco);
         produtoAtualizado.estoque = parseInt(produtoAtualizado.estoque, 10);
+        produtoAtualizado.subcategoria = req.body.subcategoria;
         produtos[index] = produtoAtualizado;
         fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
         res.json({ message: "Produto atualizado!" });

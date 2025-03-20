@@ -1,5 +1,5 @@
 let categorias = [];
-console.log();
+
 async function carregarProdutos() {
   console.log("carregarProdutos");
   const res = await fetch("http://localhost:3000/produtos");
@@ -28,6 +28,7 @@ async function carregarProdutos() {
                             <th>Nome</th>
                             <th>Composição</th>
                             <th>Descrição</th>
+                            <th>Subcategoria</th>
                             <th>Imagem Principal</th>
                             <th>Cores</th>
                             <th>Tamanhos</th>
@@ -47,6 +48,7 @@ async function carregarProdutos() {
                                 <td>${produto.nome}</td>
                                 <td>${produto.composicao}</td>
                                 <td>${produto.descricao}</td>
+                                <td>${produto.subcategoria}</td>
                                 <td><img src="${produto.imagem}" alt="${
                               produto.nome
                             }" width="50"></td>
@@ -76,9 +78,9 @@ async function carregarProdutos() {
                                       produto.id
                                     }, '${produto.nome}', '${
                               produto.composicao
-                            }', '${produto.descricao}', ${
-                              produto.estoque
-                            }, '${produto.tamanhos.join(
+                            }', '${produto.descricao}','${
+                              produto.subcategoria
+                            }', ${produto.estoque}, '${produto.tamanhos.join(
                               ", "
                             )}', '${produto.medidas
                               .map((m) => `${m.tamanho}: ${m.medida}`)
@@ -104,32 +106,6 @@ async function carregarProdutos() {
 
     categoriaDiv.appendChild(tabela);
     container.appendChild(categoriaDiv);
-  }
-}
-
-function atualizarCategorias() {
-  const categoriaSelect = document.getElementById("categoria-select");
-  categoriaSelect.innerHTML =
-    '<option value="">Selecione uma categoria</option>';
-  categorias.forEach((categoria) => {
-    const option = document.createElement("option");
-    option.value = categoria;
-    option.textContent = categoria;
-    categoriaSelect.appendChild(option);
-  });
-  const novaOption = document.createElement("option");
-  novaOption.value = "nova";
-  novaOption.textContent = "Adicionar uma nova categoria";
-  categoriaSelect.appendChild(novaOption);
-}
-
-function verificarCategoria() {
-  const categoriaSelect = document.getElementById("categoria-select");
-  const novaCategoriaInput = document.getElementById("nova-categoria");
-  if (categoriaSelect.value === "nova") {
-    novaCategoriaInput.style.display = "block";
-  } else {
-    novaCategoriaInput.style.display = "none";
   }
 }
 
@@ -161,6 +137,10 @@ async function adicionarProduto() {
     "categoria",
     document.getElementById("categoria-select").value
   );
+  formData.append(
+    "subcategoria",
+    document.getElementById("subcategoria-select").value
+  );
   formData.append("imagem", document.getElementById("imagem").files[0]);
   formData.append(
     "imagem_medidas",
@@ -188,6 +168,32 @@ async function adicionarProduto() {
   carregarProdutos();
 }
 
+function atualizarCategorias() {
+  const categoriaSelect = document.getElementById("categoria-select");
+  categoriaSelect.innerHTML =
+    '<option value="">Selecione uma categoria</option>';
+  categorias.forEach((categoria) => {
+    const option = document.createElement("option");
+    option.value = categoria;
+    option.textContent = categoria;
+    categoriaSelect.appendChild(option);
+  });
+  const novaOption = document.createElement("option");
+  novaOption.value = "nova";
+  novaOption.textContent = "Adicionar uma nova categoria";
+  categoriaSelect.appendChild(novaOption);
+}
+
+function verificarCategoria() {
+  const categoriaSelect = document.getElementById("categoria-select");
+  const novaCategoriaInput = document.getElementById("nova-categoria");
+  if (categoriaSelect.value === "nova") {
+    novaCategoriaInput.style.display = "block";
+  } else {
+    novaCategoriaInput.style.display = "none";
+  }
+}
+
 async function removerProduto(id) {
   const token = localStorage.getItem("token");
   await fetch(`http://localhost:3000/produtos/${id}`, {
@@ -204,6 +210,7 @@ function editarProduto(
   nome,
   composicao,
   descricao,
+  subcategoria,
   estoque,
   tamanhos,
   medidas,
@@ -219,6 +226,7 @@ function editarProduto(
   document.getElementById("tamanhos").value = tamanhos;
   document.getElementById("medidas").value = medidas;
   document.getElementById("cores").value = cores;
+  document.getElementById("subcategoria-select").value = subcategoria;
   document.getElementById("categoria-select").value = categoria;
   document.getElementById("nova-categoria").value = "";
   document.getElementById("nome").dataset.id = id;
@@ -258,6 +266,10 @@ async function atualizarProduto() {
     "categoria",
     document.getElementById("categoria-select").value
   );
+  formData.append(
+    "subcategoria",
+    document.getElementById("subcategoria-select").value
+  );
   formData.append("imagem", document.getElementById("imagem").files[0]);
   formData.append(
     "imagem_medidas",
@@ -291,6 +303,7 @@ async function atualizarProduto() {
   document.getElementById("tamanhos").value = "";
   document.getElementById("medidas").value = "";
   document.getElementById("cores").value = "";
+  document.getElementById("subcategoria-select").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("nova-categoria").value = "";
   document.getElementById("adicionar-btn").style.display = "inline-block";
@@ -307,6 +320,7 @@ function voltarProduto() {
   document.getElementById("tamanhos").value = "";
   document.getElementById("medidas").value = "";
   document.getElementById("cores").value = "";
+  document.getElementById("subcategoria-select").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("nova-categoria").value = "";
   document.getElementById("adicionar-btn").style.display = "inline-block";

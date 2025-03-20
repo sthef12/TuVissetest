@@ -1,129 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produto</title>
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
-    <link rel="stylesheet" href="./css/header.css" />
-    <link rel="stylesheet" href="./css/carrossel.css" />
-    <link rel="stylesheet" href="./css/footer.css" />
-    <link rel="stylesheet" href="./css/telaProduto.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produto</title>
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
+  <link rel="stylesheet" href="./css/header.css" />
+  <link rel="stylesheet" href="./css/carrossel.css" />
+  <link rel="stylesheet" href="./css/footer.css" />
+  <link rel="stylesheet" href="./css/telaProduto.css" />
 </head>
+
 <body>
-    <header>
-        <!-- header principal (menu, logo e barra de pesquisa)-->
-        <div class="header_main">
-        
-          <img src="img/logo-sem-fundo.png" alt="Logo do site" />
-          <div class="barra-de-pesquisa">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Pesquisar" />
-          </div>
-          <div onclick="window.location.href='carrinho.html'" class="outros">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </div>
-          <div class="menu_header">
-            <span>
-              <i class="fa-solid fa-bars" onclick="openMenu()"></i>
-            </span>
+  <header>
+    <!-- header principal (menu, logo e barra de pesquisa)-->
+    <div class="header_main">
+
+      <img src="img/logo-sem-fundo.png" alt="Logo do site" />
+      <div class="barra-de-pesquisa">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Pesquisar" />
+      </div>
+      <div onclick="window.location.href='carrinho.html'" class="outros">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <div class="menu_header">
+        <span>
+          <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+        </span>
+      </div>
+    </div>
+    </div>
+  </header>
+  <main>
+    <div id="produto_view"></div>
+  </main>
+  <footer>
+    <div class="footerFundo">
+      <div class="footer_colun1">
+        <div class="logo_footer">
+          <img src="img/logo_branco_sem_fundo.png" alt="Logo" />
+        </div>
+        <div class="info">
+          <label for="">E-mail:</label>
+          <a href="#" class="contatoFooter">tuvisseperssonalizacao@gmail.com</a><br />
+          <label for="">Contato:</label>
+          <a href="#" class="contatoFooter">(81) 98888-8888</a><br />
+          <label for="">Endereço:</label>
+          <a href="#" class="contatoFooter">Rua exemplo, 00 - Cidade/PE</a>
+        </div>
+      </div>
+      <div class="footer_colun2">
+        <div class="nossaHistoria">
+          <a href="./sobre.html">
+            <label>Nossa História</label>
+          </a>
+        </div>
+        <div class="redesFooter">
+          <label>Nossas Redes Sociais</label>
+          <div class="img_redes">
+            <a href="#" class="redeLink"><i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="redeLink"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="redeLink"><i class="fa-brands fa-youtube"></i></a>
           </div>
         </div>
-        </div>
-    </header>
-    <main>
-        <div class="produto_view">
-          <div class="carrossel_img">
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      <span>
+        <label for="">Tu Visse Personalização&nbsp;</label>
+        &copy;&nbsp;<label for="">Desenvolvido por&nbsp;</label><a href="#">@linkGit</a> &nbsp;
+      </span>
+      All Rights Reserved.</label>
+    </div>
+  </footer>
+  <script>
+    async function buscarProdutoPelaURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const produtoId = urlParams.get('id');
+
+      if (produtoId) {
+        try {
+          const produtos = await fetch("../banco/produtos.json");
+          const produtosJson = await produtos.json();
+          const produto = produtosJson.find(p => p.id == produtoId);
+
+          if (produto) {
+            const produto_view = document.getElementById("produto_view");
+            produto_view.innerHTML = `
+            <div class="carrossel_img">
               <div class="carrossel_view">
-                <!--      
-                    <div class="carrossel">
-                      <div class="indicador_container">
-                        <div class="indicador">
-                          <span class="active"></span>
-                          <span></span>
-                          <span></span>
-                        </div></div>
-                        <div class="arrows">
-                          <span><i class="fa-solid fa-arrow-left" id="arrow-left"></i></span>
-                          <span><i class="fa-solid fa-arrow-right" id="arrow-right"></i></span>
-                        </div>
-                -->
-                <img class="imagem_view" src="/img/2.png" alt="view 1">
-                <img class="imagem_view" src="/img/2.png" alt="view 2">
-                <img class="imagem_view" src="/img/2.png" alt="view 3"> 
-                <img class="imagem_view2" src="/img/2.png" alt="view 4"> 
-                <img class="imagem_view2" src="/img/2.png" alt="view 5"> 
+                ${produto.imagens_cores.map(img => `<img class="imagem_view" src="${img.caminho}" alt="${img.cor}">`).join('')}
               </div>
               <div class="imagem_principal">
-                <img src="/img/2.png" alt="Produto 1" />
+                <img src="${produto.imagem}" alt="${produto.nome}" />
               </div>
             </div>
             <div class="descricao">
-                <div class="nome_descricao">
-                    <span id="nome_produto">
-                        <h1>Produto 1</h1>
-                    </span>
-                    <h3>Descrição:</h3>
-                    <span id="descricao_produto">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                        <br>Amet deleniti incidunt nobis, pariatur explicabo nesciunt. 
-                        <br>Officia laudantium eaque modi aut? 
-                        <br>Laboriosam fugit fugiat minus, necessitatibus asperiores ea ipsum atque cum?
-                        </p>
-                    </span>
-                </div>
-                <div class="valor_button">
-                    <h4>Valor:</h4>
-                    <span id="valor_produto"></span>
-                        <p>R$ 100,00</p>
-                    </span>
-                    <button>Adicionar ao carrinho</button>
-                    <button onclick="window.location.href= 'index.html'">Continuar Comprando</button>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <div class="footerFundo">
-          <div class="footer_colun1">
-            <div class="logo_footer">
-              <img src="img/logo_branco_sem_fundo.png" alt="Logo" />
-            </div>
-            <div class="info">
-              <label for="">E-mail:</label>
-              <a href="#" class="contatoFooter">tuvisseperssonalizacao@gmail.com</a><br />
-              <label for="">Contato:</label>
-              <a href="#" class="contatoFooter">(81) 98888-8888</a><br />
-              <label for="">Endereço:</label>
-              <a href="#" class="contatoFooter">Rua exemplo, 00 - Cidade/PE</a>
-            </div>
-          </div>
-          <div class="footer_colun2">
-            <div class="nossaHistoria">
-              <a href="./sobre.html">
-                <label>Nossa História</label>
-              </a>
-            </div>
-            <div class="redesFooter">
-              <label >Nossas Redes Sociais</label>
-              <div class="img_redes">
-                <a href="#" class="redeLink"><i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="#" class="redeLink"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" class="redeLink"><i class="fa-brands fa-youtube"></i></a>
+              <div class="nome_descricao">
+                <span id="nome_produto">
+                  <h1>${produto.nome}</h1>
+                </span>
+                <h3>Descrição:</h3>
+                <span id="descricao_produto">
+                  <p>${produto.descricao}</p>
+                </span>
               </div>
-            </div>
-          </div>
+              <div class="valor_button">
+                <h4>Valor:</h4>
+                <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
+                <button>Adicionar ao carrinho</button>
+                <button onclick="window.location.href= 'index.html'">Continuar Comprando</button>
+              </div>
+            </div>`;
+          } else {
+            console.error("Produto não encontrado");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        console.error("ID do produto não fornecido");
+      }
+    }
 
-        </div>
-
-        <div class="copyright">
-          <span>
-            <label for="">Tu Visse Personalização&nbsp;</label>
-            &copy;&nbsp;<label for="">Desenvolvido por&nbsp;</label><a href="#">@linkGit</a> &nbsp; 
-          </span>
-          All Rights Reserved.</label>
-        </div>
-    </footer>
+    window.onload = buscarProdutoPelaURL;
+  </script>
 </body>
+
 </html>
