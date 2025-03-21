@@ -9,8 +9,11 @@
 .header_galeria {
     background-color: var(--secondary-color);
     width: 100%;
+    height: 10vh;
     padding: 10px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .conteudo_galeria {
@@ -19,26 +22,25 @@
     width: 100%;
     align-items: center;
     padding: 20px;
-    gap: 15px;
+    gap: 5px;
 }
 
 .imgs_galeria {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 .img_galeria {
-    width: 30vw;
-    height: 20vh;
-    border-radius: 10px;
+    width: 20vw;
+    height: 40vh;
     background-color: rgba(217, 217, 217, 0.8);
 }
 
-.conteudo_galeria video {
-    width: 90%;
-    height: 20vh;
-    border-radius: 10px;
+.conteudo_galeria .video_galeria {
+    width: 20vw;
+    height: 100%;
     background-color: rgba(217, 217, 217, 0.8);
 }
