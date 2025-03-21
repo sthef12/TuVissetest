@@ -113,7 +113,7 @@
               <div class="valor_button">
                 <h4>Valor:</h4>
                 <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
-                <button>Adicionar ao carrinho</button>
+                <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
                 <button onclick="window.location.href= 'index.html'">Continuar Comprando</button>
               </div>
             </div>`;
@@ -127,8 +127,18 @@
         console.error("ID do produto não fornecido");
       }
     }
-
     window.onload = buscarProdutoPelaURL;
+
+    const addCarrinho = (produtoId) => {
+      const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      if (!carrinho.includes(produtoId)) {
+        carrinho.push(produtoId);
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        alert("Produto adicionado ao carrinho");
+      } else {
+        alert("Produto já está no carrinho");
+      }
+    }
   </script>
 </body>
 
