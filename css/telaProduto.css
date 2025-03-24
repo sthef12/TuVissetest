@@ -2,10 +2,10 @@
 
 #produto_view {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-    padding: 20px 0;
-    width: fit-content;
+    padding: 20px 80px;
+    width: 100%;
 }
 
 .carrossel_img {
@@ -95,7 +95,7 @@
 
 
 @media (max-width: 767px) {
-    .produto_view {
+    #produto_view {
         flex-direction: column;
         padding: 20px;
         align-items: center;
@@ -106,8 +106,8 @@
     }
     .carrossel_view{
         flex-direction: row;
-        height: 20vh;
-        width: 50%;
+        height: 26vh;
+        width: 100%;
     }
     .imagem_principal {
         height: 50vh;
