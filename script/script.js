@@ -56,8 +56,10 @@ async function carregarProdutos() {
           <a href="telaProduto.html?id=${produto.id}">
             <div class="produtos">
               <img src="${produto.imagem}" alt="${produto.nome}" />
-              <h1>${produto.nome}</h1>
-              <h2>R$ ${produto.preco.toFixed(2)}</h2>
+              <div class="nome_preco_produto">
+                <h1>${produto.nome}</h1>
+                <h2>R$ ${produto.preco.toFixed(2)}</h2>
+              </div>
               <button>Comprar</button>
             </div>
           </a>`;
