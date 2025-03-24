@@ -18,10 +18,20 @@ header {
   width: 8.5%;
 }
 
+.barra-de-pesquisa-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 50%;
+}
+
 .barra-de-pesquisa {
   background-color: var(--lab3-color);
   padding: 0.3rem;
-  width: 50%;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .barra-de-pesquisa input {
@@ -34,6 +44,15 @@ header {
 
 .barra-de-pesquisa input::placeholder {
   color: var(--lab4-color);
+}
+
+.buscado{
+  display: none;
+  position: absolute;
+  top: 15%;
+  background-color: var(--lab3-color);
+  width: 45%;
+  z-index: 1;
 }
 
 .outros {
@@ -84,8 +103,5 @@ header {
   }
   .barra-de-pesquisa {
     width: 60%;
-  }
-  .outros {
-    
   }
 }

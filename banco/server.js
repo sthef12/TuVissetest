@@ -169,11 +169,11 @@ app.put("/produtos/:id", verificarToken, upload.fields([{ name: 'imagem' }, { na
 
 // Remover um produto (apenas admin)
 app.delete("/produtos/:id", verificarToken, (req, res) => {
-    let produtos = lerProdutos();
-    const id = parseInt(req.params.id);
-    produtos = produtos.filter(p => p.id !== id);
-    fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
-    res.json({ message: "Produto removido!" });
+  let produtos = lerProdutos();
+  const id = parseInt(req.params.id);
+  produtos = produtos.filter(p => p.id !== id);
+  fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
+  res.json({ message: "Produto removido!" });
 });
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

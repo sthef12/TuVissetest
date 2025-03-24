@@ -1,8 +1,7 @@
 let categorias = [];
 
 async function carregarProdutos() {
-  console.log("carregarProdutos");
-  const res = await fetch("http://localhost:3000/produtos");
+  const res = await fetch("../banco/produtos.json");
   const produtos = await res.json();
   const produtosPorCategoria = produtos.reduce((acc, produto) => {
     if (!acc[produto.categoria]) {
@@ -165,7 +164,7 @@ async function adicionarProduto() {
   );
 
   const token = localStorage.getItem("token");
-  await fetch("http://localhost:3000/produtos", {
+  await fetch("../banco/produtos.json", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,

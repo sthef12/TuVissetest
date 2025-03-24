@@ -5,6 +5,7 @@ let produtos = [];
 
 inputBusca.oninput = () => {
   let value = inputBusca.value.toLowerCase();
+  divBuscado.style.display = value ? "block" : "none";
   divBuscado.innerHTML = "";
   produtos
     .filter((produto) => produto.nome.toLowerCase().includes(value))
