@@ -1,3 +1,44 @@
+async function carregarCategorias() {
+  try {
+    const produtos = await fetch("../banco/produtos.json");
+    const produtosJson = await produtos.json();
+
+    const categorias = {};
+
+    produtosJson.forEach(produto => {
+      if (!categorias[produto.categoria]) {
+        categorias[produto.categoria] = new Set();
+      }
+      categorias[produto.categoria].add(produto.subcategoria);
+    });
+
+    const corpoCategorias = document.getElementById("corpo_categorias");
+    corpoCategorias.innerHTML = ""; // Limpa o conteúdo existente
+
+    const menuL = document.createElement("div");
+    menuL.className = "menuL";
+    menuL.innerHTML = "<h1>Categorias</h1>";
+
+    Object.keys(categorias).forEach(categoria => {
+      const details = document.createElement("details");
+      details.className = "links-categoria";
+      details.innerHTML = `<summary>${categoria}</summary>`;
+
+      categorias[categoria].forEach(subcategoria => {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#" class="sub_itens">${subcategoria}</a>`;
+        details.appendChild(li);
+      });
+
+      menuL.appendChild(details);
+    });
+
+    corpoCategorias.appendChild(menuL);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function carregarProdutos() {
   try {
     const produtos = await fetch("../banco/produtos.json");
@@ -41,4 +82,7 @@ function openMenu() {
   }
 }
 
-window.onload = carregarProdutos;
+window.onload = () => {
+  carregarProdutos();
+  carregarCategorias();
+};

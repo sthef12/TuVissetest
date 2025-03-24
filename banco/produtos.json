@@ -147,5 +147,77 @@
     ],
     "subcategoria": "Personalizado",
     "imagem_medidas": "undefined"
+  },
+  {
+    "nome": "Caneca de plástico",
+    "composicao": "Plástico",
+    "descricao": "Caneca de plástico",
+    "preco": 100,
+    "estoque": 100,
+    "tamanhos": [
+      "Único"
+    ],
+    "medidas": [
+      {
+        "tamanho": "Único",
+        "medida": "único"
+      }
+    ],
+    "categoria": "Canecas",
+    "subcategoria": "Pronto",
+    "cores": [
+      "Branca"
+    ],
+    "id": 3,
+    "imagem": "../img/produtos_imagens/caneca_de_plástico/1742824431245.png",
+    "medidasimagem": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png",
+    "imagens_cores": [
+      {
+        "cor": "Captura de tela 2023-09-05 113038",
+        "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431250.png"
+      },
+      {
+        "cor": "Captura de tela 2023-10-20 214343",
+        "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431256.png"
+      }
+    ]
+  },
+  {
+    "nome": "Boné ",
+    "composicao": "100% Algodão",
+    "descricao": "Boné bordado",
+    "preco": 100,
+    "estoque": 100,
+    "tamanhos": [
+      "Único"
+    ],
+    "medidas": [
+      {
+        "tamanho": "Único",
+        "medida": "único"
+      }
+    ],
+    "categoria": "Bordado",
+    "subcategoria": "Personalizado",
+    "cores": [
+      "Branco"
+    ],
+    "id": 4,
+    "imagem": "../img/produtos_imagens/boné_/1742825938339.png",
+    "medidasimagem": "../img/produtos_imagens/boné_/1742825938344.png",
+    "imagens_cores": [
+      {
+        "cor": "Captura de tela 2024-06-27 125225",
+        "caminho": "../img/produtos_imagens/boné_/1742825938346.png"
+      },
+      {
+        "cor": "Captura de tela 2024-07-22 124831",
+        "caminho": "../img/produtos_imagens/boné_/1742825938347.png"
+      },
+      {
+        "cor": "Captura de tela 2024-09-30 103012",
+        "caminho": "../img/produtos_imagens/boné_/1742825938350.png"
+      }
+    ]
   }
 ]

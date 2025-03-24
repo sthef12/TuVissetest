@@ -18,12 +18,12 @@
   <!-- header -->
   <header>
     <div class="header_main">
-      
       <img src="img/logo-sem-fundo.png" alt="Logo do site" />
       <div class="barra-de-pesquisa">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" placeholder="Pesquisar" />
+        <input type="text" placeholder="Pesquisar" id="input-busca"/>
       </div>
+      <div class="buscado"></div>
       <div onclick="window.location.href='carrinho.html'" class="outros">
         <i class="fa-solid fa-cart-shopping"></i>
       </div>
@@ -46,12 +46,13 @@
               <span class="active"></span>
               <span></span>
               <span></span>
-            </div></div>
-            <div class="arrows">
-              <span><i class="fa-solid fa-arrow-left" id="arrow-left"></i></span>
-              <span><i class="fa-solid fa-arrow-right" id="arrow-right"></i></span>
             </div>
-          
+          </div>
+          <div class="arrows">
+            <span><i class="fa-solid fa-arrow-left" id="arrow-left"></i></span>
+            <span><i class="fa-solid fa-arrow-right" id="arrow-right"></i></span>
+          </div>
+
           <img src="img/banner.png" alt="Dog 1" class="img-normal" />
           <img src="img/banner2.png" alt="Dog 2" class="img-sepia" />
           <img src="img/banner3.png" alt="Dog 3" class="img-grayscale" />
@@ -60,57 +61,47 @@
     </section>
     <!-- menu/barra lateral -->
     <div class="corpo">
-      <section id="corpo_categorias">
-        <div class="menuL">
-          <h1>Categorias</h1>
-          <details class="links-categoria"><summary>Camisetas</summary>
-            <li><a href="./sobre.html" class="sub_itens">Modelos Personalizados</a></li>
-            <li><a href="#"class="sub_itens">Modelos prontos</a></li>
-          </details>
-          <details class="links-categoria"><summary>Canecas</summary>
-            <li><a href="#" class="sub_itens">Modelos Personalizados</a></li>
-            <li><a href="#"class="sub_itens">Modelos prontos</a></li>
-          </details>
-          <details class="links-categoria"><summary>Bordados</summary>
-            <li><a href="#" class="sub_itens">Modelos Personalizados</a></li>
-            <li><a href="#"class="sub_itens">Modelos prontos</a></li>
-          </details>
-        </div>
-      </section>
+      <section id="corpo_categorias"></section>
       <div class="content">
         <!-- produtos -->
         <section class="corpo_catalogo">
-        <div id="catalogo"></div>
+          <div id="catalogo"></div>
         </section>
-       <!-- galeria -->
+        <!-- galeria -->
         <section id="galeria">
-        <div class="galeria_container">
-          <div class="header_galeria">
-            <h2>Galeria</h2>
-          </div>
-          <div class="conteudo_galeria">
-            <div class="imgs_galeria">
-              <img class="img_galeria" src="img/galeria/caneca google.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/caneca pai e filho.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/melhor pai do mundo 1.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/melhor pai do mundo 2.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/militar.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/fronhas.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/bone.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/bone2.jpg" alt="img1">
-              <img class="img_galeria" src="img/galeria/camisa tipo polo.jpg" alt="img1">
+          <div class="galeria_container">
+            <div class="header_galeria">
+              <h2>Galeria</h2>
             </div>
-            <div class="videos_galeria">
-              <video autoplay muted loop class="video_galeria" src="img/galeria/SaveClip.App_AQO8HgADGbjP5xFoaY_44O2npTCg7PKL8BGpB9SyYFfGINH1wa0wnSytuAvHsvqvO_mUxevb5ajj6H1hbhwOrx1hRYh7sfmgMXWvPSY.mp4" alt="video"></video>
-              <video autoplay muted loop class="video_galeria" src="img/galeria/SaveClip.App_AQPdPdh9L1_PpoCuPkKdvoyp-5hD48-sPA4fNcpUOM-3-qcnxg0vmx0gOzv6WpkfNcqWiAfHTDnZEFbBWhv64WptUnzjbt_TQM7tSVI.mp4" alt="video"></video>
-              <video autoplay muted loop class="video_galeria" src="img/galeria/SaveClip.App_AQOsReE4K8vT-eqJ06FeIUu7P7R9fx4_gkQaMdvqAwJXA72wzoLTTTabkx3LSXkg7jy7AleBsX8iWshBTQLAYs-yuOzGcT8tRHFeCYk.mp4" alt="video"></video>
+            <div class="conteudo_galeria">
+              <div class="imgs_galeria">
+                <img class="img_galeria" src="img/galeria/caneca google.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/caneca pai e filho.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/melhor pai do mundo 1.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/melhor pai do mundo 2.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/militar.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/fronhas.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/bone.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/bone2.jpg" alt="img1">
+                <img class="img_galeria" src="img/galeria/camisa tipo polo.jpg" alt="img1">
+              </div>
+              <div class="videos_galeria">
+                <video autoplay muted loop class="video_galeria"
+                  src="img/galeria/SaveClip.App_AQO8HgADGbjP5xFoaY_44O2npTCg7PKL8BGpB9SyYFfGINH1wa0wnSytuAvHsvqvO_mUxevb5ajj6H1hbhwOrx1hRYh7sfmgMXWvPSY.mp4"
+                  alt="video"></video>
+                <video autoplay muted loop class="video_galeria"
+                  src="img/galeria/SaveClip.App_AQPdPdh9L1_PpoCuPkKdvoyp-5hD48-sPA4fNcpUOM-3-qcnxg0vmx0gOzv6WpkfNcqWiAfHTDnZEFbBWhv64WptUnzjbt_TQM7tSVI.mp4"
+                  alt="video"></video>
+                <video autoplay muted loop class="video_galeria"
+                  src="img/galeria/SaveClip.App_AQOsReE4K8vT-eqJ06FeIUu7P7R9fx4_gkQaMdvqAwJXA72wzoLTTTabkx3LSXkg7jy7AleBsX8iWshBTQLAYs-yuOzGcT8tRHFeCYk.mp4"
+                  alt="video"></video>
+              </div>
             </div>
           </div>
-        </div>
         </section>
       </div>
     </div>
-   
+
     <!-- botão whatsapp -->
     <div class="whats-container">
       <span class="whats_button">
@@ -143,7 +134,7 @@
           </a>
         </div>
         <div class="redesFooter">
-          <label >Nossas Redes Sociais</label>
+          <label>Nossas Redes Sociais</label>
           <div class="img_redes">
             <a href="#" class="redeLink"><i class="fa-brands fa-instagram"></i>
             </a>
@@ -158,7 +149,7 @@
     <div class="copyright">
       <span>
         <label for="">Tu Visse Personalização&nbsp;</label>
-        &copy;&nbsp;<label for="">Desenvolvido por&nbsp;</label><a href="#">@linkGit</a> &nbsp; 
+        &copy;&nbsp;<label for="">Desenvolvido por&nbsp;</label><a href="#">@linkGit</a> &nbsp;
       </span>
       All Rights Reserved.</label>
     </div>
@@ -166,6 +157,7 @@
   <!-- scripts -->
   <script src="script/carrossel.js"></script>
   <script src="script/script.js"></script>
+  <script src="script/header.js"></script>
 </body>
 
 </html>

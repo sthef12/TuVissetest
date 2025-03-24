@@ -110,6 +110,16 @@ async function carregarProdutos() {
 }
 
 async function adicionarProduto() {
+  const categoriaSelect = document.getElementById("categoria-select");
+  let categoria = categoriaSelect.value;
+  if (categoria === "nova") {
+    categoria = document.getElementById("nova-categoria").value;
+    if (!categorias.includes(categoria)) {
+      categorias.push(categoria);
+      atualizarCategorias();
+    }
+  }
+
   const formData = new FormData();
   formData.append("nome", document.getElementById("nome").value);
   formData.append("composicao", document.getElementById("composicao").value);
@@ -133,10 +143,7 @@ async function adicionarProduto() {
       .value.split(",")
       .map((m) => m.trim())
   );
-  formData.append(
-    "categoria",
-    document.getElementById("categoria-select").value
-  );
+  formData.append("categoria", categoria);
   formData.append(
     "subcategoria",
     document.getElementById("subcategoria-select").value
