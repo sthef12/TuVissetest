@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./css/header.css" />
   <link rel="stylesheet" href="./css/carrossel.css" />
   <link rel="stylesheet" href="./css/footer.css" />
-  <link rel="stylesheet" href="./css/telaProduto.css" />
+  <link rel="stylesheet" href="css/telaProduto.css">
 </head>
 
 <body>
@@ -93,11 +93,15 @@
             const produto_view = document.getElementById("produto_view");
             produto_view.innerHTML = `
             <div class="carrossel_img">
-              <div class="carrossel_view">
-                ${produto.imagens_cores.map(img => `<img class="imagem_view" src="${img.caminho}" alt="${img.cor}">`).join('')}
-              </div>
               <div class="imagem_principal">
-                <img src="${produto.imagem}" alt="${produto.nome}" />
+                <img id="imagem_principal" src="${produto.imagem}" alt="${produto.nome}" />
+              </div>
+              <div class="carrossel_container">
+                <button id="cima" class="seta" onclick="moverCarrossel(-1)">&#10095;</button>
+                <div class="carrossel_view" id="carrossel">
+                  ${produto.imagens_cores.map((img, i) => `<img class="imagem_view" src="${img.caminho}" alt="${img.cor}" onclick="selecionarImagem(${i})">`).join('')}
+                </div>
+                <button id="baixo" class="seta" onclick="moverCarrossel(1)">&#10095;</button>
               </div>
             </div>
             <div class="descricao">
@@ -113,9 +117,11 @@
               <div class="valor_button">
                 <h4>Valor:</h4>
                 <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
-                <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
-                <button onclick="window.location.href= 'index.html'">Continuar Comprando</button>
-              </div>
+                <div class="buttons">
+                  <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
+                  <button onclick="window.location.href= 'index.html'">Continuar Comprando</button>
+                </div>
+                </div>
             </div>`;
           } else {
             console.error("Produto não encontrado");
@@ -128,6 +134,34 @@
       }
     }
     window.onload = buscarProdutoPelaURL;
+
+    function selecionarImagem(index) {
+      const produtoId = new URLSearchParams(window.location.search).get('id');
+      fetch("../banco/produtos.json")
+        .then(response => response.json())
+        .then(produtosJson => {
+          const produto = produtosJson.find(p => p.id == produtoId);
+          if (produto) {
+            document.getElementById("imagem_principal").src = produto.imagens_cores[index].caminho;
+          }
+        })
+        .catch(error => console.error(error));
+    }
+
+    function moverCarrossel(direcao) {
+      if (window.innerWidth <= 767){
+       const carrossel = document.getElementById("carrossel");
+       const scrollAmount = 110;
+       carrossel.scrollLeft += direcao * scrollAmount;
+      }
+
+      else{
+        const carrossel = document.getElementById("carrossel");
+        const scrollAmount = 110;
+        carrossel.scrollTop += direcao * scrollAmount;
+      }
+    }
+
 
     const addCarrinho = (produtoId) => {
       const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
