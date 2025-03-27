@@ -20,75 +20,82 @@
             <div class="titulo">
                 <h1>Administração da Loja</h1>
             </div>
-            <img src="../img/logo-sem-fundo.png" alt="Logo do site" onclick="window.location.href='../index.html'"/>
-          <div class="menu_header">
-            <span>
-              <i class="fa-solid fa-bars" onclick="openMenu()"></i>
-            </span>
-          </div>
+            <img src="../img/logo-sem-fundo.png" alt="Logo do site" onclick="window.location.href='../index.html'" />
+            <div class="menu_header">
+                <span>
+                    <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+                </span>
+            </div>
         </div>
         </div>
-      </header>
-      <main>
-          <div class="opcoes-container">
-              <div class="opcoes">
-                  <div class="nome_descricao">
-                      <h2>Nome e descrições</h2>
-                      <input type="text" id="nome" placeholder="Nome do Produto" title="Nome do Produto">
-                      <input type="text" id="composicao" placeholder="Composição do Produto"
-                          title="Composição do Produto (ex: 100% algodão)">
-                      <input type="text" id="descricao" placeholder="Descrição do Produto"
-                          title="Descrição resumida do produto">
-                      <select id="categoria-select" onchange="verificarCategoria()" title="Selecionar a categoria do produto">
-                          <option value="">Selecione uma categoria</option>
-                          <option value="nova">Adicionar uma nova categoria</option>
-                      </select>
-                      <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;">
-                      <select id="subcategoria-select" title="Selecionar a subcategoria do produto">
-                          <option value="Pronto">Produto Pronto</option>
-                          <option value="Personalizado">Personalizado</option>
-                      </select>
-                  </div>
-      
-                  <div class="imagens_cores">
-                      <h2>Imagens e Cores</h2>
-                      <div class="anexar_imagem_padrao">
-                          <label for="file">Imagem Principal do Produto</label>
-                          <input type="file" id="imagem" placeholder="Imagem Principal do Produto" accept=".jpg, .jpeg, .png"
-                              required title="Fazer upload da imagem principal do produto">
-                      </div>
-                      <input type="text" id="cores" placeholder="Cores do Produto (ex: Preto, Branco, Azul)"
-                          title="Cores disponíveis do produto">
-                      <div class="anexar_imagens_cores">
-                          <label for="file">Imagens das demais cores</label>
-                          <input type="file" id="imagens_cores" placeholder="Imagens das demais cores"
-                              accept=".jpg, .jpeg, .png" multiple
-                              title="Fazer upload das imagens das demais cores do produto">
-                      </div>
-                  </div>
-                  <div class="numeros_medidas">
-                      <h2>Números e Medidas</h2>
-                      <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
-                          title="Tamanhos disponíveis do produto">
-                      <input type="text" id="medidas" placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)"
-                          title="Medidas dos tamanhos disponíveis">
-                      <div class="anexar_imagem_medidas">
-                          <label for="file">Imagem das medidas</label>
-                          <input type="file" id="imagem_medidas" placeholder="Imagem das medidas" accept=".jpg, .jpeg, .png"
-                              title="Fazer upload da imagem das medidas do produto">
-                      </div>
-                      <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
-                      <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
-                  </div>
-              </div>
-              <div class="opcoes-botoes">
-                  <button id="adicionar-btn" onclick="adicionarProduto()">Adicionar Produto</button>
-                  <button id="atualizar-btn" onclick="atualizarProduto()" style="display: none;">Atualizar Produto</button>
-                  <button id="voltar-btn" onclick="voltarProduto()" style="display: none;">Voltar</button>
-              </div>
-              <div id="lista-produtos"></div>
-          </div>
-      </main>
+    </header>
+    <main>
+        <div class="opcoes-container">
+            <div class="opcoes">
+                <div class="nome_descricao">
+                    <h2>Nome e descrições</h2>
+                    <input type="text" id="nome" placeholder="Nome do Produto" title="Nome do Produto">
+                    <input type="text" id="composicao" placeholder="Composição do Produto"
+                        title="Composição do Produto (ex: 100% algodão)">
+                    <input type="text" id="descricao" placeholder="Descrição do Produto"
+                        title="Descrição resumida do produto">
+                    <select id="categoria-select" onchange="verificarCategoria()"
+                        title="Selecionar a categoria do produto">
+                        <option value="">Selecione uma categoria</option>
+                        <option value="nova">Adicionar uma nova categoria</option>
+                    </select>
+                    <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;">
+                    <select id="subcategoria-select" title="Selecionar a subcategoria do produto">
+                        <option value="Pronto">Produto Pronto</option>
+                        <option value="Personalizado">Personalizado</option>
+                    </select>
+                </div>
+
+                <div class="imagens_cores">
+                    <h2>Imagens e Cores</h2>
+                    <div id="cores-container">
+                        <button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>
+                    </div>
+                    <div class="anexar_imagem_padrao">
+                        <label for="file">Imagem Principal do Produto</label>
+                        <input type="file" id="imagem" placeholder="Imagem Principal do Produto"
+                            accept=".jpg, .jpeg, .png" required title="Fazer upload da imagem principal do produto">
+                    </div>
+                    <!--<input type="text" id="cores" placeholder="Cores do Produto (ex: Preto, Branco, Azul)"
+                        title="Cores disponíveis do produto">
+                         -->
+                    <!-- <div class="anexar_imagens_cores">
+                        <label for="file">Imagens das demais cores</label>
+                        <input type="file" id="imagens_cores" placeholder="Imagens das demais cores"
+                            accept=".jpg, .jpeg, .png" multiple
+                            title="Fazer upload das imagens das demais cores do produto">
+                    </div> -->
+                </div>
+                <div class="numeros_medidas">
+                    <h2>Números e Medidas</h2>
+                    <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
+                        title="Tamanhos disponíveis do produto">
+                    <input type="text" id="medidas"
+                        placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)"
+                        title="Medidas dos tamanhos disponíveis">
+                    <div class="anexar_imagem_medidas">
+                        <label for="file">Imagem das medidas</label>
+                        <input type="file" id="imagem_medidas" placeholder="Imagem das medidas"
+                            accept=".jpg, .jpeg, .png" title="Fazer upload da imagem das medidas do produto">
+                    </div>
+                    <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
+                    <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
+                </div>
+            </div>
+            <div class="opcoes-botoes">
+                <button id="adicionar-btn" onclick="adicionarProduto()">Adicionar Produto</button>
+                <button id="atualizar-btn" onclick="atualizarProduto()" style="display: none;">Atualizar
+                    Produto</button>
+                <button id="voltar-btn" onclick="voltarProduto()" style="display: none;">Voltar</button>
+            </div>
+            <div id="lista-produtos"></div>
+        </div>
+    </main>
     <script src="../script/admin.js"></script>
 </body>
 

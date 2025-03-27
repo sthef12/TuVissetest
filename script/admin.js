@@ -1,4 +1,5 @@
 let categorias = [];
+let cores = [];
 
 async function carregarProdutos() {
   const res = await fetch("../banco/produtos.json");
@@ -21,83 +22,98 @@ async function carregarProdutos() {
     categoriaDiv.innerHTML = `<h2>${categoria}</h2>`;
     const tabela = document.createElement("table");
     tabela.innerHTML = `
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Composição</th>
-                            <th>Descrição</th>
-                            <th>Subcategoria</th>
-                            <th>Imagem Principal</th>
-                            <th>Cores</th>
-                            <th>Tamanhos</th>
-                            <th>Medidas</th>
-                            <th>Imagem Medidas</th>
-                            <th>Estoque</th>
-                            <th>Preço</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${produtosPorCategoria[categoria]
-                          .map(
-                            (produto) => `
-                            <tr>
-                                <td>${produto.id}</td>
-                                <td>${produto.nome}</td>
-                                <td>${produto.composicao}</td>
-                                <td>${produto.descricao}</td>
-                                <td>${produto.subcategoria}</td>
-                                <td><img src="${produto.imagem}" alt="${
-                              produto.nome
-                            }" width="50"></td>
-                                <td>${produto.cores.join(
-                                  ", "
-                                )}<br>${produto.imagens_cores
-                              .map(
-                                (img) =>
-                                  `<img src="${img.caminho}" alt="${img.cor}" width="30">`
-                              )
-                              .join(" ")}</td>
-                                <td>${produto.tamanhos.join(", ")}</td>
-                                <td>${produto.medidas
-                                  .map((m) => `${m.tamanho}: ${m.medida}`)
-                                  .join(", ")}</td>
-                                <td><img src="${
-                                  produto.medidasimagem
-                                }" alt="Medidas" width="50"></td>
-                                <td>${produto.estoque}</td>
-                                <td>${
-                                  produto.preco
-                                    ? `R$ ${produto.preco.toFixed(2)}`
-                                    : "N/A"
-                                }</td>
-                                <td>
-                                    <button onclick="editarProduto(${
-                                      produto.id
-                                    }, '${produto.nome}', '${
-                              produto.composicao
-                            }', '${produto.descricao}','${
-                              produto.subcategoria
-                            }', ${produto.estoque}, '${produto.tamanhos.join(
-                              ", "
-                            )}', '${produto.medidas
-                              .map((m) => `${m.tamanho}: ${m.medida}`)
-                              .join(", ")}', '${
-                              produto.categoria
-                            }', '${produto.cores.join(", ")}', ${
-                              produto.preco
-                            })">Editar</button>
-                                    <button onclick="removerProduto(${
-                                      produto.id
-                                    })">Excluir</button>
-                                </td>
-                            </tr>
-                        `
-                          )
-                          .join("")}
-                    </tbody>
-                `;
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Composição</th>
+          <th>Descrição</th>
+          <th>Subcategoria</th>
+          <th>Imagem Principal</th>
+          <th>Cores</th>
+          <th>Tamanhos</th>
+          <th>Medidas</th>
+          <th>Imagem Medidas</th>
+          <th>Estoque</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${produtosPorCategoria[categoria]
+          .map(
+            (produto) => `
+            <tr>
+              <td>${produto.id}</td>
+              <td>${produto.nome}</td>
+              <td>${produto.composicao}</td>
+              <td>${produto.descricao}</td>
+              <td>${produto.subcategoria}</td>
+              <td><img src="${produto.imagem}" alt="${
+              produto.nome
+            }" width="50"></td>
+              <td>
+                ${produto.cores
+                  .map(
+                    (cor) => `
+                    <div>
+                      <p><strong>Código da cor:</strong> ${
+                        cor.codigoCor ? cor.codigoCor : "N/A"
+                      }</p>
+                      <p><strong>Nome da cor:</strong> ${
+                        cor.nomeCor ? cor.nomeCor : "N/A"
+                      }</p>
+                      ${
+                        cor.imagemFrente
+                          ? `<img src="${cor.imagemFrente}" alt="Frente" width="30">`
+                          : ""
+                      }
+                      ${
+                        cor.imagemVerso
+                          ? `<img src="${cor.imagemVerso}" alt="Verso" width="30">`
+                          : ""
+                      }
+                    </div>
+                  `
+                  )
+                  .join("")}
+              </td>
+              <td>${produto.tamanhos.join(", ")}</td>
+              <td>${produto.medidas
+                .map((m) => `${m.tamanho}: ${m.medida}`)
+                .join(", ")}</td>
+              <td><img src="${
+                produto.medidasimagem
+              }" alt="Medidas" width="50"></td>
+              <td>${produto.estoque}</td>
+              <td>${
+                produto.preco ? `R$ ${produto.preco.toFixed(2)}` : "N/A"
+              }</td>
+              <td>
+                <button onclick="editarProduto(
+                  ${produto.id},
+                  '${produto.nome}',
+                  '${produto.composicao}',
+                  '${produto.descricao}',
+                  '${produto.subcategoria}',
+                  ${produto.estoque},
+                  '${produto.tamanhos.join(", ")}',
+                  '${produto.medidas
+                    .map((m) => `${m.tamanho}: ${m.medida}`)
+                    .join(", ")}',
+                  '${produto.categoria}',
+                  ${produto.preco},
+                  '${produto.cores[0]?.codigo || ""}',
+                  '${produto.cores[0]?.nome || ""}'
+                )">Editar</button>
+                <button onclick="removerProduto(${produto.id})">Excluir</button>
+              </td>
+            </tr>
+          `
+          )
+          .join("")}
+      </tbody>
+    `;
     categoriaDiv.style.display = "flex";
     categoriaDiv.style.flexDirection = "column";
     categoriaDiv.style.alignItems = "center";
@@ -106,6 +122,30 @@ async function carregarProdutos() {
     categoriaDiv.appendChild(tabela);
     container.appendChild(categoriaDiv);
   }
+}
+
+function adicionarCor() {
+  const coresContainer = document.getElementById("cores-container");
+
+  const corDiv = document.createElement("div");
+  corDiv.className = "cor-item";
+
+  corDiv.innerHTML = `
+    <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" id="codigo-cor"/>
+    <input type="text" placeholder="Nome da Cor (ex: Branco)" id="nome-cor" />
+    <label>Imagem Frente (opcional):</label>
+    <input type="file" id="imagem-frente" accept=".jpg, .jpeg, .png" />
+    <label>Imagem Verso (opcional):</label>
+    <input type="file" id="imagem-verso" accept=".jpg, .jpeg, .png" />
+    <button type="button" onclick="removerCor(this)">Remover</button>
+  `;
+
+  coresContainer.appendChild(corDiv);
+}
+
+function removerCor(button) {
+  const corDiv = button.parentElement;
+  corDiv.remove();
 }
 
 async function adicionarProduto() {
@@ -118,6 +158,18 @@ async function adicionarProduto() {
       atualizarCategorias();
     }
   }
+
+  const coresLista = document.querySelectorAll(".cor-item");
+  cores = Array.from(coresLista).map((corItem) => {
+    const codigo = corItem.getElementById(".codigo-cor").value;
+    const nome = corItem.getElementById(".nome-cor").value;
+    const imagemFrente =
+      corItem.getElementById(".imagem-frente").files[0] || null;
+    const imagemVerso =
+      corItem.getElementById(".imagem-verso").files[0] || null;
+
+    return { codigo, nome, imagemFrente, imagemVerso };
+  });
 
   const formData = new FormData();
   formData.append("nome", document.getElementById("nome").value);
@@ -148,23 +200,20 @@ async function adicionarProduto() {
     document.getElementById("subcategoria-select").value
   );
   formData.append("imagem", document.getElementById("imagem").files[0]);
-  formData.append(
-    "imagem_medidas",
-    document.getElementById("imagem_medidas").files[0]
-  );
-  Array.from(document.getElementById("imagens_cores").files).forEach((file) => {
-    formData.append("imagens_cores", file);
+
+  cores.forEach((cor, index) => {
+    formData.append(`cores[${index}][codigo]`, cor.codigo);
+    formData.append(`cores[${index}][nome]`, cor.nome);
+    if (cor.imagemFrente) {
+      formData.append(`cores[${index}][imagemFrente]`, cor.imagemFrente);
+    }
+    if (cor.imagemVerso) {
+      formData.append(`cores[${index}][imagemVerso]`, cor.imagemVerso);
+    }
   });
-  formData.append(
-    "cores",
-    document
-      .getElementById("cores")
-      .value.split(",")
-      .map((c) => c.trim())
-  );
 
   const token = localStorage.getItem("token");
-  await fetch("../banco/produtos.json", {
+  await fetch("http://localhost:3000/produtos", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -221,9 +270,11 @@ function editarProduto(
   tamanhos,
   medidas,
   categoria,
-  cores,
-  preco
+  preco,
+  codigoCor,
+  nomeCor
 ) {
+  window.scrollTo({ top: 0, behavior: "smooth" });
   document.getElementById("nome").value = nome;
   document.getElementById("composicao").value = composicao;
   document.getElementById("descricao").value = descricao;
@@ -231,7 +282,8 @@ function editarProduto(
   document.getElementById("estoque").value = estoque;
   document.getElementById("tamanhos").value = tamanhos;
   document.getElementById("medidas").value = medidas;
-  document.getElementById("cores").value = cores;
+  document.getElementById("codigoCor").value = codigoCor;
+  document.getElementById("nomeCor").value = nomeCor;
   document.getElementById("subcategoria-select").value = subcategoria;
   document.getElementById("categoria-select").value = categoria;
   document.getElementById("nova-categoria").value = "";
@@ -240,7 +292,6 @@ function editarProduto(
   document.getElementById("atualizar-btn").style.display = "inline-block";
   console.log(document.getElementById("atualizar-btn").style.display);
   document.getElementById("voltar-btn").style.display = "inline-block";
-  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 async function atualizarProduto() {
@@ -308,7 +359,8 @@ async function atualizarProduto() {
   document.getElementById("estoque").value = "";
   document.getElementById("tamanhos").value = "";
   document.getElementById("medidas").value = "";
-  document.getElementById("cores").value = "";
+  document.getElementById("codigoCor").value = "";
+  document.getElementById("nomeCor").value = "";
   document.getElementById("subcategoria-select").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("nova-categoria").value = "";
@@ -325,7 +377,8 @@ function voltarProduto() {
   document.getElementById("estoque").value = "";
   document.getElementById("tamanhos").value = "";
   document.getElementById("medidas").value = "";
-  document.getElementById("cores").value = "";
+  document.getElementById("codigoCor").value = "";
+  document.getElementById("nomeCor").value = "";
   document.getElementById("subcategoria-select").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("nova-categoria").value = "";

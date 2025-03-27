@@ -6,43 +6,29 @@
     "categoria": "Camisas",
     "composicao": "50% poliéster e 50% algodão",
     "cores": [
-      "Branco",
-      "Preto",
-      "Azul royal",
-      "Azul escuro"
-    ],
-    "imagens_cores": [
       {
-        "cor": "preta_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623273.jpg"
+        "codigo": "#FFFFFF",
+        "nome": "Branco",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/branco_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/branco_verso.jpg"
       },
       {
-        "cor": "azul_claro_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623275.jpg"
+        "codigo": "#000000",
+        "nome": "Preto",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/preto_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/preto_verso.jpg"
       },
       {
-        "cor": "azul_claro_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623278.jpg"
+        "codigo": "#4169E1",
+        "nome": "Azul royal",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_verso.jpg"
       },
       {
-        "cor": "azul_escura_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623281.jpg"
-      },
-      {
-        "cor": "azul_escuro_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623283.jpg"
-      },
-      {
-        "cor": "branca_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623285.jpg"
-      },
-      {
-        "cor": "branca_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623287.jpg"
-      },
-      {
-        "cor": "preta_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_tipo_polo/1742407623288.jpg"
+        "codigo": "#000080",
+        "nome": "Azul marinho",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_verso.jpg"
       }
     ],
     "tamanhos": [
@@ -107,46 +93,35 @@
     ],
     "categoria": "Camisas",
     "cores": [
-      "Preto",
-      "Branco",
-      "Azul escuro",
-      "Azul claro"
+      {
+        "codigo": "#FFFFFF",
+        "nome": "Branco",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/branco_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/branco_verso.jpg"
+      },
+      {
+        "codigo": "#000000",
+        "nome": "Preto",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/preto_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/preto_verso.jpg"
+      },
+      {
+        "codigo": "#4169E1",
+        "nome": "Azul royal",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_verso.jpg"
+      },
+      {
+        "codigo": "#000080",
+        "nome": "Azul marinho",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_frente.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_verso.jpg"
+      }
     ],
     "id": 2,
     "imagem": "../img/produtos_imagens/camisa_básica/1742475432078.jpg",
     "medidasimagem": "../img/produtos_imagens/camisa_básica/1742404844158.jpg",
-    "imagens_cores": [
-      {
-        "cor": "azul_claro_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844161.jpg"
-      },
-      {
-        "cor": "branco_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844164.jpg"
-      },
-      {
-        "cor": "branco_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844166.jpg"
-      },
-      {
-        "cor": "preto_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844169.jpg"
-      },
-      {
-        "cor": "azul_claro_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844172.jpg"
-      },
-      {
-        "cor": "azul_escuro_COSTAS",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844174.jpg"
-      },
-      {
-        "cor": "azul_escuro_FRENTE",
-        "caminho": "../img/produtos_imagens/camisa_básica/1742404844175.jpg"
-      }
-    ],
-    "subcategoria": "Personalizado",
-    "imagem_medidas": "undefined"
+    "subcategoria": "Personalizado"
   },
   {
     "nome": "Caneca de plástico",
