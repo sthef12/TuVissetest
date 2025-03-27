@@ -149,10 +149,10 @@
     "imagem_medidas": "undefined"
   },
   {
-    "nome": "Caneca de plástico",
-    "composicao": "Plástico",
-    "descricao": "Caneca de plástico",
-    "preco": 100,
+    "nome": "Caneca dia dos pais",
+    "composicao": "ceramica",
+    "descricao": "Canecas prontas",
+    "preco": 30,
     "estoque": 100,
     "tamanhos": [
       "Único"
@@ -169,17 +169,18 @@
       "Branca"
     ],
     "id": 3,
-    "imagem": "../img/produtos_imagens/caneca_de_plástico/1742824431245.png",
+    "imagem": "../img/produtos_imagens/caneca_dia_dos_pais/1743082313435.jpg",
     "medidasimagem": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png",
     "imagens_cores": [
       {
-        "cor": "Captura de tela 2023-09-05 113038",
-        "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431250.png"
+        "cor": "caneca google",
+        "caminho": "../img/produtos_imagens/caneca_dia_dos_pais/1743082276267.jpg"
       },
       {
-        "cor": "Captura de tela 2023-10-20 214343",
-        "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431256.png"
+        "cor": "caneca google2",
+        "caminho": "../img/produtos_imagens/caneca_dia_dos_pais/1743082276274.jpg"
       }
-    ]
+    ],
+    "imagem_medidas": "undefined"
   }
 ]
