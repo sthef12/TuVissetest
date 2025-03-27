@@ -48,21 +48,18 @@ async function carregarProdutos() {
       const catalogo = document.getElementById("catalogo");
       catalogo.innerHTML = "";
 
-      // Embaralha os produtos
-      const produtosEmbaralhados = produtosJson.sort(() => Math.random() - 0.5);
-
-      for (const produto of produtosEmbaralhados) {
-        catalogo.innerHTML += `
-          <a href="telaProduto.html?id=${produto.id}">
-            <div class="produtos">
-              <img src="${produto.imagem}" alt="${produto.nome}" />
-              <div class="nome_preco_produto">
-                <h1>${produto.nome}</h1>
-                <h2>R$ ${produto.preco.toFixed(2)}</h2>
-              </div>
-              <button>Comprar</button>
-            </div>
-          </a>`;
+      for (const produto of produtosJson) {
+      catalogo.innerHTML += `
+        <a href="telaProduto.html?id=${produto.id}">
+        <div class="produtos">
+          <img src="${produto.imagem}" alt="${produto.nome}" />
+          <div class="nome_preco_produto">
+          <h1>${produto.nome}</h1>
+          <h2>R$ ${produto.preco.toFixed(2)}</h2>
+          </div>
+          <button>Comprar</button>
+        </div>
+        </a>`;
       }
     }
   } catch (error) {
