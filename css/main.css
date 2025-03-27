@@ -63,6 +63,21 @@ main {
   max-height: 10rem;
   max-width: 20rem;
 }
+
+.cores {
+  display: flex;
+  height: 1.5rem;
+  width: 5rem;
+  gap: 5px;
+}
+
+.cor_produto {
+  background-color: aqua;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
 .produtos button {
   color: var(--lab2-color);
   font-size: larger;

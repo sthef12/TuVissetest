@@ -95,6 +95,20 @@
     overflow: hidden;
 }
 
+.cores {
+  display: flex;
+  height: 1.5rem;
+  width: 5rem;
+  gap: 5px;
+}
+  
+.cor_produto {
+  background-color: aqua;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
 .valor_button {
     display: flex;
     flex-direction: column;

@@ -55,6 +55,11 @@ async function carregarProdutos() {
           <img src="${produto.imagem}" alt="${produto.nome}" />
           <div class="nome_preco_produto">
           <h1>${produto.nome}</h1>
+          <div class="cores">
+            <span class="cor_produto"></span>
+            <span class="cor_produto"></span>
+            <span class="cor_produto"></span>
+          </div>
           <h2>R$ ${produto.preco.toFixed(2)}</h2>
           </div>
           <button>Comprar</button>
