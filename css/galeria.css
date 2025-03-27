@@ -37,10 +37,12 @@
     width: 20vw;
     height: 40vh;
     background-color: rgba(217, 217, 217, 0.8);
+    cursor: pointer;
 }
 
-.conteudo_galeria .video_galeria {
+.video_galeria {
     width: 20vw;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.8);
+    cursor: pointer;
 }
