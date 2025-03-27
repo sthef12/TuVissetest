@@ -15,22 +15,25 @@
 </head>
 <body>
   <header>
-      <div class="header_main">
-          <div class="menu_header">
-            <span>
-              <i class="fa-solid fa-bars" onclick="openMenu()"></i>
-            </span>
-          </div>
-            <img src="img/logo-sem-fundo.png" alt="Logo do site" />
-            <div class="barra-de-pesquisa">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" placeholder="Pesquisar" />
-            </div>
-            <div class="outros">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
+    <div class="header_main">
+      <img src="img/logo-sem-fundo.png" alt="Logo do site" onclick="window.location.href='index.html'"/>
+      <div class="barra-de-pesquisa-container">
+        <div class="barra-de-pesquisa">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Pesquisar" id="input-busca"/>
         </div>
+        <div class="buscado"></div>
+      </div>
+      <div onclick="window.location.href='carrinho.html'" class="outros">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <div class="menu_header">
+        <span>
+          <i class="fa-solid fa-bars" onclick="openMenu()"></i>
+        </span>
+      </div>
+    </div>
+    </div>
   </header>
   <main>
       <div class="container_sobre">
@@ -112,5 +115,6 @@
       All Rights Reserved.</label>
     </div>
   </footer>
+  <script src="script/header.js"></script>
 </body>
 </html>
