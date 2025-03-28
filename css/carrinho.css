@@ -35,7 +35,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 .itens_list tr {
@@ -58,7 +58,7 @@
     gap: 3px;
 }
 
-.produto img{
+.produto img {
     width: 50px;
     height: 50px;
 }
@@ -103,17 +103,21 @@
     #itens_container {
         width: 100%;
     }
-    .nome_carrinho{
+
+    .nome_carrinho {
         padding-left: 0;
         text-align: center;
     }
+
     .cont {
         flex-direction: column;
     }
+
     .buttons {
         flex-direction: column;
         gap: 10px;
     }
+
     .button {
         width: 45vw;
     }

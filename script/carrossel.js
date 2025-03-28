@@ -1,18 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const images = document.querySelectorAll('.carrossel img');
-  const indicators = document.querySelectorAll('.indicador span');
+document.addEventListener("DOMContentLoaded", () => {
+  const images = document.querySelectorAll(".carrossel img");
+  const indicators = document.querySelectorAll(".indicador span");
   let currentIndex = 0;
 
   const showImage = (index) => {
     images.forEach((img, i) => {
-      img.style.display = i === index ? 'block' : 'none';
+      img.style.display = i === index ? "block" : "none";
     });
     updateIndicators(index);
   };
 
   const updateIndicators = (index) => {
     indicators.forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === index);
+      indicator.classList.toggle("active", i === index);
     });
   };
 
@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showImage(currentIndex);
   };
 
-  document.getElementById('arrow-right').addEventListener('click', nextImage);
+  document.getElementById("arrow-right").addEventListener("click", nextImage);
 
-  document.getElementById('arrow-left').addEventListener('click', () => {
+  document.getElementById("arrow-left").addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
     showImage(currentIndex);
   });

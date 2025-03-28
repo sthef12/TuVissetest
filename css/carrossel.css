@@ -1,69 +1,80 @@
 @import url(./variaveis.css);
 
 .carrossel__container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
-  .carrossel {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 200px;
-    width: 100%;
-  }
-  .indicador_container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    top: 90%;
-  }
-  .indicador {
-    display: flex;
-    gap: 10px;
-    position: absolute;
-  }
-  .indicador span {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: var(--lab3-color);
-    border-radius: 50%;
-    margin: 0 5px;
-  }
-  .indicador span.active {
-    background-color: var(--lab4-color);
-  }
-  .arrows {
-    position: relative;
-    cursor: pointer;
-  }
-  .fa-arrow-left,
-  .fa-arrow-right {
-    color: var(--lab2-color);
-    position: absolute;
-    top: 12vh;
-  }
-  .fa-arrow-left {
-    right: 45vw;
-  }
-  .fa-arrow-right {
-    left: 45vw;
-  }
-  .carrossel__container img {
-    width: 100%;
-    height: 100%;
-  }
-  .img-normal {
-    z-index: -1;
-  }
-  
-  .img-sepia,
-  .img-grayscale {
-    display: none;
-    z-index: -1;
-  }
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.carrossel {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+}
+
+.indicador_container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 90%;
+}
+
+.indicador {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+}
+
+.indicador span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--lab3-color);
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.indicador span.active {
+  background-color: var(--lab4-color);
+}
+
+.arrows {
+  position: relative;
+  cursor: pointer;
+}
+
+.fa-arrow-left,
+.fa-arrow-right {
+  color: var(--lab2-color);
+  position: absolute;
+  top: 12vh;
+}
+
+.fa-arrow-left {
+  right: 45vw;
+}
+
+.fa-arrow-right {
+  left: 45vw;
+}
+
+.carrossel__container img {
+  width: 100%;
+  height: 100%;
+}
+
+.img-1 {
+  z-index: -1;
+}
+
+.img-2,
+.img-3 {
+  display: none;
+  z-index: -1;
+}
 
 
 /*

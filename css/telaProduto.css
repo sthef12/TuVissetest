@@ -12,12 +12,18 @@
     font-size: 20px;
     background: none;
     border: none;
-} 
-#cima{ transform: rotate(270deg);}
-#baixo{transform: rotate(90deg);}
+}
+
+#cima {
+    transform: rotate(270deg);
+}
+
+#baixo {
+    transform: rotate(90deg);
+}
 
 
- 
+
 #produto_view {
     display: flex;
     align-items: center;
@@ -96,17 +102,17 @@
 }
 
 .cores {
-  display: flex;
-  height: 1.5rem;
-  width: 5rem;
-  gap: 5px;
+    display: flex;
+    height: 1.5rem;
+    width: 5rem;
+    gap: 5px;
 }
-  
+
 .cor_produto {
-  background-color: aqua;
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
+    background-color: aqua;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
 }
 
 .valor_button {
@@ -118,10 +124,10 @@
     height: 40%;
 }
 
-.buttons{
+.buttons {
     display: flex;
     flex-direction: column;
-    
+
     width: 100%;
     gap: 10px;
 }
@@ -146,27 +152,42 @@
         padding: 20px;
         align-items: center;
     }
+
     .carrossel_img {
         flex-direction: column;
         align-items: center;
     }
-    .carrossel_container {display: flex; flex-direction: row;}
-    .carrossel_view{
+
+    .carrossel_container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .carrossel_view {
         align-items: center;
         flex-direction: row;
         height: 26vh;
         width: 100%;
     }
+
     .imagem_principal {
         height: 50vh;
         width: 70vw;
     }
+
     .imagem_principal img {
         width: 70%;
     }
+
     .descricao {
         width: 100%;
     }
-    #cima{ transform: rotate(180deg);}
-    #baixo{transform: rotate(0deg);}
+
+    #cima {
+        transform: rotate(180deg);
+    }
+
+    #baixo {
+        transform: rotate(0deg);
+    }
 }
