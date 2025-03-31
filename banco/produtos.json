@@ -7,28 +7,28 @@
     "composicao": "50% poliéster e 50% algodão",
     "cores": [
       {
-        "codigo": "#FFFFFF",
-        "nome": "Branco",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/branco_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/branco_verso.jpg"
+        "codigoCor": "#FFFFFF",
+        "nomeCor": "Branco",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/1742407623287.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/1742407623285.jpg"
       },
       {
-        "codigo": "#000000",
-        "nome": "Preto",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/preto_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/preto_verso.jpg"
+        "codigoCor": "#000000",
+        "nomeCor": "Preto",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/1742407623273.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/1742407623288.jpg"
       },
       {
-        "codigo": "#4169E1",
-        "nome": "Azul royal",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_verso.jpg"
+        "codigoCor": "#4169E1",
+        "nomeCor": "Azul royal",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/1742407623278.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/1742407623275.jpg"
       },
       {
-        "codigo": "#000080",
-        "nome": "Azul marinho",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_verso.jpg"
+        "codigoCor": "#000080",
+        "nomeCor": "Azul marinho",
+        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/1742407623283.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/1742407623281.jpg"
       }
     ],
     "tamanhos": [
@@ -94,28 +94,28 @@
     "categoria": "Camisas",
     "cores": [
       {
-        "codigo": "#FFFFFF",
-        "nome": "Branco",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/branco_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/branco_verso.jpg"
+        "codigoCor": "#FFFFFF",
+        "nomeCor": "Branco",
+        "imagemFrente": "../img/produtos_imagens/camisa_básica/1742404844166.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_básica/1742395140888.jpg"
       },
       {
-        "codigo": "#000000",
-        "nome": "Preto",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/preto_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/preto_verso.jpg"
+        "codigoCor": "#000000",
+        "nomeCor": "Preto",
+        "imagemFrente": "../img/produtos_imagens/camisa_básica/1742475432078.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_básica/1742404844154.jpg"
       },
       {
-        "codigo": "#4169E1",
-        "nome": "Azul royal",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_royal_verso.jpg"
+        "codigoCor": "#4169E1",
+        "nomeCor": "Azul royal",
+        "imagemFrente": "../img/produtos_imagens/camisa_básica/1742404844161.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_básica/1742404844172.jpg"
       },
       {
-        "codigo": "#000080",
-        "nome": "Azul marinho",
-        "imagemFrente": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_frente.jpg",
-        "imagemVerso": "../img/produtos_imagens/camisa_tipo_polo/azul_marinho_verso.jpg"
+        "codigoCor": "#000080",
+        "nomeCor": "Azul marinho",
+        "imagemFrente": "../img/produtos_imagens/camisa_básica/1742404844175.jpg",
+        "imagemVerso": "../img/produtos_imagens/camisa_básica/1742404844174.jpg"
       }
     ],
     "id": 2,

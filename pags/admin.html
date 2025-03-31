@@ -27,7 +27,6 @@
                 </span>
             </div>
         </div>
-        </div>
     </header>
     <main>
         <div class="opcoes-container">
@@ -57,19 +56,10 @@
                         <button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>
                     </div>
                     <div class="anexar_imagem_padrao">
-                        <label for="file">Imagem Principal do Produto</label>
-                        <input type="file" id="imagem" placeholder="Imagem Principal do Produto"
+                        <label for="imagem">Imagem Principal do Produto</label>
+                        <input type="file" id="imagem"
                             accept=".jpg, .jpeg, .png" required title="Fazer upload da imagem principal do produto">
                     </div>
-                    <!--<input type="text" id="cores" placeholder="Cores do Produto (ex: Preto, Branco, Azul)"
-                        title="Cores disponíveis do produto">
-                         -->
-                    <!-- <div class="anexar_imagens_cores">
-                        <label for="file">Imagens das demais cores</label>
-                        <input type="file" id="imagens_cores" placeholder="Imagens das demais cores"
-                            accept=".jpg, .jpeg, .png" multiple
-                            title="Fazer upload das imagens das demais cores do produto">
-                    </div> -->
                 </div>
                 <div class="numeros_medidas">
                     <h2>Números e Medidas</h2>
@@ -79,8 +69,8 @@
                         placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)"
                         title="Medidas dos tamanhos disponíveis">
                     <div class="anexar_imagem_medidas">
-                        <label for="file">Imagem das medidas</label>
-                        <input type="file" id="imagem_medidas" placeholder="Imagem das medidas"
+                        <label for="imagem_medidas">Imagem das medidas</label>
+                        <input type="file" id="imagem_medidas"
                             accept=".jpg, .jpeg, .png" title="Fazer upload da imagem das medidas do produto">
                     </div>
                     <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">

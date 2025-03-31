@@ -103,8 +103,7 @@ async function carregarProdutos() {
                     .join(", ")}',
                   '${produto.categoria}',
                   ${produto.preco},
-                  '${produto.cores[0]?.codigo || ""}',
-                  '${produto.cores[0]?.nome || ""}'
+                  ${JSON.stringify(produto.cores)}
                 )">Editar</button>
                 <button onclick="removerProduto(${produto.id})">Excluir</button>
               </td>
@@ -131,12 +130,10 @@ function adicionarCor() {
   corDiv.className = "cor-item";
 
   corDiv.innerHTML = `
-    <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" id="codigo-cor"/>
-    <input type="text" placeholder="Nome da Cor (ex: Branco)" id="nome-cor" />
-    <label>Imagem Frente (opcional):</label>
-    <input type="file" id="imagem-frente" accept=".jpg, .jpeg, .png" />
-    <label>Imagem Verso (opcional):</label>
-    <input type="file" id="imagem-verso" accept=".jpg, .jpeg, .png" />
+    <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" />
+    <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" />
+    <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
+    <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
     <button type="button" onclick="removerCor(this)">Remover</button>
   `;
 
@@ -161,14 +158,12 @@ async function adicionarProduto() {
 
   const coresLista = document.querySelectorAll(".cor-item");
   cores = Array.from(coresLista).map((corItem) => {
-    const codigo = corItem.getElementById(".codigo-cor").value;
-    const nome = corItem.getElementById(".nome-cor").value;
-    const imagemFrente =
-      corItem.getElementById(".imagem-frente").files[0] || null;
-    const imagemVerso =
-      corItem.getElementById(".imagem-verso").files[0] || null;
+    const codigoCor = corItem.querySelector(".codigo-cor").value;
+    const nomeCor = corItem.querySelector(".nome-cor").value;
+    const imagemFrente = corItem.querySelector(".imagem-frente").files[0] || null;
+    const imagemVerso = corItem.querySelector(".imagem-verso").files[0] || null;
 
-    return { codigo, nome, imagemFrente, imagemVerso };
+    return { codigoCor, nomeCor, imagemFrente, imagemVerso };
   });
 
   const formData = new FormData();
@@ -202,8 +197,8 @@ async function adicionarProduto() {
   formData.append("imagem", document.getElementById("imagem").files[0]);
 
   cores.forEach((cor, index) => {
-    formData.append(`cores[${index}][codigo]`, cor.codigo);
-    formData.append(`cores[${index}][nome]`, cor.nome);
+    formData.append(`cores[${index}][codigoCor]`, cor.codigoCor);
+    formData.append(`cores[${index}][nomeCor]`, cor.nomeCor);
     if (cor.imagemFrente) {
       formData.append(`cores[${index}][imagemFrente]`, cor.imagemFrente);
     }
@@ -271,9 +266,9 @@ function editarProduto(
   medidas,
   categoria,
   preco,
-  codigoCor,
-  nomeCor
+  cores
 ) {
+  console.log('editar produtos')
   window.scrollTo({ top: 0, behavior: "smooth" });
   document.getElementById("nome").value = nome;
   document.getElementById("composicao").value = composicao;
@@ -282,15 +277,34 @@ function editarProduto(
   document.getElementById("estoque").value = estoque;
   document.getElementById("tamanhos").value = tamanhos;
   document.getElementById("medidas").value = medidas;
-  document.getElementById("codigoCor").value = codigoCor;
-  document.getElementById("nomeCor").value = nomeCor;
   document.getElementById("subcategoria-select").value = subcategoria;
   document.getElementById("categoria-select").value = categoria;
   document.getElementById("nova-categoria").value = "";
   document.getElementById("nome").dataset.id = id;
+
+  // Limpar cores existentes no formulário
+  const coresContainer = document.getElementById("cores-container");
+  coresContainer.innerHTML = "";
+
+  // Adicionar cores ao formulário
+  if (cores && cores.length > 0) {
+    cores.forEach((cor) => {
+      const corDiv = document.createElement("div");
+      corDiv.className = "cor-item";
+
+      corDiv.innerHTML = `
+        <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" value="${cor.codigoCor || ""}" />
+        <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" value="${cor.nomeCor || ""}" />
+        <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
+        <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
+      `;
+
+      coresContainer.appendChild(corDiv);
+    });
+  }
+
   document.getElementById("adicionar-btn").style.display = "none";
   document.getElementById("atualizar-btn").style.display = "inline-block";
-  console.log(document.getElementById("atualizar-btn").style.display);
   document.getElementById("voltar-btn").style.display = "inline-block";
 }
 
@@ -332,16 +346,17 @@ async function atualizarProduto() {
     "imagem_medidas",
     document.getElementById("imagem_medidas").files[0]
   );
-  Array.from(document.getElementById("imagens_cores").files).forEach((file) => {
-    formData.append("imagens_cores", file);
+
+  cores.forEach((cor, index) => {
+    formData.append(`cores[${index}][codigoCor]`, cor.codigoCor);
+    formData.append(`cores[${index}][nomeCor]`, cor.nomeCor);
+    if (cor.imagemFrente) {
+      formData.append(`cores[${index}][imagemFrente]`, cor.imagemFrente);
+    }
+    if (cor.imagemVerso) {
+      formData.append(`cores[${index}][imagemVerso]`, cor.imagemVerso);
+    }
   });
-  formData.append(
-    "cores",
-    document
-      .getElementById("cores")
-      .value.split(",")
-      .map((c) => c.trim())
-  );
 
   const token = localStorage.getItem("token");
   await fetch(`http://localhost:3000/produtos/${id}`, {
