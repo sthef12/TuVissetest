@@ -125,7 +125,7 @@ main {
     display: none;
   }
 
-  .catalogo {
+  #catalogo {
     display: flex;
     justify-content: center;
   }

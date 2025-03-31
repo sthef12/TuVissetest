@@ -102,9 +102,11 @@ function openMenu() {
   ) {
     menuLateral.style.display = "block";
     iconFechar.style.display = "block";
+    document.body.style.overflow = 'hidden';
   } else if (menuLateral.style.display === "block") {
     menuLateral.style.display = "none";
     iconFechar.style.display = "none";
+    document.body.style.overflow = '';
   }
 }
 
