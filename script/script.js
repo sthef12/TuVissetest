@@ -1,3 +1,4 @@
+//carregar as categorias do menu lateral:
 async function carregarCategorias() {
   try {
     const produtos = await fetch("../banco/produtos.json");
@@ -5,7 +6,7 @@ async function carregarCategorias() {
 
     const categorias = {};
 
-    produtosJson.forEach(produto => {
+    produtosJson.forEach((produto) => {
       if (!categorias[produto.categoria]) {
         categorias[produto.categoria] = new Set();
       }
@@ -13,24 +14,39 @@ async function carregarCategorias() {
     });
 
     const corpoCategorias = document.getElementById("corpo_categorias");
-    corpoCategorias.innerHTML = ""; // Limpa o conteúdo existente
+    //dentro da div com id corpo_categorias:
+    corpoCategorias.innerHTML = ""; //limpa o conteudo da div
 
-    const menuL = document.createElement("div");
-    menuL.className = "menuL";
-    menuL.innerHTML = "<h1>Categorias</h1>";
+    const menuL = document.createElement("div"); //cria uma div
+    menuL.className = "menuL"; //com a classe menuL
+    menuL.innerHTML = "<h1>Categorias</h1>"; //coloca um h1 com o texto Categorias
 
-    Object.keys(categorias).forEach(categoria => {
+    //para cada categoria, cria um elemento chamado details com um <summary> e uma lista de subcategorias
+    //e adiciona na div menuL
+    Object.keys(categorias).forEach((categoria) => {
       const details = document.createElement("details");
       details.className = "links-categoria";
       details.innerHTML = `<summary>${categoria}</summary>`;
 
-      categorias[categoria].forEach(subcategoria => {
+      //para cada subcategoria, cria um elemento <li> com um link (href) e adiciona na lista de subcategorias
+      categorias[categoria].forEach((subcategoria) => {
         const li = document.createElement("li");
         li.innerHTML = `<a href="#" class="sub_itens">${subcategoria}</a>`;
         details.appendChild(li);
       });
 
-      menuL.appendChild(details);
+      //entao, no final a estrutura HTML fica assim:
+      //<div id="corpo_categorias">
+      //  <div class="menuL">
+      //    <h1>Categorias</h1>
+      //    <details class="links-categoria">
+      //      <summary>categoria</summary>
+      //      <li><a href="#" class="sub_itens">subcategoria</a></li>
+      //    </details>
+      //  </div>
+      // </div>
+
+      menuL.appendChild(details); //faz aparecer isso tudo la na pagina
     });
 
     corpoCategorias.appendChild(menuL);
@@ -39,18 +55,21 @@ async function carregarCategorias() {
   }
 }
 
+//carregar os produtos do catalogo:
 async function carregarProdutos() {
   try {
     const produtos = await fetch("../banco/produtos.json");
     const produtosJson = await produtos.json();
 
     if (produtosJson.length > 0) {
+      //se tiver algum produto:
       const catalogo = document.getElementById("catalogo");
       catalogo.innerHTML = "";
 
+      //para cada produto ele insere na div catalogo essa estrutura HTML:
       for (const produto of produtosJson) {
-      catalogo.innerHTML += `
-        <a href="telaProduto.html?id=${produto.id}">
+        catalogo.innerHTML += `
+        <a href="pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
           <img src="${produto.imagem}" alt="${produto.nome}" />
           <div class="nome_preco_produto">
@@ -87,6 +106,7 @@ function openMenu() {
   }
 }
 
+//ao abrir a pagina, chama as seguintes funções:
 window.onload = () => {
   carregarProdutos();
   carregarCategorias();

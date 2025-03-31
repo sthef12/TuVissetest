@@ -15,8 +15,9 @@ inputBusca.oninput = () => {
 function addHTML(produto) {
   const div = document.createElement("div");
   div.classList.add("buscado-item");
+  div.innerHTML = "";
   div.innerHTML = `
-    <a href="telaProduto.html?id=${produto.id}">
+    <a href="../pags/telaProduto.html?id=${produto.id}">
       <div class="produto">
         <img src="${produto.imagem}" alt="${produto.nome}" />
         <span>${produto.nome}</span>

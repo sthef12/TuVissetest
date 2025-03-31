@@ -1,7 +1,9 @@
 @import url(./variaveis.css);
+
 footer {
   overflow: hidden;
 }
+
 .footerFundo a {
   text-decoration: none;
   color: var(--lab2-color);
@@ -28,7 +30,8 @@ footer {
   height: auto;
   width: auto;
 }
-.logo_footer img{
+
+.logo_footer img {
   width: 10rem;
   height: 10rem;
 }
@@ -39,8 +42,9 @@ footer {
   width: 50%;
   /*align-items: left;*/
   font-size: 20px;
-  
+
 }
+
 .footer_colun2 {
   display: flex;
   flex-direction: column;
@@ -49,7 +53,7 @@ footer {
   width: 50%;
   gap: 20px;
   font-size: 20px;
-  
+
 }
 
 
@@ -58,12 +62,14 @@ footer {
   justify-content: left;
   align-items: center;
   gap: 10px;
-  
+
 }
+
 .img_redes a i {
   font-size: 40px;
-    
+
 }
+
 .footerFundo a:hover {
   color: var(--lab4-color);
 }
@@ -86,6 +92,7 @@ footer {
   flex-direction: column;
   align-items: center;
 }
+
 .copyright a {
   text-decoration: none;
   color: var(--lab2-color);
@@ -97,8 +104,13 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 30px;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e36cb9cb6837d8404d5704216030074ec7453bff
   }
+
   .logo_footer {
     width: 100%;
     display: flex;
@@ -106,6 +118,7 @@ footer {
     align-items: center;
     text-align: center;
   }
+
   .footer_colun1 {
     width: 100%;
     display: flex;
@@ -113,6 +126,7 @@ footer {
     text-align: center;
     font-size: 15px;
   }
+
   .footer_colun2 {
     width: 100%;
     display: flex;
@@ -120,9 +134,11 @@ footer {
     gap: 5px;
     font-size: 15px;
   }
+
   .redesFooter {
     gap: 10px;
   }
+
   .img_redes {
     display: flex;
     justify-content: center;
@@ -136,4 +152,3 @@ footer {
     font-size: 10px;
   }
 }
-  

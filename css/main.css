@@ -30,6 +30,7 @@ main {
   gap: 10px;
   justify-content: left;
 }
+
 #catalogo a {
   text-decoration: none;
 }
@@ -47,12 +48,14 @@ main {
   border-radius: 10px;
   gap: 5px;
 }
+
 .produtos img {
   width: 100%;
   border-radius: 10px;
   max-height: 40%;
   min-height: 15rem;
 }
+
 .nome_preco_produto {
   display: flex;
   flex-direction: column;
@@ -106,18 +109,22 @@ main {
 
 
 @media (max-width: 767px) {
+
   /* produtos */
   .corpo {
     display: flex;
     justify-content: center;
     width: 100%;
   }
+
   .content {
     width: 100%;
   }
+
   #corpo_categorias {
     display: none;
   }
+
   .catalogo {
     display: flex;
     justify-content: center;
@@ -132,4 +139,3 @@ main {
     width: 4rem;
   }
 }
-      

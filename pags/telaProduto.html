@@ -6,20 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produto</title>
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
-  <link rel="stylesheet" href="./css/header.css" />
-  <link rel="stylesheet" href="./css/carrossel.css" />
-  <link rel="stylesheet" href="./css/footer.css" />
-  <link rel="stylesheet" href="css/telaProduto.css">
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/carrossel.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/telaProduto.css">
 </head>
 
 <body>
   <header>
     <div class="header_main">
-      <img src="img/logo-sem-fundo.png" alt="Logo do site" onclick="window.location.href='index.html'"/>
+      <img src="../img/logo-sem-fundo.png" alt="Logo do site" onclick="window.location.href='../index.html'" />
       <div class="barra-de-pesquisa-container">
         <div class="barra-de-pesquisa">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Pesquisar" id="input-busca"/>
+          <input type="text" placeholder="Pesquisar" id="input-busca" />
         </div>
         <div class="buscado"></div>
       </div>
@@ -35,13 +35,15 @@
     </div>
   </header>
   <main>
-    <div id="produto_view"></div>
+    <div id="produto_view">
+      <!-- HTML dos produtos na function buscarProdutoPelaURL()-->
+    </div>
   </main>
   <footer>
     <div class="footerFundo">
       <div class="footer_colun1">
         <div class="logo_footer">
-          <img src="img/logo_branco_sem_fundo.png" alt="Logo" />
+          <img src="../img/logo_branco_sem_fundo.png" alt="Logo" />
         </div>
         <div class="info">
           <label for="">E-mail:</label>
@@ -79,7 +81,7 @@
       All Rights Reserved.</label>
     </div>
   </footer>
-  <script src="script/header.js"></script>
+  <script src="../script/header.js"></script>
   <script>
     async function buscarProdutoPelaURL() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -91,7 +93,7 @@
           const produtosJson = await produtos.json();
           const produto = produtosJson.find(p => p.id == produtoId);
 
-          if (produto) {
+          if (produto) { //se tiver produto com o id especifico:
             const produto_view = document.getElementById("produto_view");
             produto_view.innerHTML = `
             <div class="carrossel_img">
@@ -126,7 +128,7 @@
                 <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
                 <div class="buttons">
                   <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
-                  <button onclick="window.location.href= 'index.html'">Continuar Comprando</button>
+                  <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>
                 </div>
                 </div>
             </div>`;
@@ -140,6 +142,7 @@
         console.error("ID do produto não fornecido");
       }
     }
+    //ao carregar a pagina chama essa função:
     window.onload = buscarProdutoPelaURL;
 
     function selecionarImagem(index) {
@@ -156,20 +159,20 @@
     }
 
     function moverCarrossel(direcao) {
-      if (window.innerWidth <= 767){
-       const carrossel = document.getElementById("carrossel");
-       const scrollAmount = 110;
-       carrossel.scrollLeft += direcao * scrollAmount;
+      if (window.innerWidth <= 767) {
+        const carrossel = document.getElementById("carrossel");
+        const scrollAmount = 110;
+        carrossel.scrollLeft += direcao * scrollAmount;
       }
 
-      else{
+      else {
         const carrossel = document.getElementById("carrossel");
         const scrollAmount = 110;
         carrossel.scrollTop += direcao * scrollAmount;
       }
     }
 
-
+    //adicionar produto ao carrinho
     const addCarrinho = (produtoId) => {
       const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
       if (!carrinho.includes(produtoId)) {
