@@ -81,6 +81,7 @@ function openMenu() {
     menuLateral.style.display === "none"
   ) {
     menuLateral.style.display = "block";
+    
   } else if (menuLateral.style.display === "block") {
     menuLateral.style.display = "none";
   }

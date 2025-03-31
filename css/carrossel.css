@@ -18,6 +18,7 @@
     flex-direction: column;
     position: relative;
     top: 90%;
+    align-items: center;
   }
   .indicador {
     display: flex;
@@ -64,6 +65,7 @@
     display: none;
     z-index: -1;
   }
+  
 
 
 /*
