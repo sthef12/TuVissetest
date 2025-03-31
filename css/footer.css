@@ -104,7 +104,11 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 30px;
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> e36cb9cb6837d8404d5704216030074ec7453bff
   }
 
   .logo_footer {
@@ -120,6 +124,7 @@ footer {
     display: flex;
     align-items: center;
     text-align: center;
+    font-size: 15px;
   }
 
   .footer_colun2 {
@@ -127,6 +132,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 5px;
+    font-size: 15px;
   }
 
   .redesFooter {
@@ -142,5 +148,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    font-size: 10px;
   }
 }

@@ -19,7 +19,8 @@ async function carregarCategorias() {
 
     const menuL = document.createElement("div"); //cria uma div
     menuL.className = "menuL"; //com a classe menuL
-    menuL.innerHTML = "<i class='fa-solid fa-xmark' style='display: none;' id='fechar' onclick='openMenu()'></i><h1>Categorias</h1>"; //coloca um h1 com o texto Categorias
+    menuL.innerHTML =
+      "<i class='fa-solid fa-xmark' style='display: none;' id='fechar' onclick='openMenu()'></i><h1>Categorias</h1>"; //coloca um h1 com o texto Categorias
 
     //para cada categoria, cria um elemento chamado details com um <summary> e uma lista de subcategorias
     //e adiciona na div menuL
