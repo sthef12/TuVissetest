@@ -141,7 +141,12 @@
     "categoria": "Canecas",
     "subcategoria": "Pronto",
     "cores": [
-      "Branca"
+      {
+        "codigoCor": "#FFFFFF",
+        "nomeCor": "Branca",
+        "imagemFrente": "../img/produtos_imagens/caneca_de_plástico/1742824431250.png",
+        "imagemVerso": "../img/produtos_imagens/caneca_de_plástico/1742824431256.png"
+      }
     ],
     "id": 3,
     "imagem": "../img/produtos_imagens/caneca_de_plástico/1742824431245.png",
@@ -156,5 +161,25 @@
         "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431256.png"
       }
     ]
+  },
+  {
+    "nome": "Boné ",
+    "composicao": "100% Algodão",
+    "descricao": "Boné bordado",
+    "preco": "100",
+    "estoque": "100",
+    "tamanhos": "Único",
+    "medidas": "Único: único",
+    "categoria": "nova",
+    "subcategoria": "Pronto",
+    "imagem": "../img/produtos_imagens/boné_/1743532860475-Captura de tela 2024-05-31 191444.png",
+    "imagem_medidas": "../img/produtos_imagens/boné_/1743532860479-Captura de tela 2023-10-20 214343.png",
+    "cores": [
+      {
+        "imagemFrente": "../img/produtos_imagens/boné_/1743532860483-Captura de tela 2024-06-27 125225.png",
+        "imagemVerso": "../img/produtos_imagens/boné_/1743532860483-Captura de tela 2024-07-22 124831.png"
+      }
+    ],
+    "id": 4
   }
 ]
