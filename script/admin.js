@@ -1,9 +1,10 @@
 let categorias = [];
 let cores = [];
+let produtos = []; // Variável global para armazenar os produtos
 
 async function carregarProdutos() {
   const res = await fetch("../banco/produtos.json");
-  const produtos = await res.json();
+  produtos = await res.json(); // Armazena os produtos na variável global
   const produtosPorCategoria = produtos.reduce((acc, produto) => {
     if (!acc[produto.categoria]) {
       acc[produto.categoria] = [];
@@ -49,20 +50,14 @@ async function carregarProdutos() {
               <td>${produto.composicao}</td>
               <td>${produto.descricao}</td>
               <td>${produto.subcategoria}</td>
-              <td><img src="${produto.imagem}" alt="${
-              produto.nome
-            }" width="50"></td>
+              <td><img src="${produto.imagem}" alt="${produto.nome}" width="50"></td>
               <td>
                 ${produto.cores
                   .map(
                     (cor) => `
                     <div>
-                      <p><strong>Código da cor:</strong> ${
-                        cor.codigoCor ? cor.codigoCor : "N/A"
-                      }</p>
-                      <p><strong>Nome da cor:</strong> ${
-                        cor.nomeCor ? cor.nomeCor : "N/A"
-                      }</p>
+                      <p><strong>Código da cor:</strong> ${cor.codigoCor || "N/A"}</p>
+                      <p><strong>Nome da cor:</strong> ${cor.nomeCor || "N/A"}</p>
                       ${
                         cor.imagemFrente
                           ? `<img src="${cor.imagemFrente}" alt="Frente" width="30">`
@@ -82,29 +77,11 @@ async function carregarProdutos() {
               <td>${produto.medidas
                 .map((m) => `${m.tamanho}: ${m.medida}`)
                 .join(", ")}</td>
-              <td><img src="${
-                produto.medidasimagem
-              }" alt="Medidas" width="50"></td>
+              <td><img src="${produto.medidasimagem}" alt="Medidas" width="50"></td>
               <td>${produto.estoque}</td>
-              <td>${
-                produto.preco ? `R$ ${produto.preco.toFixed(2)}` : "N/A"
-              }</td>
+              <td>${produto.preco ? `R$ ${produto.preco.toFixed(2)}` : "N/A"}</td>
               <td>
-                <button onclick="editarProduto(
-                  ${produto.id},
-                  '${produto.nome}',
-                  '${produto.composicao}',
-                  '${produto.descricao}',
-                  '${produto.subcategoria}',
-                  ${produto.estoque},
-                  '${produto.tamanhos.join(", ")}',
-                  '${produto.medidas
-                    .map((m) => `${m.tamanho}: ${m.medida}`)
-                    .join(", ")}',
-                  '${produto.categoria}',
-                  ${produto.preco},
-                  ${JSON.stringify(produto.cores)}
-                )">Editar</button>
+                <button onclick="editarProduto(${produto.id})">Editar</button>
                 <button onclick="removerProduto(${produto.id})">Excluir</button>
               </td>
             </tr>
@@ -134,6 +111,7 @@ function adicionarCor() {
     <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" />
     <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
     <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
+    <button type="button" onclick="addMaisCor(this)">Adicionar mais cores</button>
     <button type="button" onclick="removerCor(this)">Remover</button>
   `;
 
@@ -143,6 +121,17 @@ function adicionarCor() {
 function removerCor(button) {
   const corDiv = button.parentElement;
   corDiv.remove();
+}
+
+function addMaisCor(button) {
+  const corDiv = button.parentElement;
+  const novaCorDiv = corDiv.cloneNode(true); // Clona o elemento da cor
+  novaCorDiv.querySelector(".codigo-cor").value = ""; // Limpa o valor do código da cor
+  novaCorDiv.querySelector(".nome-cor").value = ""; // Limpa o valor do nome da cor
+  novaCorDiv.querySelector(".imagem-frente").value = ""; // Limpa o valor da imagem frente
+  novaCorDiv.querySelector(".imagem-verso").value = ""; // Limpa o valor da imagem verso
+  corDiv.parentElement.appendChild(novaCorDiv); // Adiciona a nova cor ao container
+  cores.push({}); // Adiciona um novo objeto vazio à lista de cores
 }
 
 async function adicionarProduto() {
@@ -160,10 +149,7 @@ async function adicionarProduto() {
   cores = Array.from(coresLista).map((corItem) => {
     const codigoCor = corItem.querySelector(".codigo-cor").value;
     const nomeCor = corItem.querySelector(".nome-cor").value;
-    const imagemFrente = corItem.querySelector(".imagem-frente").files[0] || null;
-    const imagemVerso = corItem.querySelector(".imagem-verso").files[0] || null;
-
-    return { codigoCor, nomeCor, imagemFrente, imagemVerso };
+    return { codigoCor, nomeCor };
   });
 
   const formData = new FormData();
@@ -255,40 +241,36 @@ async function removerProduto(id) {
   carregarProdutos();
 }
 
-function editarProduto(
-  id,
-  nome,
-  composicao,
-  descricao,
-  subcategoria,
-  estoque,
-  tamanhos,
-  medidas,
-  categoria,
-  preco,
-  cores
-) {
-  console.log('editar produtos')
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  document.getElementById("nome").value = nome;
-  document.getElementById("composicao").value = composicao;
-  document.getElementById("descricao").value = descricao;
-  document.getElementById("preco").value = preco;
-  document.getElementById("estoque").value = estoque;
-  document.getElementById("tamanhos").value = tamanhos;
-  document.getElementById("medidas").value = medidas;
-  document.getElementById("subcategoria-select").value = subcategoria;
-  document.getElementById("categoria-select").value = categoria;
+function editarProduto(id) {
+  const produto = produtos.find((p) => p.id === id); // Busca o produto pelo ID
+  if (!produto) {
+    console.error("Produto não encontrado!");
+    return;
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" }); 
+  document.getElementById("adicionar-btn").style.display = "none";
+  // Preenche os campos do formulário com os dados do produto
+  document.getElementById("nome").value = produto.nome;
+  document.getElementById("composicao").value = produto.composicao;
+  document.getElementById("descricao").value = produto.descricao;
+  document.getElementById("preco").value = produto.preco;
+  document.getElementById("estoque").value = produto.estoque;
+  document.getElementById("tamanhos").value = produto.tamanhos.join(", ");
+  document.getElementById("medidas").value = produto.medidas
+    .map((m) => `${m.tamanho}: ${m.medida}`)
+    .join(", ");
+  document.getElementById("subcategoria-select").value = produto.subcategoria;
+  document.getElementById("categoria-select").value = produto.categoria;
   document.getElementById("nova-categoria").value = "";
   document.getElementById("nome").dataset.id = id;
 
-  // Limpar cores existentes no formulário
+  // Limpa as cores existentes no formulário
   const coresContainer = document.getElementById("cores-container");
   coresContainer.innerHTML = "";
 
-  // Adicionar cores ao formulário
-  if (cores && cores.length > 0) {
-    cores.forEach((cor) => {
+  // Adiciona as cores ao formulário
+  if (produto.cores && produto.cores.length > 0) {
+    produto.cores.forEach((cor) => {
       const corDiv = document.createElement("div");
       corDiv.className = "cor-item";
 
@@ -297,6 +279,7 @@ function editarProduto(
         <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" value="${cor.nomeCor || ""}" />
         <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
         <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
+        <button type="button" onclick="removerCor(this)">Remover</button>
       `;
 
       coresContainer.appendChild(corDiv);
@@ -367,6 +350,8 @@ async function atualizarProduto() {
     body: formData,
   });
   carregarProdutos();
+
+  // Limpar os campos do formulário
   document.getElementById("nome").value = "";
   document.getElementById("composicao").value = "";
   document.getElementById("descricao").value = "";
@@ -374,14 +359,18 @@ async function atualizarProduto() {
   document.getElementById("estoque").value = "";
   document.getElementById("tamanhos").value = "";
   document.getElementById("medidas").value = "";
-  document.getElementById("codigoCor").value = "";
-  document.getElementById("nomeCor").value = "";
   document.getElementById("subcategoria-select").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("nova-categoria").value = "";
   document.getElementById("adicionar-btn").style.display = "inline-block";
   document.getElementById("atualizar-btn").style.display = "none";
   document.getElementById("voltar-btn").style.display = "none";
+
+  // Limpar os campos das cores
+  const coresContainer = document.getElementById("cores-container");
+  coresContainer.innerHTML = ""; // Remove todos os campos de cores
+  coresContainer.innerHTML = `<button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>`
+  cores = []; // Limpa a lista de cores
 }
 
 function voltarProduto() {
