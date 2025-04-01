@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TuVisse</title>
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/menuL.css">
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+</head>
+
+<body>
+  <!-- header -->
+  <header>
+    <div class="header_main">
+      <img src="../img/logo-sem-fundo.png" alt="Logo do site" onclick="window.location.href='index.html'" />
+      <div class="barra-de-pesquisa-container">
+        <div class="barra-de-pesquisa">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Pesquisar" id="input-busca" />
+        </div>
+        <div class="buscado"></div>
+      </div>
+      <div onclick="window.location.href='./carrinho.html'" class="outros">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <div class="menu_header"  >
+        <span onclick="openMenu()">
+          <i  class="fa-solid fa-bars" ></i>
+        </span>
+      </div>
+    </div>
+  </header>
+  <!-- main -->
+  <main>
+    <!-- menu/barra lateral -->
+    <div class="corpo">
+      <section id="corpo_categorias">
+        <!-- corpo do menu lateral na function carregarCategorias() -->
+      </section>
+      <div class="content">
+        <!-- produtos -->
+        <section class="corpo_catalogo">
+          <div id="catalogo">
+            <!-- função abrir e fechar o menu: openMenu() -->
+            <!-- corpo dos produtos na function carregarProdutos() -->
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- botão whatsapp -->
+    <div class="whats-container">
+      <span class="whats_button">
+        <a href="https://www.whatsapp.com/">
+          <img src="../img/whatsapp.jpeg" alt="Logo do whatsapp" />
+        </a>
+      </span>
+    </div>
+  </main>
+  <!-- footer -->
+  <footer>
+    <div class="footerFundo">
+      <div class="footer_colun1">
+        <div class="logo_footer" onclick="window.location.href='index.html'">
+          <img src="../img/logo_branco_sem_fundo.png" alt="Logo" />
+        </div>
+        <div class="info">
+          <label for="">E-mail:</label>
+          <a href="#" class="contatoFooter">tuvisseperssonalizacao@gmail.com</a><br />
+          <label for="">Contato:</label>
+          <a href="#" class="contatoFooter">(81) 98888-8888</a><br />
+          <label for="">Endereço:</label>
+          <a href="#" class="contatoFooter">Rua exemplo, 00 - Cidade/PE</a>
+        </div>
+      </div>
+      <div class="footer_colun2">
+        <div class="nossaHistoria">
+          <a href="./sobre.html">
+            <label>Nossa História</label>
+          </a>
+        </div>
+        <div class="redesFooter">
+          <label>Nossas Redes Sociais</label>
+          <div class="img_redes">
+            <a href="https://www.instagram.com/tuvissepersonalizacao?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              class="redeLink"><i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="redeLink"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="redeLink"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      <span>
+        <label for="">Tu Visse Personalização&nbsp;</label>
+        &copy;&nbsp;<label for="">Desenvolvido por&nbsp;</label><a href="#">@linkGit</a> &nbsp;
+      </span>
+      All Rights Reserved.</label>
+    </div>
+  </footer>
+  <!-- scripts -->
+  <script src="../script/filtro.js"></script>
+  <script src="../script/header.js"></script>
+</body>
+
+</html>

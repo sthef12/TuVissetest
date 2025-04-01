@@ -12,6 +12,7 @@
     font-size: 20px;
     background: none;
     border: none;
+    padding: 5px;
 }
 
 #cima {
@@ -161,6 +162,7 @@
     .carrossel_container {
         display: flex;
         flex-direction: row;
+        gap: 5px;
     }
 
     .carrossel_view {
@@ -173,10 +175,6 @@
     .imagem_principal {
         height: 50vh;
         width: 70vw;
-    }
-
-    .imagem_principal img {
-        width: 70%;
     }
 
     .descricao {

@@ -33,6 +33,7 @@ header {
   display: flex;
   align-items: center;
   width: 100%;
+  border-radius: 5px;
 }
 
 .barra-de-pesquisa input {
@@ -50,10 +51,23 @@ header {
 .buscado{
   display: none;
   position: absolute;
-  top: 15%;
+  top: 12%;
   background-color: var(--lab3-color);
-  width: 45%;
+  width: 49.4%;
   z-index: 1;
+}
+.buscado a {
+  text-decoration: none;
+  color: #000;
+}
+.buscado a .produto {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px;
+}
+.buscado a .produto img{
+  border-radius: 3px;
 }
 
 .outros {
@@ -117,5 +131,9 @@ header {
   .barra-de-pesquisa i{
     font-size: 1rem;
     padding-left: 1.5%;
+  }
+  .buscado{
+    top: 8%;
+    width: 48%;
   }
 }
