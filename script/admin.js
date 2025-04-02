@@ -86,7 +86,7 @@ async function carregarProdutos() {
               <td>${verificarTamanho(produto)}</td>
               <td>${verificarMedidas(produto)}</td>
               <td><img src="${
-                produto.medidasimagem
+                produto.imagem_medidas
               }" alt="Medidas" width="50"></td>
               <td>${produto.estoque}</td>
               <td>${
@@ -184,20 +184,11 @@ async function adicionarProduto() {
   formData.append("composicao", document.getElementById("composicao").value);
   formData.append("descricao", document.getElementById("descricao").value);
   formData.append("preco", parseFloat(document.getElementById("preco").value));
-  formData.append(
-    "estoque",
-    parseInt(document.getElementById("estoque").value, 10)
-  );
+  formData.append("estoque", parseInt(document.getElementById("estoque").value, 10));
   formData.append("tamanhos", document.getElementById("tamanhos").value);
   formData.append("medidas", document.getElementById("medidas").value);
-  formData.append(
-    "categoria",
-    document.getElementById("categoria-select").value
-  );
-  formData.append(
-    "subcategoria",
-    document.getElementById("subcategoria-select").value
-  );
+  formData.append("categoria", document.getElementById("categoria-select").value);
+  formData.append("subcategoria", document.getElementById("subcategoria-select").value);
 
   // Adicionar imagem principal
   const imagem = document.getElementById("imagem").files[0];
@@ -211,13 +202,16 @@ async function adicionarProduto() {
     formData.append("imagem_medidas", imagemMedidas);
   }
 
-  // Adicionar imagens das cores
+  // Adicionar campos das cores
   const coresLista = document.querySelectorAll(".cor-item");
-  cores = Array.from(coresLista).map((corItem, index) => {
+  coresLista.forEach((corItem, index) => {
     const codigoCor = corItem.querySelector(".codigo-cor").value;
     const nomeCor = corItem.querySelector(".nome-cor").value;
     const imagemFrente = corItem.querySelector(".imagem-frente").files[0];
     const imagemVerso = corItem.querySelector(".imagem-verso").files[0];
+
+    formData.append(`cores[${index}][codigoCor]`, codigoCor);
+    formData.append(`cores[${index}][nomeCor]`, nomeCor);
 
     if (imagemFrente) {
       formData.append(`cores[${index}][imagemFrente]`, imagemFrente);
@@ -225,8 +219,6 @@ async function adicionarProduto() {
     if (imagemVerso) {
       formData.append(`cores[${index}][imagemVerso]`, imagemVerso);
     }
-
-    return { codigoCor, nomeCor };
   });
 
   const token = localStorage.getItem("token");
@@ -283,8 +275,12 @@ function editarProduto(id) {
     console.error("Produto não encontrado!");
     return;
   }
+  
   window.scrollTo({ top: 0, behavior: "smooth" });
   document.getElementById("adicionar-btn").style.display = "none";
+  document.getElementById("atualizar-btn").style.display = "inline-block";
+  document.getElementById("voltar-btn").style.display = "inline-block";
+
   // Preenche os campos do formulário com os dados do produto
   document.getElementById("nome").value = produto.nome;
   document.getElementById("composicao").value = produto.composicao;
@@ -311,11 +307,9 @@ function editarProduto(id) {
       corDiv.className = "cor-item";
 
       corDiv.innerHTML = `
-        <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" value="${
-          cor.codigoCor || ""
-        }" />
+        <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" value="${cor.codigoCor || ""}"/>
         <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" value="${
-          cor.nomeCor || ""
+         cor.nomeCor || ""
         }" />
         <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
         <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
@@ -325,10 +319,6 @@ function editarProduto(id) {
       coresContainer.appendChild(corDiv);
     });
   }
-
-  document.getElementById("adicionar-btn").style.display = "none";
-  document.getElementById("atualizar-btn").style.display = "inline-block";
-  document.getElementById("voltar-btn").style.display = "inline-block";
 }
 
 async function atualizarProduto() {

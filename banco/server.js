@@ -103,28 +103,51 @@ app.post(
         try {
             const produto = req.body;
 
-            // Processar imagens principais
+            // Inicializa o campo cores como um array vazio
+            produto.cores = [];
+
+            // Processar os arquivos enviados
             if (req.files) {
                 req.files.forEach((file) => {
                     const relativePath = path.relative(__dirname, file.path).replace(/\\/g, "/");
-                    if (file.fieldname === "imagem") {
-                        produto.imagem = relativePath;
-                    } else if (file.fieldname === "imagem_medidas") {
-                        produto.imagem_medidas = relativePath;
-                    } else if (file.fieldname.startsWith("cores")) {
+
+                    if (file.fieldname.startsWith("cores")) {
                         const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
                         if (match) {
                             const index = parseInt(match[1], 10);
                             const field = match[2];
-                            produto.cores = produto.cores || [];
+
+                            // Garante que o índice da cor existe no array
                             produto.cores[index] = produto.cores[index] || {};
                             produto.cores[index][field] = relativePath;
                         }
+                    } else if (file.fieldname === "imagem") {
+                        produto.imagem = relativePath;
+                    } else if (file.fieldname === "imagem_medidas") {
+                        produto.imagem_medidas = relativePath;
                     }
                 });
             }
 
-            // Salvar o produto
+            // Processar os campos de texto das cores
+            const cores = Array.isArray(req.body["cores[0][codigoCor]"])
+                ? req.body["cores[0][codigoCor]"].map((_, index) => ({
+                      codigoCor: req.body[`cores[${index}][codigoCor]`],
+                      nomeCor: req.body[`cores[${index}][nomeCor]`],
+                  }))
+                : [
+                      {
+                          codigoCor: req.body["cores[0][codigoCor]"],
+                          nomeCor: req.body["cores[0][nomeCor]"],
+                      },
+                  ];
+
+            // Mesclar os dados de texto com as imagens
+            cores.forEach((cor, index) => {
+                produto.cores[index] = { ...produto.cores[index], ...cor };
+            });
+
+            // Salvar o produto no JSON
             const produtos = lerProdutos();
             produto.id = produtos.length ? produtos[produtos.length - 1].id + 1 : 1;
             produtos.push(produto);
@@ -154,8 +177,8 @@ app.put("/produtos/:id", verificarToken, upload.any(), (req, res) => {
                     removerArquivo(produtos[index].imagem);
                     produtoAtualizado.imagem = file.path;
                 } else if (file.fieldname === "imagem_medidas") {
-                    removerArquivo(produtos[index].medidasimagem);
-                    produtoAtualizado.medidasimagem = file.path;
+                    removerArquivo(produtos[index].imagem_medidas);
+                    produtoAtualizado.imagem_medidas = file.path;
                 } else if (file.fieldname.startsWith("cores")) {
                     const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
                     if (match) {

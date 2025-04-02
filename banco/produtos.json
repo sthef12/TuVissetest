@@ -55,7 +55,7 @@
         "medida": "60cm x 72cm"
       }
     ],
-    "medidasimagem": "../img/produtos_imagens/camisa_tipo_polo/1742407623269.jpg",
+    "imagem_medidas": "../img/produtos_imagens/camisa_tipo_polo/1742407623269.jpg",
     "estoque": 100,
     "descricao": "Camisa tipo polo customizável com logo",
     "preco": 50.8,
@@ -120,7 +120,7 @@
     ],
     "id": 2,
     "imagem": "../img/produtos_imagens/camisa_básica/1742475432078.jpg",
-    "medidasimagem": "../img/produtos_imagens/camisa_básica/1742404844158.jpg",
+    "imagem_medidas": "../img/produtos_imagens/camisa_básica/1742404844158.jpg",
     "subcategoria": "Personalizado"
   },
   {
@@ -150,7 +150,7 @@
     ],
     "id": 3,
     "imagem": "../img/produtos_imagens/caneca_de_plástico/1742824431245.png",
-    "medidasimagem": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png",
+    "imagem_medidas": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png",
     "imagens_cores": [
       {
         "cor": "Captura de tela 2023-09-05 113038",
@@ -172,14 +172,14 @@
     "medidas": "Único: único",
     "categoria": "nova",
     "subcategoria": "Pronto",
-    "imagem": "../img/produtos_imagens/boné_/1743532860475-Captura de tela 2024-05-31 191444.png",
-    "imagem_medidas": "../img/produtos_imagens/boné_/1743532860479-Captura de tela 2023-10-20 214343.png",
     "cores": [
       {
-        "imagemFrente": "../img/produtos_imagens/boné_/1743532860483-Captura de tela 2024-06-27 125225.png",
-        "imagemVerso": "../img/produtos_imagens/boné_/1743532860483-Captura de tela 2024-07-22 124831.png"
+        "imagemFrente": "../img/produtos_imagens/boné_/1743605939825-Captura de tela 2024-06-27 125225.png",
+        "imagemVerso": "../img/produtos_imagens/boné_/1743605939826-Captura de tela 2024-05-31 191444.png"
       }
     ],
+    "imagem": "../img/produtos_imagens/boné_/1743605939821-Captura de tela 2023-10-20 214343.png",
+    "imagem_medidas": "../img/produtos_imagens/boné_/1743605939823-Captura de tela 2023-08-25 215226.png",
     "id": 4
   }
 ]
