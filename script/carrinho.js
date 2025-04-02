@@ -72,7 +72,7 @@ async function buscarProdutoPeloLocalStorage() {
             </div>
             <div class="buttons">
               <button class="button" id="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
-              <button class="button" id="continuar">Continuar Comprando</button>
+              <button class="button" id="continuar" onclick="window.location.href= '../index.html'">Continuar Comprando</button>
             </div>`;
     } catch (error) {
       console.error(error);
