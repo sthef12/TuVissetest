@@ -67,12 +67,8 @@ main h1 {
     gap: 20px;
 }
 
-<<<<<<< HEAD
 @media (max-width: 767px) {
     .cards_container{
         flex-direction: column;
     }
 }
-=======
-@media (max-width: 767px) {}
->>>>>>> e36cb9cb6837d8404d5704216030074ec7453bff
