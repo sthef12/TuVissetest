@@ -1,6 +1,6 @@
 let categorias = [];
 let cores = [];
-let produtos = []; // Variável global para armazenar os produtos
+let produtos = [];
 
 async function carregarProdutos() {
   const res = await fetch("../banco/produtos.json");
@@ -115,6 +115,114 @@ async function carregarProdutos() {
   }
 }
 
+async function adicionarProduto() {
+  const formData = new FormData();
+  formData.append("nome", document.getElementById("nome").value);
+  formData.append("composicao", document.getElementById("composicao").value);
+  formData.append("descricao", document.getElementById("descricao").value);
+  formData.append("preco", parseFloat(document.getElementById("preco").value));
+  formData.append(
+    "estoque",
+    parseInt(document.getElementById("estoque").value, 10)
+  );
+  formData.append("tamanhos", document.getElementById("tamanhos").value);
+  formData.append("medidas", document.getElementById("medidas").value);
+  formData.append(
+    "categoria",
+    document.getElementById("categoria-select").value
+  );
+  formData.append(
+    "subcategoria",
+    document.getElementById("subcategoria-select").value
+  );
+
+  // Adicionar imagem principal
+  const imagem = document.getElementById("imagem").files[0];
+  if (imagem) {
+    formData.append("imagem", imagem);
+  }
+
+  // Adicionar imagem de medidas
+  const imagemMedidas = document.getElementById("imagem_medidas").files[0];
+  if (imagemMedidas) {
+    formData.append("imagem_medidas", imagemMedidas);
+  }
+
+  // Adicionar campos das cores
+  const coresLista = document.querySelectorAll(".cor-item");
+  coresLista.forEach((corItem, index) => {
+    const codigoCor = corItem.querySelector(".codigo-cor").value;
+    const nomeCor = corItem.querySelector(".nome-cor").value;
+
+    formData.append(`cores[${index}][codigoCor]`, codigoCor);
+    formData.append(`cores[${index}][nomeCor]`, nomeCor);
+
+    const imagemFrente = corItem.querySelector(".imagem-frente").files[0];
+    const imagemVerso = corItem.querySelector(".imagem-verso").files[0];
+
+    if (imagemFrente) {
+      formData.append(`cores[${index}][imagemFrente]`, imagemFrente);
+    }
+    if (imagemVerso) {
+      formData.append(`cores[${index}][imagemVerso]`, imagemVerso);
+    }
+  });
+
+  const token = localStorage.getItem("token");
+  await fetch("http://localhost:3000/produtos", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+  carregarProdutos();
+
+  // Debug: Verificar o conteúdo do FormData
+  for (let pair of formData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
+}
+
+function adicionarCor() {
+  const coresContainer = document.getElementById("cores-container");
+
+  const corDiv = document.createElement("div");
+  corDiv.className = "cor-item";
+
+  corDiv.innerHTML = `
+    <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" />
+    <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" />
+    <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
+    <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
+    <button type="button" onclick="addMaisCor(this)">Adicionar mais cores</button>
+    <button type="button" onclick="removerCor(this)">Remover</button>
+  `;
+
+  coresContainer.appendChild(corDiv);
+}
+
+function addMaisCor(button) {
+  const corDiv = button.parentElement;
+  const novaCorDiv = corDiv.cloneNode(true); // Clona o elemento da cor
+  novaCorDiv.querySelector(".codigo-cor").value = ""; // Limpa o valor do código da cor
+  novaCorDiv.querySelector(".nome-cor").value = ""; // Limpa o valor do nome da cor
+  novaCorDiv.querySelector(".imagem-frente").value = ""; // Limpa o valor da imagem frente
+  novaCorDiv.querySelector(".imagem-verso").value = ""; // Limpa o valor da imagem verso
+  corDiv.parentElement.appendChild(novaCorDiv); // Adiciona a nova cor ao container
+  cores.push({}); // Adiciona um novo objeto vazio à lista de cores
+}
+
+function verificarCategoria() {
+  const categoriaSelect = document.getElementById("categoria-select");
+  const novaCategoriaInput = document.getElementById("nova-categoria");
+  if (categoriaSelect.value === "nova") {
+    novaCategoriaInput.style.display = "block";
+  } else {
+    novaCategoriaInput.style.display = "none";
+  }
+}
+
 function verificarTamanho(produto) {
   if (typeof produto.tamanhos === "string") {
     // Caso os tamanhos estejam em formato de string
@@ -144,138 +252,13 @@ function verificarMedidas(produto) {
   }
 }
 
-function adicionarCor() {
-  const coresContainer = document.getElementById("cores-container");
-
-  const corDiv = document.createElement("div");
-  corDiv.className = "cor-item";
-
-  corDiv.innerHTML = `
-    <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" />
-    <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" />
-    <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
-    <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
-    <button type="button" onclick="addMaisCor(this)">Adicionar mais cores</button>
-    <button type="button" onclick="removerCor(this)">Remover</button>
-  `;
-
-  coresContainer.appendChild(corDiv);
-}
-
-function removerCor(button) {
-  const corDiv = button.parentElement;
-  corDiv.remove();
-}
-
-function addMaisCor(button) {
-  const corDiv = button.parentElement;
-  const novaCorDiv = corDiv.cloneNode(true); // Clona o elemento da cor
-  novaCorDiv.querySelector(".codigo-cor").value = ""; // Limpa o valor do código da cor
-  novaCorDiv.querySelector(".nome-cor").value = ""; // Limpa o valor do nome da cor
-  novaCorDiv.querySelector(".imagem-frente").value = ""; // Limpa o valor da imagem frente
-  novaCorDiv.querySelector(".imagem-verso").value = ""; // Limpa o valor da imagem verso
-  corDiv.parentElement.appendChild(novaCorDiv); // Adiciona a nova cor ao container
-  cores.push({}); // Adiciona um novo objeto vazio à lista de cores
-}
-
-async function adicionarProduto() {
-  const formData = new FormData();
-  formData.append("nome", document.getElementById("nome").value);
-  formData.append("composicao", document.getElementById("composicao").value);
-  formData.append("descricao", document.getElementById("descricao").value);
-  formData.append("preco", parseFloat(document.getElementById("preco").value));
-  formData.append("estoque", parseInt(document.getElementById("estoque").value, 10));
-  formData.append("tamanhos", document.getElementById("tamanhos").value);
-  formData.append("medidas", document.getElementById("medidas").value);
-  formData.append("categoria", document.getElementById("categoria-select").value);
-  formData.append("subcategoria", document.getElementById("subcategoria-select").value);
-
-  // Adicionar imagem principal
-  const imagem = document.getElementById("imagem").files[0];
-  if (imagem) {
-    formData.append("imagem", imagem);
-  }
-
-  // Adicionar imagem de medidas
-  const imagemMedidas = document.getElementById("imagem_medidas").files[0];
-  if (imagemMedidas) {
-    formData.append("imagem_medidas", imagemMedidas);
-  }
-
-  // Adicionar campos das cores
-  const coresLista = document.querySelectorAll(".cor-item");
-  coresLista.forEach((corItem, index) => {
-    const codigoCor = corItem.querySelector(".codigo-cor").value;
-    const nomeCor = corItem.querySelector(".nome-cor").value;
-    const imagemFrente = corItem.querySelector(".imagem-frente").files[0];
-    const imagemVerso = corItem.querySelector(".imagem-verso").files[0];
-
-    formData.append(`cores[${index}][codigoCor]`, codigoCor);
-    formData.append(`cores[${index}][nomeCor]`, nomeCor);
-
-    if (imagemFrente) {
-      formData.append(`cores[${index}][imagemFrente]`, imagemFrente);
-    }
-    if (imagemVerso) {
-      formData.append(`cores[${index}][imagemVerso]`, imagemVerso);
-    }
-  });
-
-  const token = localStorage.getItem("token");
-  await fetch("http://localhost:3000/produtos", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
-  carregarProdutos();
-}
-
-function atualizarCategorias() {
-  const categoriaSelect = document.getElementById("categoria-select");
-  categoriaSelect.innerHTML =
-    '<option value="">Selecione uma categoria</option>';
-  categorias.forEach((categoria) => {
-    const option = document.createElement("option");
-    option.value = categoria;
-    option.textContent = categoria;
-    categoriaSelect.appendChild(option);
-  });
-  const novaOption = document.createElement("option");
-  novaOption.value = "nova";
-  novaOption.textContent = "Adicionar uma nova categoria";
-  categoriaSelect.appendChild(novaOption);
-}
-
-function verificarCategoria() {
-  const categoriaSelect = document.getElementById("categoria-select");
-  const novaCategoriaInput = document.getElementById("nova-categoria");
-  if (categoriaSelect.value === "nova") {
-    novaCategoriaInput.style.display = "block";
-  } else {
-    novaCategoriaInput.style.display = "none";
-  }
-}
-
-async function removerProduto(id) {
-  const token = localStorage.getItem("token");
-  await fetch(`http://localhost:3000/produtos/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  carregarProdutos();
-}
-
 function editarProduto(id) {
   const produto = produtos.find((p) => p.id === id); // Busca o produto pelo ID
   if (!produto) {
     console.error("Produto não encontrado!");
     return;
   }
-  
+
   window.scrollTo({ top: 0, behavior: "smooth" });
   document.getElementById("adicionar-btn").style.display = "none";
   document.getElementById("atualizar-btn").style.display = "inline-block";
@@ -287,10 +270,8 @@ function editarProduto(id) {
   document.getElementById("descricao").value = produto.descricao;
   document.getElementById("preco").value = produto.preco;
   document.getElementById("estoque").value = produto.estoque;
-  document.getElementById("tamanhos").value = produto.tamanhos.join(", ");
-  document.getElementById("medidas").value = produto.medidas
-    .map((m) => `${m.tamanho}: ${m.medida}`)
-    .join(", ");
+  document.getElementById("tamanhos").value = verificarTamanho(produto);
+  document.getElementById("medidas").value = verificarMedidas(produto);
   document.getElementById("subcategoria-select").value = produto.subcategoria;
   document.getElementById("categoria-select").value = produto.categoria;
   document.getElementById("nova-categoria").value = "";
@@ -307,9 +288,11 @@ function editarProduto(id) {
       corDiv.className = "cor-item";
 
       corDiv.innerHTML = `
-        <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" value="${cor.codigoCor || ""}"/>
+        <input type="text" placeholder="Código da Cor (ex: #FFFFFF)" class="codigo-cor" value="${
+          cor.codigoCor || ""
+        }"/>
         <input type="text" placeholder="Nome da Cor (ex: Branco)" class="nome-cor" value="${
-         cor.nomeCor || ""
+          cor.nomeCor || ""
         }" />
         <input type="file" class="imagem-frente" accept=".jpg, .jpeg, .png" />
         <input type="file" class="imagem-verso" accept=".jpg, .jpeg, .png" />
@@ -319,6 +302,22 @@ function editarProduto(id) {
       coresContainer.appendChild(corDiv);
     });
   }
+}
+
+function atualizarCategorias() {
+  const categoriaSelect = document.getElementById("categoria-select");
+  categoriaSelect.innerHTML =
+    '<option value="">Selecione uma categoria</option>';
+  categorias.forEach((categoria) => {
+    const option = document.createElement("option");
+    option.value = categoria;
+    option.textContent = categoria;
+    categoriaSelect.appendChild(option);
+  });
+  const novaOption = document.createElement("option");
+  novaOption.value = "nova";
+  novaOption.textContent = "Adicionar uma nova categoria";
+  categoriaSelect.appendChild(novaOption);
 }
 
 async function atualizarProduto() {
@@ -386,6 +385,22 @@ async function atualizarProduto() {
   document.getElementById("adicionar-btn").style.display = "inline-block";
   document.getElementById("atualizar-btn").style.display = "none";
   document.getElementById("voltar-btn").style.display = "none";
+}
+
+function removerCor(button) {
+  const corDiv = button.parentElement;
+  corDiv.remove();
+}
+
+async function removerProduto(id) {
+  const token = localStorage.getItem("token");
+  await fetch(`http://localhost:3000/produtos/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  carregarProdutos();
 }
 
 function voltarProduto() {

@@ -19,6 +19,7 @@ const SECRET_KEY = "segredo_admin"; // Use uma variável de ambiente em produç�
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/produtos_imagens', express.static(path.join(__dirname, '../img/produtos_imagens')));
 
 // Configuração do multer para salvar arquivos na pasta 'uploads'
@@ -98,66 +99,83 @@ app.get("/produtos", (req, res) => {
 // Adicionar um novo produto (apenas admin)
 app.post(
     "/produtos",
-    upload.any(), // Aceita qualquer campo de arquivo
+    upload.any(), // Aceita qualquer campo de arquivo ou texto
     (req, res) => {
-        try {
-            const produto = req.body;
+        console.log("Dados recebidos no req.body:", req.body);
+        console.log("Arquivos recebidos no req.files:", req.files);
 
-            // Inicializa o campo cores como um array vazio
-            produto.cores = [];
+        const produto = req.body;
 
-            // Processar os arquivos enviados
-            if (req.files) {
-                req.files.forEach((file) => {
-                    const relativePath = path.relative(__dirname, file.path).replace(/\\/g, "/");
+        // Inicializa o campo cores como um array vazio
+        produto.cores = [];
 
-                    if (file.fieldname.startsWith("cores")) {
-                        const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
-                        if (match) {
-                            const index = parseInt(match[1], 10);
-                            const field = match[2];
+        // Processar os arquivos enviados
+        if (req.files) {
+            req.files.forEach((file) => {
+                const relativePath = path.relative(__dirname, file.path).replace(/\\/g, "/");
 
-                            // Garante que o índice da cor existe no array
-                            produto.cores[index] = produto.cores[index] || {};
+                if (file.fieldname.startsWith("cores")) {
+                    const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
+                    if (match) {
+                        const index = parseInt(match[1], 10);
+                        const field = match[2];
+
+                        // Garante que o índice da cor existe no array
+                        produto.cores[index] = produto.cores[index] || {};
+
+                        // Adiciona o campo da imagem sem sobrescrever os campos existentes
+                        if (!produto.cores[index][field]) {
+                            console.log(`Adicionando imagem ao campo cores[${index}][${field}]: ${relativePath}`);
                             produto.cores[index][field] = relativePath;
+                        } else {
+                            console.log(`Campo cores[${index}][${field}] já existe, não sobrescrevendo.`);
                         }
-                    } else if (file.fieldname === "imagem") {
-                        produto.imagem = relativePath;
-                    } else if (file.fieldname === "imagem_medidas") {
-                        produto.imagem_medidas = relativePath;
                     }
-                });
-            }
-
-            // Processar os campos de texto das cores
-            const cores = Array.isArray(req.body["cores[0][codigoCor]"])
-                ? req.body["cores[0][codigoCor]"].map((_, index) => ({
-                      codigoCor: req.body[`cores[${index}][codigoCor]`],
-                      nomeCor: req.body[`cores[${index}][nomeCor]`],
-                  }))
-                : [
-                      {
-                          codigoCor: req.body["cores[0][codigoCor]"],
-                          nomeCor: req.body["cores[0][nomeCor]"],
-                      },
-                  ];
-
-            // Mesclar os dados de texto com as imagens
-            cores.forEach((cor, index) => {
-                produto.cores[index] = { ...produto.cores[index], ...cor };
+                } else if (file.fieldname === "imagem") {
+                    console.log(`Adicionando imagem principal: ${relativePath}`);
+                    produto.imagem = relativePath;
+                } else if (file.fieldname === "imagem_medidas") {
+                    console.log(`Adicionando imagem de medidas: ${relativePath}`);
+                    produto.imagem_medidas = relativePath;
+                }
             });
-
-            // Salvar o produto no JSON
-            const produtos = lerProdutos();
-            produto.id = produtos.length ? produtos[produtos.length - 1].id + 1 : 1;
-            produtos.push(produto);
-            fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
-
-            res.json({ message: "Produto salvo com sucesso!", produto });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Erro ao salvar o produto." });
         }
+
+        // Processar os campos de texto das cores
+        const regex = /^cores\[(\d+)\]\[(.+)\]$/;
+
+        Object.keys(req.body).forEach((key) => {
+            const match = key.match(regex);
+            if (match) {
+                const index = parseInt(match[1], 10);
+                const field = match[2];
+
+                // Garante que o índice da cor existe no array
+                produto.cores[index] = produto.cores[index] || {};
+
+                // Adiciona o campo de texto sem sobrescrever os campos existentes
+                if (!produto.cores[index][field]) {
+                    console.log(`Adicionando campo de texto cores[${index}][${field}]: ${req.body[key]}`);
+                    produto.cores[index][field] = req.body[key];
+                } else {
+                    console.log(`Campo cores[${index}][${field}] já existe, não sobrescrevendo.`);
+                }
+            } else {
+                console.log(`Campo ${key} não corresponde ao regex.`);
+            }
+        });
+
+        // Log do produto final antes de salvar
+        console.log("Produto final antes de salvar no JSON:", JSON.stringify(produto, null, 2));
+
+        // Salvar o produto no JSON
+        const produtos = lerProdutos();
+        produto.id = produtos.length ? produtos[produtos.length - 1].id + 1 : 1;
+        produtos.push(produto);
+        fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
+        console.log("Arquivo JSON atualizado com sucesso!");
+
+        res.json({ message: "Produto salvo com sucesso!", produto });
     }
 );
 
@@ -194,6 +212,7 @@ app.put("/produtos/:id", verificarToken, upload.any(), (req, res) => {
 
         produtos[index] = produtoAtualizado;
         fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
+        console.log("Arquivo JSON atualizado com sucesso!");
         res.json({ message: "Produto atualizado com sucesso!" });
     } else {
         res.status(404).json({ message: "Produto não encontrado!" });
@@ -206,6 +225,7 @@ app.delete("/produtos/:id", verificarToken, (req, res) => {
   const id = parseInt(req.params.id);
   produtos = produtos.filter(p => p.id !== id);
   fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
+  console.log("Arquivo JSON atualizado com sucesso!");
   res.json({ message: "Produto removido!" });
 });
 

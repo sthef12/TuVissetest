@@ -150,36 +150,6 @@
     ],
     "id": 3,
     "imagem": "../img/produtos_imagens/caneca_de_plástico/1742824431245.png",
-    "imagem_medidas": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png",
-    "imagens_cores": [
-      {
-        "cor": "Captura de tela 2023-09-05 113038",
-        "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431250.png"
-      },
-      {
-        "cor": "Captura de tela 2023-10-20 214343",
-        "caminho": "../img/produtos_imagens/caneca_de_plástico/1742824431256.png"
-      }
-    ]
-  },
-  {
-    "nome": "Boné ",
-    "composicao": "100% Algodão",
-    "descricao": "Boné bordado",
-    "preco": "100",
-    "estoque": "100",
-    "tamanhos": "Único",
-    "medidas": "Único: único",
-    "categoria": "nova",
-    "subcategoria": "Pronto",
-    "cores": [
-      {
-        "imagemFrente": "../img/produtos_imagens/boné_/1743605939825-Captura de tela 2024-06-27 125225.png",
-        "imagemVerso": "../img/produtos_imagens/boné_/1743605939826-Captura de tela 2024-05-31 191444.png"
-      }
-    ],
-    "imagem": "../img/produtos_imagens/boné_/1743605939821-Captura de tela 2023-10-20 214343.png",
-    "imagem_medidas": "../img/produtos_imagens/boné_/1743605939823-Captura de tela 2023-08-25 215226.png",
-    "id": 4
+    "imagem_medidas": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png"
   }
 ]
