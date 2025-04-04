@@ -124,12 +124,8 @@ app.post(
                         produto.cores[index] = produto.cores[index] || {};
 
                         // Adiciona o campo da imagem sem sobrescrever os campos existentes
-                        if (!produto.cores[index][field]) {
-                            console.log(`Adicionando imagem ao campo cores[${index}][${field}]: ${relativePath}`);
-                            produto.cores[index][field] = relativePath;
-                        } else {
-                            console.log(`Campo cores[${index}][${field}] já existe, não sobrescrevendo.`);
-                        }
+                        console.log(`Adicionando imagem ao campo cores[${index}][${field}]: ${relativePath}`);
+                        produto.cores[index][field] = relativePath;
                     }
                 } else if (file.fieldname === "imagem") {
                     console.log(`Adicionando imagem principal: ${relativePath}`);
@@ -142,26 +138,24 @@ app.post(
         }
 
         // Processar os campos de texto das cores
-        const regex = /^cores\[(\d+)\]\[(.+)\]$/;
+        const regexCores = /^cores\[(\d+)\]\[(.+)\]$/;
 
         Object.keys(req.body).forEach((key) => {
-            const match = key.match(regex);
-            if (match) {
-                const index = parseInt(match[1], 10);
-                const field = match[2];
+            const matchCores = key.match(regexCores);
+            if (matchCores) {
+                const index = parseInt(matchCores[1], 10);
+                const field = matchCores[2];
 
                 // Garante que o índice da cor existe no array
                 produto.cores[index] = produto.cores[index] || {};
 
                 // Adiciona o campo de texto sem sobrescrever os campos existentes
-                if (!produto.cores[index][field]) {
-                    console.log(`Adicionando campo de texto cores[${index}][${field}]: ${req.body[key]}`);
-                    produto.cores[index][field] = req.body[key];
-                } else {
-                    console.log(`Campo cores[${index}][${field}] já existe, não sobrescrevendo.`);
-                }
+                console.log(`Adicionando campo cores[${index}][${field}]: ${req.body[key]}`);
+                produto.cores[index][field] = req.body[key];
             } else {
-                console.log(`Campo ${key} não corresponde ao regex.`);
+                // Processar campos gerais
+                console.log(`Adicionando campo geral ${key}: ${req.body[key]}`);
+                produto[key] = req.body[key];
             }
         });
 
@@ -181,6 +175,9 @@ app.post(
 
 // Atualizar um produto (apenas admin)
 app.put("/produtos/:id", verificarToken, upload.any(), (req, res) => {
+    console.log("Dados recebidos no req.body:", req.body);
+    console.log("Arquivos recebidos no req.files:", req.files);
+
     const produtos = lerProdutos();
     const id = parseInt(req.params.id);
     const index = produtos.findIndex((p) => p.id === id);
