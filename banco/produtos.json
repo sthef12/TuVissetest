@@ -151,5 +151,27 @@
     "id": 3,
     "imagem": "../img/produtos_imagens/caneca_de_plástico/1742824431245.png",
     "imagem_medidas": "../img/produtos_imagens/caneca_de_plástico/1742824431249.png"
+  },
+  {
+    "nome": "Boné ",
+    "composicao": "100% Algodão",
+    "descricao": "Boné bordado",
+    "preco": "100",
+    "estoque": "100",
+    "tamanhos": "Único",
+    "medidas": "Único: único",
+    "categoria": "Bordado",
+    "subcategoria": "Pronto",
+    "cores": [
+      {
+        "codigoCor": "cqcsfwf",
+        "nomeCor": "nynjymyj",
+        "imagemFrente": "../img/produtos_imagens/boné_/1744156553827-Captura de tela 2023-08-23 124016.png",
+        "imagemVerso": "../img/produtos_imagens/boné_/1744156553829-Captura de tela 2023-08-25 215226.png"
+      }
+    ],
+    "imagem": "../img/produtos_imagens/boné_/1744156553823-Captura de tela 2023-09-05 113038.png",
+    "imagem_medidas": "../img/produtos_imagens/boné_/1744156553827-Captura de tela 2024-06-27 125225.png",
+    "id": 4
   }
 ]

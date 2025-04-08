@@ -127,10 +127,13 @@ async function adicionarProduto() {
   );
   formData.append("tamanhos", document.getElementById("tamanhos").value);
   formData.append("medidas", document.getElementById("medidas").value);
-  formData.append(
-    "categoria",
-    document.getElementById("categoria-select").value
-  );
+
+  // Verificar se a categoria é "nova" e usar o valor do campo de nova categoria
+  const categoriaSelect = document.getElementById("categoria-select").value;
+  const novaCategoria = document.getElementById("nova-categoria").value.trim();
+  const categoriaFinal = categoriaSelect === "nova" && novaCategoria ? novaCategoria : categoriaSelect;
+  formData.append("categoria", categoriaFinal);
+
   formData.append(
     "subcategoria",
     document.getElementById("subcategoria-select").value
@@ -150,12 +153,18 @@ async function adicionarProduto() {
 
   // Adicionar campos das cores
   const coresLista = document.querySelectorAll(".cor-item");
+  const listaCores = [];
+
   coresLista.forEach((corItem, index) => {
     const codigoCor = corItem.querySelector(".codigo-cor").value;
     const nomeCor = corItem.querySelector(".nome-cor").value;
 
-    formData.append(`cores[${index}][codigoCor]`, codigoCor);
-    formData.append(`cores[${index}][nomeCor]`, nomeCor);
+    const corObj = {
+      codigoCor,
+      nomeCor,
+    };
+
+    listaCores.push(corObj);
 
     const imagemFrente = corItem.querySelector(".imagem-frente").files[0];
     const imagemVerso = corItem.querySelector(".imagem-verso").files[0];
@@ -163,10 +172,14 @@ async function adicionarProduto() {
     if (imagemFrente) {
       formData.append(`cores[${index}][imagemFrente]`, imagemFrente);
     }
+
     if (imagemVerso) {
       formData.append(`cores[${index}][imagemVerso]`, imagemVerso);
     }
   });
+
+  // Envia o array como JSON string
+  formData.append("cores", JSON.stringify(listaCores));
 
   const token = localStorage.getItem("token");
   await fetch("http://localhost:3000/produtos", {
