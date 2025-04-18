@@ -86,7 +86,7 @@ async function carregarProdutos() {
               <td>${verificarTamanho(produto)}</td>
               <td>${verificarMedidas(produto)}</td>
               <td><img src="${
-                produto.imagem_medidas
+                produto.imagem_medidas == undefined ? "N/A" : produto.imagem_medidas
               }" alt="Medidas" width="50"></td>
               <td>${produto.estoque}</td>
               <td>${
@@ -147,9 +147,9 @@ async function adicionarProduto() {
 
   // Adicionar imagem de medidas
   const imagemMedidas = document.getElementById("imagem_medidas").files[0];
+  console.log(imagemMedidas);
   if (imagemMedidas) {
     formData.append("imagem_medidas", imagemMedidas);
-  }
 
   // Adicionar campos das cores
   const coresLista = document.querySelectorAll(".cor-item");
@@ -195,7 +195,7 @@ async function adicionarProduto() {
   for (let pair of formData.entries()) {
     console.log(pair[0], pair[1]);
   }
-}
+}}
 
 function adicionarCor() {
   const coresContainer = document.getElementById("cores-container");
@@ -367,10 +367,11 @@ async function atualizarProduto() {
     document.getElementById("subcategoria-select").value
   );
   formData.append("imagem", document.getElementById("imagem").files[0]);
-  formData.append(
-    "imagem_medidas",
-    document.getElementById("imagem_medidas").files[0]
-  );
+
+  const imagemMedidas = document.getElementById("imagem_medidas").files[0];
+  if (imagemMedidas) {
+    formData.append("imagem_medidas", imagemMedidas);
+  }
 
   cores.forEach((cor, index) => {
     formData.append(`cores[${index}][codigoCor]`, cor.codigoCor);

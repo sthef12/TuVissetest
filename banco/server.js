@@ -123,7 +123,6 @@ app.post(
     // Inicializa o campo cores como um array vazio
     produto.cores = JSON.parse(req.body.cores || "[]");
 
-
     // Processar os arquivos enviados
     if (req.files) {
       req.files.forEach((file) => {
@@ -217,7 +216,10 @@ app.put("/produtos/:id", verificarToken, upload.any(), (req, res) => {
           removerArquivo(produtos[index].imagem);
           produtoAtualizado.imagem = file.path;
         } else if (file.fieldname === "imagem_medidas") {
-          removerArquivo(produtos[index].imagem_medidas);
+          // Verifica se o produto já possui uma imagem_medidas e remove a antiga
+          if (produtos[index].imagem_medidas) {
+            removerArquivo(produtos[index].imagem_medidas);
+          }
           produtoAtualizado.imagem_medidas = file.path;
         } else if (file.fieldname.startsWith("cores")) {
           const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
