@@ -110,10 +110,12 @@
 }
 
 .cor_produto {
-    background-color: aqua;
+    background-color: transparent;
     height: 100%;
     width: 100%;
     border-radius: 50%;
+    border: 1px solid var(--lab3-color);
+    cursor: pointer;
 }
 
 .valor_button {
@@ -128,7 +130,6 @@
 .buttons {
     display: flex;
     flex-direction: column;
-
     width: 100%;
     gap: 10px;
 }
@@ -144,8 +145,6 @@
     cursor: pointer;
     font-size: large;
 }
-
-
 
 @media (max-width: 767px) {
     #produto_view {
