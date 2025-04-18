@@ -75,10 +75,11 @@ main {
 }
 
 .cor_produto {
-  background-color: aqua;
+  background-color: transparent;
   height: 100%;
   width: 100%;
   border-radius: 50%;
+  border: 1px solid var(--lab3-color);
 }
 
 .produtos button {
