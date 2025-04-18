@@ -19,26 +19,28 @@ const SECRET_KEY = "segredo_admin"; // Use uma variável de ambiente em produç�
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   "/produtos_imagens",
   express.static(path.join(__dirname, "../img/produtos_imagens"))
 );
 
-// Configuração do multer para salvar arquivos na pasta 'produtos_imagens'
+// Configuração do multer para salvar arquivos na pasta 'uploads'
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const nomeProduto = req.body.nome.replace(/\s+/g, "_").toLowerCase();
-    const dir = path.join(__dirname, `../img/produtos_imagens/${nomeProduto}`);
+    const produtoNome = req.body.nome.replace(/\s+/g, "_").toLowerCase(); // Substituir espaços por "_" e deixar em minúsculas
+    const dir = path.join(__dirname, `../img/produtos_imagens/${produtoNome}`);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
     cb(null, dir);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-const upload = multer({ storage: storage });
+
+const upload = multer({ storage });
 
 // Função para ler o arquivo JSON
 const lerProdutos = () => JSON.parse(fs.readFileSync(FILE_PATH));
@@ -104,111 +106,143 @@ app.get("/produtos", (req, res) => {
 // Adicionar um novo produto (apenas admin)
 app.post(
   "/produtos",
-  verificarToken,
-  upload.fields([
-    { name: "imagem" },
-    { name: "imagem_medidas" },
-    { name: "imagens_cores" },
-  ]),
+  upload.any(), // Aceita qualquer campo de arquivo ou texto
   (req, res) => {
+    console.log(">>> Campos recebidos em req.body:");
+    Object.keys(req.body).forEach((key) => {
+      console.log("-", key);
+    });
+
+    console.log(">>> Arquivos recebidos:");
+    req.files.forEach((file) => {
+      console.log("-", file.fieldname);
+    });
+
+    const produto = req.body;
+
+    // Inicializa o campo cores como um array vazio
+    produto.cores = JSON.parse(req.body.cores || "[]");
+
+    // Processar os arquivos enviados
+    if (req.files) {
+      req.files.forEach((file) => {
+        const relativePath = path
+          .relative(__dirname, file.path)
+          .replace(/\\/g, "/");
+
+        if (file.fieldname.startsWith("cores")) {
+          const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
+          if (match) {
+            const index = parseInt(match[1], 10);
+            const field = match[2];
+
+            // Garante que o índice da cor existe no array
+            produto.cores[index] = produto.cores[index] || {};
+
+            // Adiciona o campo da imagem sem sobrescrever os campos existentes
+            console.log(
+              `Adicionando imagem ao campo cores[${index}][${field}]: ${relativePath}`
+            );
+            produto.cores[index][field] = relativePath;
+          }
+        } else if (file.fieldname === "imagem") {
+          console.log(`Adicionando imagem principal: ${relativePath}`);
+          produto.imagem = relativePath;
+        } else if (file.fieldname === "imagem_medidas") {
+          console.log(`Adicionando imagem de medidas: ${relativePath}`);
+          produto.imagem_medidas = relativePath;
+        }
+      });
+    }
+
+    Object.keys(req.body).forEach((key) => {
+      console.log(key.startsWith("cores[") ? true : false);
+      console.log(key.startsWith("cores = ") ? true : false);
+      if (key.startsWith("cores[")) {
+        const parts = key.split(/\[|\]/).filter(Boolean); // ["cores", "0", "codigoCor"]
+        const index = parseInt(parts[1], 10);
+        const field = parts[2];
+
+        produto.cores[index] = produto.cores[index] || {};
+
+        // Evita sobrescrever imagem se já tiver valor
+        if (
+          (field === "imagemFrente" || field === "imagemVerso") &&
+          produto.cores[index][field]
+        )
+          return;
+
+        produto.cores[index][field] = req.body[key];
+        console.log(`Adicionado cores[${index}][${field}] = ${req.body[key]}`);
+      } else {
+        produto[key] = req.body[key];
+        console.log(`Campo geral: ${key} = ${req.body[key]}`);
+      }
+    });
+
+    // Log do produto final antes de salvar
+    console.log(
+      "Produto final antes de salvar no JSON:",
+      JSON.stringify(produto, null, 2)
+    );
+
+    // Salvar o produto no JSON
     const produtos = lerProdutos();
-    const novoProduto = req.body;
-    novoProduto.id = produtos.length ? produtos[produtos.length - 1].id + 1 : 1;
-    const nomeProduto = req.body.nome.replace(/\s+/g, "_").toLowerCase();
-    if (req.files["imagem"]) {
-      novoProduto.imagem = `../img/produtos_imagens/${nomeProduto}/${req.files["imagem"][0].filename}`;
-    }
-    if (req.files["imagem_medidas"]) {
-      novoProduto.medidasimagem = `../img/produtos_imagens/${nomeProduto}/${req.files["imagem_medidas"][0].filename}`;
-    }
-    if (req.files["imagens_cores"]) {
-      novoProduto.imagens_cores = Array.from(req.files["imagens_cores"]).map(
-        (file) => ({
-          cor: file.originalname.split(".")[0], // Assuming the color is part of the filename
-          caminho: `../img/produtos_imagens/${nomeProduto}/${file.filename}`,
-        })
-      );
-    }
-    novoProduto.cores = Array.isArray(novoProduto.cores)
-      ? novoProduto.cores
-      : novoProduto.cores.split(",").map((c) => c.trim());
-    novoProduto.tamanhos = Array.isArray(novoProduto.tamanhos)
-      ? novoProduto.tamanhos
-      : novoProduto.tamanhos.split(",").map((t) => t.trim());
-    novoProduto.medidas = Array.isArray(novoProduto.medidas)
-      ? novoProduto.medidas
-      : novoProduto.medidas.split(",").map((m) => {
-          const [tamanho, medida] = m.split(":").map((part) => part.trim());
-          return { tamanho, medida };
-        });
-    novoProduto.preco = parseFloat(novoProduto.preco);
-    novoProduto.estoque = parseInt(novoProduto.estoque, 10);
-    novoProduto.subcategoria = req.body.subcategoria;
-    produtos.push(novoProduto);
+    produto.id = produtos.length ? produtos[produtos.length - 1].id + 1 : 1;
+    produtos.push(produto);
     fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
-    res.json({ message: "Produto adicionado!" });
+    console.log("Arquivo JSON atualizado com sucesso!");
+
+    res.json({ message: "Produto salvo com sucesso!", produto });
   }
 );
 
 // Atualizar um produto (apenas admin)
-app.put(
-  "/produtos/:id",
-  verificarToken,
-  upload.fields([
-    { name: "imagem" },
-    { name: "imagem_medidas" },
-    { name: "imagens_cores" },
-  ]),
-  (req, res) => {
-    const produtos = lerProdutos();
-    const id = parseInt(req.params.id);
-    const index = produtos.findIndex((p) => p.id === id);
+app.put("/produtos/:id", verificarToken, upload.any(), (req, res) => {
+  console.log("Dados recebidos no req.body:", req.body);
+  console.log("Arquivos recebidos no req.files:", req.files);
 
-    if (index !== -1) {
-      const produtoAtualizado = { ...produtos[index], ...req.body };
-      const nomeProduto = req.body.nome.replace(/\s+/g, "_").toLowerCase();
-      if (req.files["imagem"]) {
-        removerArquivo(path.join(__dirname, produtoAtualizado.imagem));
-        produtoAtualizado.imagem = `../img/produtos_imagens/${nomeProduto}/${req.files["imagem"][0].filename}`;
-      }
-      if (req.files["imagem_medidas"]) {
-        removerArquivo(path.join(__dirname, produtoAtualizado.medidasimagem));
-        produtoAtualizado.medidasimagem = `../img/produtos_imagens/${nomeProduto}/${req.files["imagem_medidas"][0].filename}`;
-      }
-      if (req.files["imagens_cores"]) {
-        produtoAtualizado.imagens_cores.forEach((img) =>
-          removerArquivo(path.join(__dirname, img.caminho))
-        );
-        produtoAtualizado.imagens_cores = Array.from(
-          req.files["imagens_cores"]
-        ).map((file) => ({
-          cor: file.originalname.split(".")[0], // Assuming the color is part of the filename
-          caminho: `../img/produtos_imagens/${nomeProduto}/${file.filename}`,
-        }));
-      }
-      produtoAtualizado.cores = Array.isArray(produtoAtualizado.cores)
-        ? produtoAtualizado.cores
-        : produtoAtualizado.cores.split(",").map((c) => c.trim());
-      produtoAtualizado.tamanhos = Array.isArray(produtoAtualizado.tamanhos)
-        ? produtoAtualizado.tamanhos
-        : produtoAtualizado.tamanhos.split(",").map((t) => t.trim());
-      produtoAtualizado.medidas = Array.isArray(produtoAtualizado.medidas)
-        ? produtoAtualizado.medidas
-        : produtoAtualizado.medidas.split(",").map((m) => {
-            const [tamanho, medida] = m.split(":").map((part) => part.trim());
-            return { tamanho, medida };
-          });
-      produtoAtualizado.preco = parseFloat(produtoAtualizado.preco);
-      produtoAtualizado.estoque = parseInt(produtoAtualizado.estoque, 10);
-      produtoAtualizado.subcategoria = req.body.subcategoria;
-      produtos[index] = produtoAtualizado;
-      fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
-      res.json({ message: "Produto atualizado!" });
-    } else {
-      res.status(404).json({ message: "Produto não encontrado!" });
+  const produtos = lerProdutos();
+  const id = parseInt(req.params.id);
+  const index = produtos.findIndex((p) => p.id === id);
+
+  if (index !== -1) {
+    const produtoAtualizado = { ...produtos[index], ...req.body };
+
+    // Processar imagens
+    if (req.files) {
+      req.files.forEach((file) => {
+        if (file.fieldname === "imagem") {
+          removerArquivo(produtos[index].imagem);
+          produtoAtualizado.imagem = file.path;
+        } else if (file.fieldname === "imagem_medidas") {
+          // Verifica se o produto já possui uma imagem_medidas e remove a antiga
+          if (produtos[index].imagem_medidas) {
+            removerArquivo(produtos[index].imagem_medidas);
+          }
+          produtoAtualizado.imagem_medidas = file.path;
+        } else if (file.fieldname.startsWith("cores")) {
+          const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
+          if (match) {
+            const corIndex = parseInt(match[1], 10);
+            const field = match[2];
+            produtoAtualizado.cores = produtoAtualizado.cores || [];
+            produtoAtualizado.cores[corIndex] =
+              produtoAtualizado.cores[corIndex] || {};
+            produtoAtualizado.cores[corIndex][field] = file.path;
+          }
+        }
+      });
     }
+
+    produtos[index] = produtoAtualizado;
+    fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
+    console.log("Arquivo JSON atualizado com sucesso!");
+    res.json({ message: "Produto atualizado com sucesso!" });
+  } else {
+    res.status(404).json({ message: "Produto não encontrado!" });
   }
-);
+});
 
 // Remover um produto (apenas admin)
 app.delete("/produtos/:id", verificarToken, (req, res) => {
@@ -216,6 +250,7 @@ app.delete("/produtos/:id", verificarToken, (req, res) => {
   const id = parseInt(req.params.id);
   produtos = produtos.filter((p) => p.id !== id);
   fs.writeFileSync(FILE_PATH, JSON.stringify(produtos, null, 2));
+  console.log("Arquivo JSON atualizado com sucesso!");
   res.json({ message: "Produto removido!" });
 });
 

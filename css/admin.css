@@ -59,3 +59,15 @@ td {
 .opcoes-botoes {
     margin-bottom: 10vh;
 }
+
+.cor-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cor-item button{
+    width: 60%;
+}
