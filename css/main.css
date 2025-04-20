@@ -75,6 +75,7 @@ main {
 }
 
 .cor_produto {
+  border: 2px solid black;
   background-color: aqua;
   height: 100%;
   width: 100%;
