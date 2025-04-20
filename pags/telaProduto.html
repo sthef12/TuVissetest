@@ -103,7 +103,15 @@
               <div class="carrossel_container">
                 <button id="cima" class="seta" onclick="moverCarrossel(-1)">&#10095;</button>
                 <div class="carrossel_view" id="carrossel">
-                  ${produto.imagens_cores.map((img, i) => `<img class="imagem_view" src="${img.caminho}" alt="${img.cor}" onclick="selecionarImagem(${i})">`).join('')}
+                  ${produto.cores && produto.cores.length > 0 
+                    ? produto.cores.map((cor, i) => `
+                        <img class="imagem_view" src="${cor.imagemFrente}" alt="Frente - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')">
+                        <img class="imagem_view" src="${cor.imagemVerso}" alt="Verso - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'verso')">
+                      `).join('')
+                    : '<p>Nenhuma imagem disponível</p>'}
+                  ${produto.imagem_medidas && produto.imagem_medidas !== "undefined"
+                    ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
+                    : ''}
                 </div>
                 <button id="baixo" class="seta" onclick="moverCarrossel(1)">&#10095;</button>
               </div>
@@ -118,9 +126,11 @@
                   <p>${produto.descricao}</p>
                 </span>
                 <div class="cores">
-                  <span class="cor_produto"></span>
-                  <span class="cor_produto"></span>
-                  <span class="cor_produto"></span>
+                  ${produto.cores && produto.cores.length > 0 
+                    ? produto.cores.map((cor, i) => `
+                        <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
+                      `).join('')
+                    : '<p>Nenhuma cor disponível</p>'}
                 </div>
               </div>
               <div class="valor_button">
@@ -145,14 +155,22 @@
     //ao carregar a pagina chama essa função:
     window.onload = buscarProdutoPelaURL;
 
-    function selecionarImagem(index) {
+    function selecionarImagem(index, tipo) {
       const produtoId = new URLSearchParams(window.location.search).get('id');
       fetch("../banco/produtos.json")
         .then(response => response.json())
         .then(produtosJson => {
           const produto = produtosJson.find(p => p.id == produtoId);
           if (produto) {
-            document.getElementById("imagem_principal").src = produto.imagens_cores[index].caminho;
+            let imagemSelecionada;
+            if (tipo === 'frente') {
+              imagemSelecionada = produto.cores[index].imagemFrente;
+            } else if (tipo === 'verso') {
+              imagemSelecionada = produto.cores[index].imagemVerso;
+            } else if (tipo === 'medidas') {
+              imagemSelecionada = produto.imagem_medidas;
+            }
+            document.getElementById("imagem_principal").src = imagemSelecionada;
           }
         })
         .catch(error => console.error(error));
