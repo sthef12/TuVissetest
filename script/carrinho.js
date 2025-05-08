@@ -4,7 +4,7 @@ async function buscarProdutoPeloLocalStorage() {
 
   if (carrinho.length > 0) {
     try {
-      const produtos = await fetch("../banco/produtos.json");
+      const produtos = await fetch("https://backend-tuvisse.onrender.com/produtos");
       const produtosJson = await produtos.json();
 
       let totalItens = 0;

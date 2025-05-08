@@ -89,7 +89,7 @@
 
       if (produtoId) {
         try {
-          const produtos = await fetch("../banco/produtos.json");
+          const produtos = await fetch("https://backend-tuvisse.onrender.com/produtos");
           const produtosJson = await produtos.json();
           const produto = produtosJson.find(p => p.id == produtoId);
 
@@ -157,7 +157,7 @@
 
     function selecionarImagem(index, tipo) {
       const produtoId = new URLSearchParams(window.location.search).get('id');
-      fetch("../banco/produtos.json")
+      fetch("https://backend-tuvisse.onrender.com/produtos")
         .then(response => response.json())
         .then(produtosJson => {
           const produto = produtosJson.find(p => p.id == produtoId);
