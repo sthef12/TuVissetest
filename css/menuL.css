@@ -41,9 +41,6 @@
   color: var(--lab1-color);
 }
 
-
-
-
  @media (max-width: 767px) {
   #corpo_categorias {
     display: none;

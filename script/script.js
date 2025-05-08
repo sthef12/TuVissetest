@@ -32,7 +32,7 @@ async function carregarCategorias() {
       //para cada subcategoria, cria um elemento <li> com um link (href) e adiciona na lista de subcategorias
       categorias[categoria].forEach((subcategoria) => {
         const li = document.createElement("li");
-        li.innerHTML = `<a href="#" class="sub_itens">${subcategoria}</a>`;
+        li.innerHTML = `<a onclick="carregarProdutos('${categoria}', '${subcategoria}')" class="sub_itens">${subcategoria}</a>`;
         details.appendChild(li);
       });
 
