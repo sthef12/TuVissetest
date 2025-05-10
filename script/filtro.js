@@ -18,7 +18,7 @@ async function carregarProdutos(filtroCategoria = null, filtroSubcategoria = nul
       // Exibir os produtos filtrados
       for (const produto of produtosFiltrados) {
         catalogo.innerHTML += `
-        <a href="../pags/telaProduto.html?id=${produto.id}">
+        <a href="/pags/telaProduto.html?id=${produto.id}">
           <div class="produtos">
             <img src="${produto.imagem}" alt="${produto.nome}" />
             <div class="nome_preco_produto">
