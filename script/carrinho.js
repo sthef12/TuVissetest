@@ -139,7 +139,7 @@ function finalizarPedido() {
     });
 
     const mensagem = `Olá, segue meu pedido: \n - *Produtos:* \n${listaProdutos} \n - *Total de itens:* ${totalItens} \n - *Valor total:* ${valorTotal} \n \n Desejo conversar e realizar o pagamento. \n Aguardo retorno para finalizar a compra.`;
-    const url = `https://api.whatsapp.com/send?phone=5581987133707&text=${encodeURIComponent(
+    const url = `https://api.whatsapp.com/send?phone=5581999543880&text=${encodeURIComponent(
       mensagem
     )}`;
     window.open(url, "_blank");

@@ -126,3 +126,13 @@ window.onload = () => {
   carregarProdutos();
   carregarCategorias();
 };
+
+
+//whatsapp função
+
+function abrirWhatsApp() {
+  var telefone = "55081999543880"; // Substitua pelo número desejado com DDD
+  var mensagem = encodeURIComponent("Olá!");
+  var url = "https://wa.me/" + telefone + "?text=" + mensagem;
+  window.open(url, "_blank");
+}
