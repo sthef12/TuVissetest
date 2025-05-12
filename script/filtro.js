@@ -55,24 +55,29 @@ async function carregarCategorias() {
       console.error(error);
     }
   }
-  
-  //carregar os produtos do catalogo:
-  async function carregarProdutos() {
-    try {
-      const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
-      const produtosJson = await produtos.json();
-  
-      if (produtosJson.length > 0) {
-        //se tiver algum produto:
-        const catalogo = document.getElementById("catalogo");
-        catalogo.innerHTML = "";
-  
-        //para cada produto ele insere na div catalogo essa estrutura HTML:
-        for (const produto of produtosJson) {
-          catalogo.innerHTML += `
-          <a href="/pags/telaProduto.html?id=${produto.id}">
+//carregar os produtos do catalogo:
+async function carregarProdutos(filtroCategoria = null, filtroSubcategoria = null) {
+  try {
+    const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
+    const produtosJson = await produtos.json();
+
+    if (produtosJson.length > 0) {
+      const catalogo = document.getElementById("catalogo");
+      catalogo.innerHTML = "";
+
+      // FILTRAR produtos
+      const produtosFiltrados = produtosJson.filter(produto => {
+        const categoriaOk = !filtroCategoria || produto.categoria === filtroCategoria;
+        const subcategoriaOk = !filtroSubcategoria || produto.subcategoria === filtroSubcategoria;
+        return categoriaOk && subcategoriaOk;
+      });
+
+      // Exibir os produtos filtrados
+      for (const produto of produtosFiltrados) {
+        catalogo.innerHTML += `
+        <a href="../pags/telaProduto.html?id=${produto.id}">
           <div class="produtos">
-            <img src="${produto.imagem.startsWith('../') ? produto.imagem.replace('../', './') : produto.imagem}" alt="${produto.nome}" />
+            <img src="${produto.imagem}" alt="${produto.nome}" />
             <div class="nome_preco_produto">
               <h1>${produto.nome}</h1>
               <div class="cores">
