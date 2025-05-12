@@ -1,7 +1,7 @@
 //carregar as categorias do menu lateral:
 async function carregarCategorias() {
   try {
-    const produtos = await fetch("https://backend-tuvisse.onrender.com/produtos");
+    const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
     const produtosJson = await produtos.json();
 
     const categorias = {};
@@ -59,7 +59,7 @@ async function carregarCategorias() {
 //carregar os produtos do catalogo:
 async function carregarProdutos() {
   try {
-    const produtos = await fetch("https://backend-tuvisse.onrender.com/produtos");
+    const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
     const produtosJson = await produtos.json();
 
     if (produtosJson.length > 0) {
@@ -72,13 +72,13 @@ async function carregarProdutos() {
         catalogo.innerHTML += `
         <a href="pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
-          <img src="${produto.imagem}" alt="${produto.nome}" />
+          <img src="${produto.imagem.startsWith('../') ? produto.imagem.replace('../', './') : produto.imagem}" alt="${produto.nome}" />
           <div class="nome_preco_produto">
           <h1>${produto.nome}</h1>
           <div class="cores">
           ${produto.cores && produto.cores.length > 0 
             ? produto.cores.map((cor, i) => `
-                <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
+          <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
               `).join('')
             : '<p>Incolor</p>'}
           </div>
