@@ -22,14 +22,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   "/produtos_imagens",
-  express.static(path.join(__dirname, "/img/produtos_imagens"))
+  express.static(path.join(__dirname, "img/produtos_imagens"))
 );
 
 // Configuração do multer para salvar arquivos na pasta 'uploads'
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const produtoNome = req.body.nome.replace(/\s+/g, "_").toLowerCase(); // Substituir espaços por "_" e deixar em minúsculas
-    const dir = path.join(__dirname, `/img/produtos_imagens/${produtoNome}`);
+    const dir = path.join(__dirname, `img/produtos_imagens/${produtoNome}`);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
