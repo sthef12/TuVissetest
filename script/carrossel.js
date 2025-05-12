@@ -41,13 +41,13 @@ function updateCarouselImage() {
   const carouselImage2 = document.querySelector('.img-2');
   const carouselImage3 = document.querySelector('.img-3');
   if (window.innerWidth < 768) { // Define um limite de largura, por exemplo, 768px
-      carouselImage.src = 'TuVissetest/img/pequena1.png'; // Caminho da imagem menor
-      carouselImage2.src = 'TuVissetest/img/pequena2.png'; // Caminho da imagem menor
-      carouselImage3.src = 'TuVissetest/img/pequena3.png'; // Caminho da imagem menor
+      carouselImage.src = 'https://sthef12.github.io/TuVissetest/img/pequena1.png'; // Caminho da imagem menor
+      carouselImage2.src = 'https://sthef12.github.io/TuVissetest/img/pequena2.png'; // Caminho da imagem menor
+      carouselImage3.src = 'https://sthef12.github.io/TuVissetest/img/pequena3.png'; // Caminho da imagem menor
   } else {
-      carouselImage.src = 'TuVissetest/img/banner.png'; // Caminho da imagem maior
-      carouselImage2.src = 'TuVissetest/img/banner2.png'; // Caminho da imagem maior
-      carouselImage3.src = 'TuVissetest/img/banner3.png'; // Caminho da imagem maior
+      carouselImage.src = 'https://sthef12.github.io/TuVissetest/img/banner.png'; // Caminho da imagem maior
+      carouselImage2.src = 'https://sthef12.github.io/TuVissetest/img/banner2.png'; // Caminho da imagem maior
+      carouselImage3.src = 'https://sthef12.github.io/TuVissetest/img/banner3.png'; // Caminho da imagem maior
   }
 }
 
