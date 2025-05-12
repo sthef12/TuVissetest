@@ -78,7 +78,7 @@ async function carregarProdutos() {
           <div class="cores">
           ${produto.cores && produto.cores.length > 0 
             ? produto.cores.map((cor, i) => `
-          <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
+              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
               `).join('')
             : '<p>Incolor</p>'}
           </div>

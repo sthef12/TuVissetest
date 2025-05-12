@@ -70,9 +70,9 @@ async function carregarCategorias() {
         //para cada produto ele insere na div catalogo essa estrutura HTML:
         for (const produto of produtosJson) {
           catalogo.innerHTML += `
-          <a href="../pags/telaProduto.html?id=${produto.id}">
+          <a href="/pags/telaProduto.html?id=${produto.id}">
           <div class="produtos">
-            <img src="${produto.imagem}" alt="${produto.nome}" />
+            <img src="${produto.imagem.startsWith('../') ? produto.imagem.replace('../', './') : produto.imagem}" alt="${produto.nome}" />
             <div class="nome_preco_produto">
               <h1>${produto.nome}</h1>
               <div class="cores">
