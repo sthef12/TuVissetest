@@ -72,13 +72,13 @@ async function carregarProdutos() {
         catalogo.innerHTML += `
         <a href="pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
-          <img src="${produto.imagem}" alt="${produto.nome}" />
+          <img src="${produto.imagem.startsWith('../') ? produto.imagem.replace('../', './') : produto.imagem}" alt="${produto.nome}" />
           <div class="nome_preco_produto">
           <h1>${produto.nome}</h1>
           <div class="cores">
           ${produto.cores && produto.cores.length > 0 
             ? produto.cores.map((cor, i) => `
-                <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
+          <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
               `).join('')
             : '<p>Incolor</p>'}
           </div>
