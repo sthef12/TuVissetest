@@ -72,15 +72,24 @@ async function carregarProdutos() {
         catalogo.innerHTML += `
         <a href="pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
-          <img src="${produto.imagem.startsWith('../') ? produto.imagem.replace('../', './') : produto.imagem}" alt="${produto.nome}" />
+          <img src="${
+            produto.imagem.startsWith("../")
+              ? produto.imagem.replace("../", "./")
+              : produto.imagem
+          }" alt="${produto.nome}" />
           <div class="nome_preco_produto">
           <h1>${produto.nome}</h1>
           <div class="cores">
-          ${produto.cores && produto.cores.length > 0 
-            ? produto.cores.map((cor, i) => `
-              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
-              `).join('')
-            : '<p>Incolor</p>'}
+          ${
+            produto.cores && produto.cores.length > 0
+              ? produto.cores
+                  .map(
+                    (cor, i) => `
+              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
+                  )
+                  .join("")
+              : "<p>Incolor</p>"
+          }
           </div>
           <h2>R$ ${produto.preco.toFixed(2)}</h2>
           </div>
@@ -104,11 +113,11 @@ function openMenu() {
   ) {
     menuLateral.style.display = "block";
     iconFechar.style.display = "block";
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   } else if (menuLateral.style.display === "block") {
     menuLateral.style.display = "none";
     iconFechar.style.display = "none";
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   }
 }
 
