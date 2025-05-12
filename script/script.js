@@ -1,7 +1,7 @@
 //carregar as categorias do menu lateral:
 async function carregarCategorias() {
   try {
-    const produtos = await fetch("https://backend-tuvisse.onrender.com/produtos");
+    const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
     const produtosJson = await produtos.json();
 
     const categorias = {};
