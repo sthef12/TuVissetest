@@ -70,7 +70,7 @@ async function carregarProdutos() {
       //para cada produto ele insere na div catalogo essa estrutura HTML:
       for (const produto of produtosJson) {
         catalogo.innerHTML += `
-        <a href="pags/telaProduto.html?id=${produto.id}">
+        <a href="./pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
           <img src="${
             produto.imagem.startsWith("../")
