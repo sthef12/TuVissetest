@@ -26,7 +26,7 @@ function addHTML(produto) {
   divBuscado.appendChild(div);
 }
 
-fetch("https://backend-tuvisse.onrender.com/produtos")
+fetch("https://tuvissetest.onrender.com/produtos")
   .then((data) => data.json())
   .then((produtosJson) => {
     produtos = produtosJson;

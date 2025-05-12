@@ -3,7 +3,7 @@ let cores = [];
 let produtos = [];
 
 async function carregarProdutos() {
-  const res = await fetch("https://backend-tuvisse.onrender.com/produtos");
+  const res = await fetch("https://tuvissetest.onrender.com/produtos");
   produtos = await res.json(); // Armazena os produtos na variável global
   const produtosPorCategoria = produtos.reduce((acc, produto) => {
     if (!acc[produto.categoria]) {
@@ -182,7 +182,7 @@ async function adicionarProduto() {
   formData.append("cores", JSON.stringify(listaCores));
 
   const token = localStorage.getItem("token");
-  await fetch("https://backend-tuvisse.onrender.com/produtos", {
+  await fetch("https://tuvissetest.onrender.com/produtos", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -385,7 +385,7 @@ async function atualizarProduto() {
   });
 
   const token = localStorage.getItem("token");
-  await fetch(`https://backend-tuvisse.onrender.com/produtos/${id}`, {
+  await fetch(`https://tuvissetest.onrender.com/produtos/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -408,7 +408,7 @@ function removerCor(button) {
 
 async function removerProduto(id) {
   const token = localStorage.getItem("token");
-  await fetch(`https://backend-tuvisse.onrender.com/produtos/${id}`, {
+  await fetch(`https://tuvissetest.onrender.com/produtos/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

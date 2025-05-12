@@ -40,7 +40,7 @@
         async function fazerLogin() {
             const usuario = document.getElementById("usuario").value;
             const senha = document.getElementById("senha").value;
-            const res = await fetch("https://backend-tuvisse.onrender.com/login", {
+            const res = await fetch("https://tuvissetest.onrender.com/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ usuario, senha })

@@ -59,7 +59,7 @@ async function carregarCategorias() {
 //carregar os produtos do catalogo:
 async function carregarProdutos() {
   try {
-    const produtos = await fetch("https://backend-tuvisse.onrender.com/produtos");
+    const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
     const produtosJson = await produtos.json();
 
     if (produtosJson.length > 0) {
