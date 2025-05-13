@@ -128,7 +128,7 @@
                 <div class="cores">
                   ${produto.cores && produto.cores.length > 0 
                     ? produto.cores.map((cor, i) => `
-                        <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>
+                        <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarCor(${i})"></span>
                       `).join('')
                     : '<p>Nenhuma cor disponível</p>'}
                 </div>
@@ -200,6 +200,41 @@
       } else {
         alert("Produto já está no carrinho");
       }
+    }
+
+    function selecionarCor(index) {
+      const produtoId = new URLSearchParams(window.location.search).get('id');
+      fetch("https://tuvissetest.onrender.com/produtos")
+        .then(response => response.json())
+        .then(produtosJson => {
+          const produto = produtosJson.find(p => p.id == produtoId);
+          if (produto && produto.cores && produto.cores[index]) {
+            const corSelecionada = produto.cores[index];
+            const corInfo = {
+              produtoId: produto.id,
+              nomeProduto: produto.nome,
+              cor: corSelecionada.nomeCor,
+              codigoCor: corSelecionada.codigoCor
+            };
+
+            // Recupera o objeto de cores selecionadas do localStorage
+            const coresSelecionadas = JSON.parse(localStorage.getItem("coresSelecionadas")) || {};
+
+            // Atualiza ou adiciona a cor selecionada para o produto atual
+            coresSelecionadas[produtoId] = corInfo;
+
+            // Salva o objeto atualizado no localStorage
+            localStorage.setItem("coresSelecionadas", JSON.stringify(coresSelecionadas));
+
+            // Atualiza a imagem principal para a imagemFrente da cor selecionada
+            document.getElementById("imagem_principal").src = corSelecionada.imagemFrente;
+
+            console.log(`Cor selecionada para o produto ${produtoId}:`, corInfo);
+          } else {
+            console.error("Cor não encontrada");
+          }
+        })
+        .catch(error => console.error(error));
     }
   </script>
 </body>
