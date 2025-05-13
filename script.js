@@ -70,13 +70,9 @@ async function carregarProdutos() {
       //para cada produto ele insere na div catalogo essa estrutura HTML:
       for (const produto of produtosJson) {
         catalogo.innerHTML += `
-        <a href="./pags/telaProduto.html?id=${produto.id}">
+        <a href="pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
-          <img src="${
-            produto.imagem.startsWith("../")
-              ? produto.imagem.replace("../", "./")
-              : produto.imagem
-          }" alt="${produto.nome}" />
+          <img src="${verificarCaminhoImg(produto)}" alt="${produto.nome}" />
           <div class="nome_preco_produto">
           <h1>${produto.nome}</h1>
           <div class="cores">
@@ -85,7 +81,7 @@ async function carregarProdutos() {
               ? produto.cores
                   .map(
                     (cor, i) => `
-              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
+                <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
                   )
                   .join("")
               : "<p>Incolor</p>"
@@ -100,6 +96,16 @@ async function carregarProdutos() {
     }
   } catch (error) {
     console.error(error);
+  }
+}
+
+function verificarCaminhoImg(produto) {
+  if(produto.imagem.startsWith("../")){
+    console.log("Caminho veio com ../")
+    return produto.imagem.replace("../", "./");
+  }else{
+    console.log("Caminho veio sem ../")
+    return produto.imagem;
   }
 }
 
@@ -126,13 +132,3 @@ window.onload = () => {
   carregarProdutos();
   carregarCategorias();
 };
-
-
-//whatsapp função
-
-function abrirWhatsApp() {
-  var telefone = "55081999543880"; // Substitua pelo número desejado com DDD
-  var mensagem = encodeURIComponent("Olá!");
-  var url = "https://wa.me/" + telefone + "?text=" + mensagem;
-  window.open(url, "_blank");
-}
