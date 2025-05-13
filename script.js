@@ -14,40 +14,25 @@ async function carregarCategorias() {
     });
 
     const corpoCategorias = document.getElementById("corpo_categorias");
-    //dentro da div com id corpo_categorias:
-    corpoCategorias.innerHTML = ""; //limpa o conteudo da div
+    corpoCategorias.innerHTML = "";
 
-    const menuL = document.createElement("div"); //cria uma div
-    menuL.className = "menuL"; //com a classe menuL
+    const menuL = document.createElement("div");
+    menuL.className = "menuL";
     menuL.innerHTML =
-      "<i class='fa-solid fa-xmark' style='display: none;' id='fechar' onclick='openMenu()'></i><h1>Categorias</h1>"; //coloca um h1 com o texto Categorias
+      "<i class='fa-solid fa-xmark' style='display: none;' id='fechar' onclick='openMenu()'></i><h1>Categorias</h1>";
 
-    //para cada categoria, cria um elemento chamado details com um <summary> e uma lista de subcategorias
-    //e adiciona na div menuL
     Object.keys(categorias).forEach((categoria) => {
       const details = document.createElement("details");
       details.className = "links-categoria";
       details.innerHTML = `<summary>${categoria}</summary>`;
 
-      //para cada subcategoria, cria um elemento <li> com um link (href) e adiciona na lista de subcategorias
       categorias[categoria].forEach((subcategoria) => {
         const li = document.createElement("li");
         li.innerHTML = `<a onclick="carregarProdutos('${categoria}', '${subcategoria}')" class="sub_itens">${subcategoria}</a>`;
         details.appendChild(li);
       });
 
-      //entao, no final a estrutura HTML fica assim:
-      //<div id="corpo_categorias">
-      //  <div class="menuL">
-      //    <h1>Categorias</h1>
-      //    <details class="links-categoria">
-      //      <summary>categoria</summary>
-      //      <li><a href="#" class="sub_itens">subcategoria</a></li>
-      //    </details>
-      //  </div>
-      // </div>
-
-      menuL.appendChild(details); //faz aparecer isso tudo la na pagina
+      menuL.appendChild(details);
     });
 
     corpoCategorias.appendChild(menuL);
@@ -56,23 +41,34 @@ async function carregarCategorias() {
   }
 }
 
-//carregar os produtos do catalogo:
-async function carregarProdutos() {
+//carregar os produtos do catalogo (com filtros opcionais):
+async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecionada = null) {
   try {
     const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
     const produtosJson = await produtos.json();
 
+    // correção de caminho de imagem
+    produtosJson.forEach((produto) => {
+      if (produto.imagem.startsWith('../')) {
+        produto.imagem = produto.imagem.replace('../', './');
+      }
+    });
+
     if (produtosJson.length > 0) {
-      //se tiver algum produto:
       const catalogo = document.getElementById("catalogo");
       catalogo.innerHTML = "";
 
-      //para cada produto ele insere na div catalogo essa estrutura HTML:
-      for (const produto of produtosJson) {
+      const produtosFiltrados = produtosJson.filter((p) => {
+        const matchCategoria = categoriaSelecionada ? p.categoria === categoriaSelecionada : true;
+        const matchSubcategoria = subcategoriaSelecionada ? p.subcategoria === subcategoriaSelecionada : true;
+        return matchCategoria && matchSubcategoria;
+      });
+
+      for (const produto of produtosFiltrados) {
         catalogo.innerHTML += `
-        <a href="pags/telaProduto.html?id=${produto.id}">
+        <a href="./pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
-          <img src="${verificarCaminhoImg(produto)}" alt="${produto.nome}" />
+          <img src="${produto.imagem}" alt="${produto.nome}" />
           <div class="nome_preco_produto">
           <h1>${produto.nome}</h1>
           <div class="cores">
@@ -81,7 +77,7 @@ async function carregarProdutos() {
               ? produto.cores
                   .map(
                     (cor, i) => `
-                <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
+              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
                   )
                   .join("")
               : "<p>Incolor</p>"
@@ -93,22 +89,19 @@ async function carregarProdutos() {
         </div>
         </a>`;
       }
+
+      // Se nenhum produto for exibido (caso haja filtro e nada combine)
+      if (produtosFiltrados.length === 0) {
+        catalogo.innerHTML = "<p>Nenhum produto encontrado para esse filtro.</p>";
+      }
     }
   } catch (error) {
     console.error(error);
   }
 }
 
-function verificarCaminhoImg(produto) {
-  if(produto.imagem.startsWith("../")){
-    console.log("Caminho veio com ../")
-    return produto.imagem.replace("../", "./");
-  }else{
-    console.log("Caminho veio sem ../")
-    return produto.imagem;
-  }
-}
 
+//abrir e fechar o menu lateral
 const menuLateral = document.getElementById("corpo_categorias");
 
 function openMenu() {
@@ -127,8 +120,16 @@ function openMenu() {
   }
 }
 
-//ao abrir a pagina, chama as seguintes funções:
+//ao abrir a página, carrega produtos e categorias
 window.onload = () => {
   carregarProdutos();
   carregarCategorias();
 };
+
+//abrir whatsapp com mensagem
+function abrirWhatsApp() {
+  var telefone = "55081999543880"; // Substitua pelo número desejado com DDD
+  var mensagem = encodeURIComponent("Olá!");
+  var url = "https://wa.me/" + telefone + "?text=" + mensagem;
+  window.open(url, "_blank");
+}
