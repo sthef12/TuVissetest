@@ -97,21 +97,23 @@
             const produto_view = document.getElementById("produto_view");
             produto_view.innerHTML = `
             <div class="carrossel_img">
-              <div class="imagem_principal">
-                <img id="imagem_principal" src="${produto.imagem}" alt="${produto.nome}" />
+              <div class="imagem_principal_container">
+                <div class="imagem_principal">
+                  <img id="imagem_principal" src="${produto.imagem}" alt="${produto.nome}" />
+                </div>
               </div>
               <div class="carrossel_container">
                 <button id="cima" class="seta" onclick="moverCarrossel(-1)">&#10095;</button>
                 <div class="carrossel_view" id="carrossel">
-                  ${produto.cores && produto.cores.length > 0 
-                    ? produto.cores.map((cor, i) => `
+                  ${produto.cores && produto.cores.length > 0
+                ? produto.cores.map((cor, i) => `
                         <img class="imagem_view" src="${cor.imagemFrente}" alt="Frente - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')">
                         <img class="imagem_view" src="${cor.imagemVerso}" alt="Verso - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'verso')">
                       `).join('')
-                    : '<p>Nenhuma imagem disponível</p>'}
+                : '<p>Nenhuma imagem disponível</p>'}
                   ${produto.imagem_medidas && produto.imagem_medidas !== "undefined"
-                    ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
-                    : ''}
+                ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
+                : ''}
                 </div>
                 <button id="baixo" class="seta" onclick="moverCarrossel(1)">&#10095;</button>
               </div>
@@ -126,16 +128,18 @@
                   <p>${produto.descricao}</p>
                 </span>
                 <div class="cores">
-                  ${produto.cores && produto.cores.length > 0 
-                    ? produto.cores.map((cor, i) => `
+                  ${produto.cores && produto.cores.length > 0
+                ? produto.cores.map((cor, i) => `
                         <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarCor(${i})"></span>
                       `).join('')
-                    : '<p>Nenhuma cor disponível</p>'}
+                : '<p>Nenhuma cor disponível</p>'}
                 </div>
               </div>
               <div class="valor_button">
-                <h4>Valor:</h4>
-                <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
+                <div class="valor_preco">
+                  <h4>Valor:</h4>
+                  <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
+                </div>
                 <div class="buttons">
                   <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
                   <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>

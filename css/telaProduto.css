@@ -43,10 +43,17 @@
     height: 70vh;
     width: auto;
 }
+.imagem_principal_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 100%;
+}
 
 .imagem_principal {
     max-height: 70vh;
-    max-width: 70%;
+    max-width: 60%;
     background-color: rgba(217, 217, 217, 0.8);
     border-radius: 20px;
     display: flex;
@@ -78,7 +85,6 @@
     cursor: pointer;
 }
 
-
 .descricao {
     display: flex;
     flex-direction: column;
@@ -104,8 +110,8 @@
 
 .cores {
     display: flex;
-    height: 1.5rem;
-    width: 5rem;
+    height: 2rem;
+    width: 7rem;
     gap: 5px;
 }
 
@@ -146,7 +152,7 @@
     font-size: large;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     #produto_view {
         flex-direction: column;
         padding: 20px;
@@ -171,9 +177,25 @@
         width: 100%;
     }
 
-    .imagem_principal {
+    .imagem_principal_container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 50vh;
-        width: 70vw;
+        width: 100vw;
+    }
+
+    .imagem_principal {
+        height: 40vh;
+        width: 100%;
+    }
+
+   .valor_preco{
+    padding-left: 20px;
+   }
+
+    .buttons{
+        align-items: center;
     }
 
     .descricao {

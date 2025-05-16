@@ -40,7 +40,7 @@
 
 .itens_list tr {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     text-align: center;
 }
@@ -49,6 +49,10 @@
     display: flex;
     width: 100%;
     align-items: center;
+}
+
+.elemento{
+    display: flex;
     justify-content: center;
 }
 

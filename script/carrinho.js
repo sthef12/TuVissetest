@@ -63,21 +63,21 @@ async function buscarProdutoPeloLocalStorage() {
 
         const linhaProduto = `
           <tr>
-            <td>
+            <td class="produto">
               <div class="produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${produto.id}'" title="${produto.nome}">
                 <img src="${produto.imagem}" alt="${produto.nome}" />
                 <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
               </div>
             </td>
-            <td>
+            <td class="quantidade elemento">
               <input id="imput_qnt_${produtoId}" class="imput_qnt" type="number" value="${
                 produtoQuantidade[produtoId]
               }" min="0" onchange="atualizarQuantidade(${produtoId}, ${produto.preco})" />
             </td>
-            <td>
+            <td class="cor elemento">
               <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
             </td>
-            <td>
+            <td class="preco elemento">
               <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(
                 produto.preco * produtoQuantidade[produtoId]
               ).toFixed(2)}</label>
