@@ -72,10 +72,38 @@
     height: 50px;
 }
 
+.input_qnt_container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 .imput_qnt {
     width: 30%;
     text-align: center;
     border: none;
+    outline: none;
+    font-size: 110%;
+}
+
+.imput_qnt::-webkit-inner-spin-button,
+.imput_qnt::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input_qnt_icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.input_qnt_icon .fa-solid{
+    font-size: 80%;
+    background-color: var(--lab3-color);
+    padding: 2px;
 }
 
 .cont {

@@ -59,28 +59,42 @@ async function buscarProdutoPeloLocalStorage() {
         valorTotal += produto.preco * produtoQuantidade[produtoId];
 
         const corSelecionada =
-          JSON.parse(localStorage.getItem("coresSelecionadas"))?.[produtoId]?.cor || "Não especificada";
+          JSON.parse(localStorage.getItem("coresSelecionadas"))?.[produtoId]
+            ?.cor || "Não especificada";
 
         const linhaProduto = `
           <tr>
             <td class="produto">
-              <div class="produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${produto.id}'" title="${produto.nome}">
+              <div class="produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${
+                produto.id
+              }'" title="${produto.nome}">
                 <img src="${produto.imagem}" alt="${produto.nome}" />
-                <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
+                <label id="nome_produto" style="cursor: pointer;">${
+                  produto.nome
+                }</label>
               </div>
             </td>
             <td class="quantidade elemento">
-              <input id="imput_qnt_${produtoId}" class="imput_qnt" type="number" value="${
-                produtoQuantidade[produtoId]
-              }" min="0" onchange="atualizarQuantidade(${produtoId}, ${produto.preco})" />
+              <div class="input_qnt_container">
+                <input id="imput_qnt_${produtoId}" class="imput_qnt" type="number" value="${
+          produtoQuantidade[produtoId]
+        }" min="0" onchange="atualizarQuantidade(${produtoId}, ${
+          produto.preco
+        })" />
+                <div class="input_qnt_icon">
+                  <i class="fa-solid fa-plus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, 1)" style="cursor:pointer;"></i>
+                  <i class="fa-solid fa-minus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, -1)" style="cursor:pointer;"></i>
+                </div>
+                <i class="fa-solid fa-x" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
+              </div>
             </td>
             <td class="cor elemento">
               <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
             </td>
             <td class="preco elemento">
               <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(
-                produto.preco * produtoQuantidade[produtoId]
-              ).toFixed(2)}</label>
+          produto.preco * produtoQuantidade[produtoId]
+        ).toFixed(2)}</label>
             </td>
           </tr>`;
         tabelaCorpo.innerHTML += linhaProduto;
@@ -89,7 +103,9 @@ async function buscarProdutoPeloLocalStorage() {
 
     // Atualiza os totais
     document.getElementById("total_itens").textContent = totalItens;
-    document.getElementById("valor_total").textContent = `R$ ${valorTotal.toFixed(2)}`;
+    document.getElementById(
+      "valor_total"
+    ).textContent = `R$ ${valorTotal.toFixed(2)}`;
   } catch (error) {
     console.error(error);
   }
@@ -106,19 +122,6 @@ function atualizarQuantidade(produtoId, preco) {
   let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
   let totalItens = 0;
   let valorTotal = 0;
-
-  // Remove o produto do carrinho se a quantidade for 0
-  if (quantidade === 0) {
-    if (confirm("Deseja remover este produto do carrinho?")) {
-      carrinho = carrinho.filter((id) => id != produtoId);
-      localStorage.setItem("carrinho", JSON.stringify(carrinho));
-      buscarProdutoPeloLocalStorage();
-      return;
-    } else {
-      quantidadeInput.value = 1;
-      return;
-    }
-  }
 
   // Atualiza o carrinho no localStorage
   carrinho = carrinho.filter((id) => id != produtoId);
@@ -138,6 +141,38 @@ function atualizarQuantidade(produtoId, preco) {
   valorTotalLabel.textContent = `R$ ${valorTotal.toFixed(2)}`;
 }
 
+function removerProduto(quantidade) {
+  if (confirm(quantidade === 0)) {
+      carrinho = carrinho.filter((id) => id != produtoId);
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      buscarProdutoPeloLocalStorage();
+      return;
+    } else {
+      quantidadeInput.value = 1;
+      return;
+    }
+  }
+
+// Função para remover o produto do carrinho
+function removerProduto(produtoId) {
+  if (!confirm("Deseja remover este produto do carrinho?")) {
+    return;
+  }
+  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  // Remove todas as ocorrências do produto do carrinho
+  carrinho = carrinho.filter((id) => id != produtoId);
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+  // Remove a cor selecionada desse produto, se existir
+  const coresSelecionadas = JSON.parse(localStorage.getItem("coresSelecionadas")) || {};
+  if (coresSelecionadas[produtoId]) {
+    delete coresSelecionadas[produtoId];
+    localStorage.setItem("coresSelecionadas", JSON.stringify(coresSelecionadas));
+  }
+
+  buscarProdutoPeloLocalStorage();
+}
+
 // Finaliza o pedido e redireciona para o WhatsApp
 function finalizarPedido() {
   const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -152,9 +187,12 @@ function finalizarPedido() {
     produtos.forEach((produto, index) => {
       const produtoId = carrinho[index];
       const corSelecionada =
-      JSON.parse(localStorage.getItem("coresSelecionadas"))?.[produtoId]?.cor || "Não especificada";
+        JSON.parse(localStorage.getItem("coresSelecionadas"))?.[produtoId]
+          ?.cor || "Não especificada";
 
-      listaProdutos += `${index + 1}. ${produto.textContent} - Cor: ${corSelecionada}\n`;
+      listaProdutos += `${index + 1}. ${
+        produto.textContent
+      } - Cor: ${corSelecionada}\n`;
     });
 
     const mensagem = `Olá, segue meu pedido: \n - *Produtos:* \n${listaProdutos} \n - *Total de itens:* ${totalItens} \n - *Valor total:* ${valorTotal} \n \n Desejo conversar e realizar o pagamento. \n Aguardo retorno para finalizar a compra.`;
@@ -172,6 +210,20 @@ function finalizarPedido() {
   } else {
     alert("Seu carrinho está vazio.");
   }
+}
+
+// Nova função para tratar o incremento/decremento
+function alterarQuantidade(produtoId, preco, delta) {
+  const input = document.getElementById(`imput_qnt_${produtoId}`);
+  let novaQuantidade = parseInt(input.value) + delta;
+  if (novaQuantidade <= 0) {
+    if (confirm("Deseja remover este produto do carrinho?")) {
+      removerProduto(produtoId);
+    }
+    return;
+  }
+  input.value = novaQuantidade;
+  atualizarQuantidade(produtoId, preco);
 }
 
 window.onload = buscarProdutoPeloLocalStorage;
