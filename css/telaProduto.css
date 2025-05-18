@@ -117,8 +117,8 @@
 
 .cor_produto {
     background-color: transparent;
-    height: 2rem;
-    width: 2rem;
+    height: 5rem;
+    width: 5rem;
     border-radius: 50%;
     border: 1px solid var(--lab3-color);
     cursor: pointer;
@@ -210,7 +210,7 @@
         transform: rotate(0deg);
     }
     .cor_produto {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 3rem;
+        height: 3rem;
     }
 }
