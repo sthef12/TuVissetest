@@ -77,8 +77,8 @@ main {
 .cor_produto {
   border: 2px solid var(--lab3-color);
   background-color: transparent;
-  height: 1rem;
-  width: 1rem;
+  height: 2rem;
+  width: 2rem;
   border-radius: 50%;
 }
 
@@ -138,7 +138,8 @@ main {
     width: 90%;
   }
   .cor_produto {
-    width: 1.5rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   /* botao do whatsapp */
