@@ -134,6 +134,12 @@ main {
   .produtos {
     width: 20rem;
   }
+  .produtos img {
+    width: 90%;
+  }
+  .cores {
+    width: 1.5rem;
+  }
 
   /* botao do whatsapp */
   .whats_button img {
