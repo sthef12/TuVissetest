@@ -117,8 +117,8 @@
 
 .cor_produto {
     background-color: transparent;
-    height: 100%;
-    width: 100%;
+    height: 1rem;
+    width: 1rem;
     border-radius: 50%;
     border: 1px solid var(--lab3-color);
     cursor: pointer;
@@ -208,5 +208,9 @@
 
     #baixo {
         transform: rotate(0deg);
+    }
+    .cor_produto {
+        width: 0.5rem;
+        height: 0.5rem;
     }
 }
