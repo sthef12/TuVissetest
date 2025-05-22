@@ -56,25 +56,31 @@ async function buscarProdutoPeloLocalStorage() {
 
         const linhaProduto = `
           <div class="linha_produto">
+          
             <div class="prod_cor_preco">
-              <div class="produto">
-                <div class="produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${
-                  produto.id
-                  }'" title="${produto.nome}">
-                  <img src="${produto.imagem}" alt="${produto.nome}" />
-                  <label id="nome_produto" style="cursor: pointer;">${
-                    produto.nome
-                  }</label>
+
+              <div class="nome_cor">
+                <img src="${produto.imagem}" alt="${produto.nome}" />
+                <div class="produto">
+                  <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${produto.id}'" title="${produto.nome}">
+                   <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
+                  </div>
+
+                  <div class="cor">
+                    <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
+                  </div>
+                
                 </div>
+
               </div>
-              <div class="cor elemento">
-                <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
-              </div>
-              <div class="preco elemento">
+
+              <div class="preco">
+                <label id="valor_nome">valor</label>
                 <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(produto.preco * produtoQuantidade[produtoId]).toFixed(2)}</label>
               </div>
             </div>
-            <div class="quantidade elemento">
+
+            <div class="quantidade">
               <div class="input_qnt_container">
                 <div class="input_qnt_icon">
                   <i class="fa-solid fa-minus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, -1)" style="cursor:pointer;"></i>
@@ -84,6 +90,7 @@ async function buscarProdutoPeloLocalStorage() {
                 <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
               </div>
             </div>
+
           </div>`;
         tabelaCorpo.innerHTML += linhaProduto;
       }

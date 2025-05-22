@@ -15,17 +15,59 @@
     width: 50%;
     padding-left: 25px;
 }
-
-
-#nome_produto {
+.linha_produto {
+    display: flex;
+}
+.prod_cor_preco {
+    display: flex;
+}
+.nome_produto {
     text-align: left;
 }
-
-.produto img {
-    width: 50px;
-    height: 50px;
+.prod_cor_preco {
+    display: flex;
+    width: 80%;
+    font-size: 20px;
 }
 
+.prod_cor_preco img {
+    width: 60px;
+    height: 80px;
+}
+
+.nome_cor {
+    display:flex;
+    width: 75%;
+    gap: 10px;
+}
+.produto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+.preco {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+}
+.quantidade {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.input_qnt_container {
+    display: flex;
+    flex-direction: column;
+    
+}
+.input_qnt_container .input_qnt_icon {
+    display: flex;
+    flex-direction: row;
+}
 .input_qnt_container{
     display: flex;
     align-items: center;
@@ -53,7 +95,14 @@
     align-items: center;
     gap: 5px;
 }
-
+.fa-solid{
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30x;
+}
 .input_qnt_icon .fa-solid{
     font-size: 80%;
     background-color: var(--lab3-color);
@@ -93,10 +142,6 @@
 
 
 @media (max-width: 767px) {
-    /*
-    #itens_container {
-        width: 100%;
-    }
 
     .nome_carrinho {
         padding-left: 0;
@@ -105,7 +150,7 @@
 
     .cont {
         flex-direction: column;
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .buttons {
@@ -115,7 +160,18 @@
     }
     .button {
         width: 45vw;
-    }*/
+    }
+    .prod_cor_preco {
+        font-size: 15px;
+    }
+    .fa-solid{
+        height: 1rem;
+        width: 1rem;
+        font-size: 15px;
+    }
+    .nome_produto {
+        width: 90%;
+    }
 }
 
     
