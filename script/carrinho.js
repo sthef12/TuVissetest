@@ -81,7 +81,7 @@ async function buscarProdutoPeloLocalStorage() {
                   <input id="imput_qnt_${produtoId}" class="imput_qnt" type="number" value="${produtoQuantidade[produtoId]}" min="0" onchange="atualizarQuantidade(${produtoId}, ${produto.preco})" />
                   <i class="fa-solid fa-plus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, 1)" style="cursor:pointer;"></i>
                 </div>
-                <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
+                <i class="fa-solid fa-x" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
               </div>
             </div>
           </div>`;
@@ -159,6 +159,7 @@ function removerProduto(produtoId) {
   }
 
   buscarProdutoPeloLocalStorage();
+  location.reload();
 }
 
 // Finaliza o pedido e redireciona para o WhatsApp
