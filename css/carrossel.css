@@ -1,7 +1,6 @@
 @import url(./variaveis.css);
 
 .carrossel__container {
-<<<<<<< HEAD
     align-items: center;
     display: flex;
     justify-content: center;
@@ -67,11 +66,11 @@
     z-index: -1;
   }
   
-=======
+/*
   align-items: center;
   display: flex;
   justify-content: center;
-}
+*/
 
 .carrossel {
   align-items: center;
@@ -142,7 +141,6 @@
   display: none;
   z-index: -1;
 }
->>>>>>> e36cb9cb6837d8404d5704216030074ec7453bff
 
 
 /*

@@ -75,6 +75,8 @@
     justify-content: space-around;
     padding: 20px;
     width: 100%;
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .buttons {
@@ -111,14 +113,13 @@
 
     .cont {
         flex-direction: column;
+        font-size: 20px;
     }
 
     .buttons {
         flex-direction: column;
         gap: 10px;
+        width: 20rem;
     }
 
-    .button {
-        width: 45vw;
-    }
 }
