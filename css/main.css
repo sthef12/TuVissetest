@@ -69,16 +69,17 @@ main {
 
 .cores {
   display: flex;
-  height: 1.5rem;
-  width: 5rem;
+  justify-content: center;
+  height: 2rem;
+  width: 6rem;
   gap: 5px;
 }
 
 .cor_produto {
   border: 2px solid var(--lab3-color);
   background-color: transparent;
-  height: 100%;
-  width: 1fr;
+  height: 1.5rem;
+  width: 1.5rem;
   border-radius: 50%;
 }
 
@@ -138,8 +139,8 @@ main {
     width: 90%;
   }
   .cor_produto {
-    width: 1fr;
-    height: 100%;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   /* botao do whatsapp */
