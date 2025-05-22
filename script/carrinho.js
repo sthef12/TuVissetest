@@ -22,17 +22,9 @@ async function buscarProdutoPeloLocalStorage() {
 
     // Cria a estrutura inicial da tabela
     itens_container.innerHTML = `
-      <table class="itens_list" style="display: flex; flex-direction: column; ">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Cor</th>
-            <th>Preço</th>
-          </tr>
-        </thead>
-        <tbody id="tabela_corpo"></tbody>
-      </table>
+      <div class="itens_list" style="display: flex; flex-direction: column; ">
+        <div id="tabela_corpo"></div>
+      </div>
       <div class="cont">
         <div class="total_itens">
           <label>Total de Itens:</label>
@@ -63,40 +55,36 @@ async function buscarProdutoPeloLocalStorage() {
             ?.cor || "Não especificada";
 
         const linhaProduto = `
-          <tr>
-            <td class="produto">
-              <div class="produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${
-                produto.id
-              }'" title="${produto.nome}">
-                <img src="${produto.imagem}" alt="${produto.nome}" />
-                <label id="nome_produto" style="cursor: pointer;">${
-                  produto.nome
-                }</label>
-              </div>
-            </td>
-            <td class="quantidade elemento">
-              <div class="input_qnt_container">
-                <input id="imput_qnt_${produtoId}" class="imput_qnt" type="number" value="${
-          produtoQuantidade[produtoId]
-        }" min="0" onchange="atualizarQuantidade(${produtoId}, ${
-          produto.preco
-        })" />
-                <div class="input_qnt_icon">
-                  <i class="fa-solid fa-plus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, 1)" style="cursor:pointer;"></i>
-                  <i class="fa-solid fa-minus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, -1)" style="cursor:pointer;"></i>
+          <div class="linha_produto">
+            <div class="prod_cor_preco">
+              <div class="produto">
+                <div class="produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${
+                  produto.id
+                  }'" title="${produto.nome}">
+                  <img src="${produto.imagem}" alt="${produto.nome}" />
+                  <label id="nome_produto" style="cursor: pointer;">${
+                    produto.nome
+                  }</label>
                 </div>
-                <i class="fa-solid fa-x" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
               </div>
-            </td>
-            <td class="cor elemento">
-              <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
-            </td>
-            <td class="preco elemento">
-              <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(
-          produto.preco * produtoQuantidade[produtoId]
-        ).toFixed(2)}</label>
-            </td>
-          </tr>`;
+              <div class="cor elemento">
+                <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
+              </div>
+              <div class="preco elemento">
+                <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(produto.preco * produtoQuantidade[produtoId]).toFixed(2)}</label>
+              </div>
+            </div>
+            <div class="quantidade elemento">
+              <div class="input_qnt_container">
+                <div class="input_qnt_icon">
+                  <i class="fa-solid fa-minus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, -1)" style="cursor:pointer;"></i>
+                  <input id="imput_qnt_${produtoId}" class="imput_qnt" type="number" value="${produtoQuantidade[produtoId]}" min="0" onchange="atualizarQuantidade(${produtoId}, ${produto.preco})" />
+                  <i class="fa-solid fa-plus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, 1)" style="cursor:pointer;"></i>
+                </div>
+                <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
+              </div>
+            </div>
+          </div>`;
         tabelaCorpo.innerHTML += linhaProduto;
       }
     });
