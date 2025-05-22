@@ -85,7 +85,7 @@ async function buscarProdutoPeloLocalStorage() {
                   <i class="fa-solid fa-plus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, 1)" style="cursor:pointer;"></i>
                   <i class="fa-solid fa-minus" onclick="alterarQuantidade('${produtoId}', ${produto.preco}, -1)" style="cursor:pointer;"></i>
                 </div>
-                <i class="fa-solid fa-x" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
+                <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
               </div>
             </td>
             <td class="cor elemento">
@@ -171,6 +171,7 @@ function removerProduto(produtoId) {
   }
 
   buscarProdutoPeloLocalStorage();
+  location.reload();
 }
 
 // Finaliza o pedido e redireciona para o WhatsApp
