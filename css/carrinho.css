@@ -40,16 +40,21 @@
 
 .itens_list tr {
     display: flex;
-    justify-content: space-between;
     width: 100%;
+    justify-content: normal;
     text-align: center;
+}
+
+.itens_list th{
+    width: 100%;
+    text-align: left;
 }
 
 .itens_list tr td {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .produto {
@@ -58,15 +63,47 @@
     gap: 3px;
 }
 
+#nome_produto {
+    text-align: left;
+}
+
 .produto img {
     width: 50px;
     height: 50px;
+}
+
+.input_qnt_container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .imput_qnt {
     width: 30%;
     text-align: center;
     border: none;
+    outline: none;
+    font-size: 110%;
+}
+
+.imput_qnt::-webkit-inner-spin-button,
+.imput_qnt::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input_qnt_icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.input_qnt_icon .fa-solid{
+    font-size: 80%;
+    background-color: var(--lab3-color);
+    padding: 2px;
 }
 
 .cont {
@@ -121,5 +158,12 @@
         gap: 10px;
         width: 20rem;
     }
+    .button {
+        width: 45vw;
+    }
 
 }
+
+    
+
+
