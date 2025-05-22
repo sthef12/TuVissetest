@@ -57,27 +57,22 @@ async function buscarProdutoPeloLocalStorage() {
         const linhaProduto = `
           <div class="linha_produto">
           
-            <div class="prod_cor_preco">
+            <div class="pro_img">
+              <img src="${produto.imagem}" alt="${produto.nome}" />
+            </div>
 
-              <div class="nome_cor">
-                <img src="${produto.imagem}" alt="${produto.nome}" />
-                <div class="produto">
-                  <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${produto.id}'" title="${produto.nome}">
-                   <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
-                  </div>
-
-                  <div class="cor">
-                    <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
-                  </div>
-                
-                </div>
-
+            <div class="nome_cor">
+              <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${produto.id}'" title="${produto.nome}">
+               <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
               </div>
-
-              <div class="preco">
-                <label id="valor_nome">valor</label>
-                <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(produto.preco * produtoQuantidade[produtoId]).toFixed(2)}</label>
+              <div class="cor">
+                <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
               </div>
+            </div>
+
+            <div class="preco">
+              <label id="valor_nome">valor</label>
+              <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(produto.preco * produtoQuantidade[produtoId]).toFixed(2)}</label>
             </div>
 
             <div class="quantidade">
