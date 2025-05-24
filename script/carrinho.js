@@ -38,6 +38,9 @@ async function buscarProdutoPeloLocalStorage() {
       <div class="buttons">
         <button class="button" id="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
         <button class="button" id="continuar" onclick="window.location.href= '../index.html'">Continuar Comprando</button>
+      </div>
+      <div class="direction">
+        <p>Ao clicar no botão “Finalizar produto”, você será redirecionado para o WhatsApp da loja.</p>
       </div>`;
 
     const tabelaCorpo = document.getElementById("tabela_corpo");
@@ -88,7 +91,7 @@ async function buscarProdutoPeloLocalStorage() {
 
           </div>`;
         tabelaCorpo.innerHTML += linhaProduto;
-      }
+      } 
     });
 
     // Atualiza os totais
