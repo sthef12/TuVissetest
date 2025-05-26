@@ -34,11 +34,28 @@
   list-style: none;
   padding-left: 20px;
 }
-
+.links-categoria li {
+  list-style: none;
+}
 .sub_itens {
   text-decoration: none;
   padding-left: 40px;
   color: var(--lab1-color);
+}
+
+.remover_filtro {
+  display: flex;
+  justify-content: left;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+.remover_filtro #remover-filtro {
+  width: 7rem;
+  border: none;
+  border-radius: 5px;
+  height: 1.5rem;
+  background-color: var(--secondary-color);
+  color: #000000;
 }
 
  @media (max-width: 767px) {
@@ -64,9 +81,10 @@
   }
 
   .sub_itens {
+    text-align: right;
+  }
+  .remover_filtro{
     padding-left: 0px;
     padding-right: 20px;
-    text-align: left;
-
   }
 }

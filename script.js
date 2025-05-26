@@ -14,7 +14,7 @@ async function carregarCategorias() {
     });
 
     const corpoCategorias = document.getElementById("corpo_categorias");
-    corpoCategorias.innerHTML = "";
+    
 
     const menuL = document.createElement("div");
     menuL.className = "menuL";
@@ -34,8 +34,10 @@ async function carregarCategorias() {
 
       menuL.appendChild(details);
     });
+    menuL.innerHTML = "<div class='remover_filtro'><button id='remover-filtro'>Remover Filtro</button></div>"
 
     corpoCategorias.appendChild(menuL);
+
   } catch (error) {
     console.error(error);
   }

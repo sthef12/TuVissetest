@@ -1,4 +1,3 @@
-//carregar as categorias do menu lateral:
 async function carregarCategorias() {
   try {
     const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
@@ -14,111 +13,66 @@ async function carregarCategorias() {
     });
 
     const corpoCategorias = document.getElementById("corpo_categorias");
-    //dentro da div com id corpo_categorias:
-    corpoCategorias.innerHTML = ""; //limpa o conteudo da div
+    corpoCategorias.innerHTML = "";
 
-    const menuL = document.createElement("div"); //cria uma div
-    menuL.className = "menuL"; //com a classe menuL
-    menuL.innerHTML =
-      "<i class='fa-solid fa-xmark' style='display: none;' id='fechar' onclick='openMenu()'></i><h1>Categorias</h1>"; //coloca um h1 com o texto Categorias
+    const menuL = document.createElement("div");
+    menuL.className = "menuL";
+    menuL.innerHTML = "<h1>Categorias</h1>";
 
-    //para cada categoria, cria um elemento chamado details com um <summary> e uma lista de subcategorias
-    //e adiciona na div menuL
     Object.keys(categorias).forEach((categoria) => {
       const details = document.createElement("details");
       details.className = "links-categoria";
-      details.innerHTML = `<summary>${categoria}</summary>`;
+      const summary = document.createElement("summary");
+      summary.textContent = categoria;
 
-      //para cada subcategoria, cria um elemento <li> com um link (href) e adiciona na lista de subcategorias
+      summary.addEventListener("click", () => {
+        carregarProdutos(categoria);
+      });
+
+      details.appendChild(summary);
+
+      const ul = document.createElement("ul");
+
       categorias[categoria].forEach((subcategoria) => {
         const li = document.createElement("li");
-        li.innerHTML = `<a href="#" class="sub_itens">${subcategoria}</a>`;
-        details.appendChild(li);
+        const link = document.createElement("a");
+        link.href = "#";
+        link.className = "sub_itens";
+        link.textContent = subcategoria;
+
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          carregarProdutos(categoria, subcategoria);
+        });
+
+        li.appendChild(link);
+        ul.appendChild(li);
       });
 
-      //entao, no final a estrutura HTML fica assim:
-      //<div id="corpo_categorias">
-      //  <div class="menuL">
-      //    <h1>Categorias</h1>
-      //    <details class="links-categoria">
-      //      <summary>categoria</summary>
-      //      <li><a href="#" class="sub_itens">subcategoria</a></li>
-      //    </details>
-      //  </div>
-      // </div>
-
-      menuL.appendChild(details); //faz aparecer isso tudo la na pagina
+      details.appendChild(ul);
+      menuL.appendChild(details);
     });
+
+    // ✅ Adiciona o botão de remover filtro
+    const divRemover = document.createElement("div");
+    divRemover.className = "remover_filtro";
+    divRemover.innerHTML = "<button id='remover-filtro'>Remover Filtro</button>";
+    menuL.appendChild(divRemover);
 
     corpoCategorias.appendChild(menuL);
-  } catch (error) {
-    console.error(error);
-  }
-}
-//carregar os produtos do catalogo:
-async function carregarProdutos(
-  filtroCategoria = null,
-  filtroSubcategoria = null
-) {
-  try {
-    const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
-    const produtosJson = await produtos.json();
 
-    // correção de caminho de imagem
-    produtosJson.forEach((produto) => {
-      if (produto.imagem.startsWith("../")) {
-        produto.imagem = produto.imagem.replace("../", "./");
-      }
+    // ✅ Event listener para o botão
+    const btnRemoverFiltro = document.getElementById("remover-filtro");
+    btnRemoverFiltro.addEventListener("click", () => {
+      carregarProdutos(); // Sem filtro
     });
 
-    if (produtosJson.length > 0) {
-      const catalogo = document.getElementById("catalogo");
-      catalogo.innerHTML = "";
-
-      // FILTRAR produtos
-      const produtosFiltrados = produtosJson.filter((produto) => {
-        const categoriaOk =
-          !filtroCategoria || produto.categoria === filtroCategoria;
-        const subcategoriaOk =
-          !filtroSubcategoria || produto.subcategoria === filtroSubcategoria;
-        return categoriaOk && subcategoriaOk;
-      });
-
-      // Exibir os produtos filtrados
-      for (const produto of produtosFiltrados) {
-        catalogo.innerHTML += `
-        <a href="./pags/telaProduto.html?id=${produto.id}">
-          <div class="produtos">
-            <img src="${produto.imagem}" alt="${produto.nome}" />
-            <div class="nome_preco_produto">
-              <h1>${produto.nome}</h1>
-              <div class="cores">
-  ${
-    produto.cores && produto.cores.length > 0
-      ? produto.cores
-          .map(
-            (cor, i) => `
-              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
-          )
-          .join("")
-      : "<p>Incolor</p>"
-  }
-</div>
-
-              <h2>R$ ${produto.preco.toFixed(2)}</h2>
-            </div>
-            <button>Comprar</button>
-          </div>
-        </a>`;
-      }
-
-      // Se nenhum produto bater com o filtro:
-      if (produtosFiltrados.length === 0) {
-        catalogo.innerHTML =
-          "<p>Nenhum produto encontrado para esse filtro.</p>";
-      }
-    }
   } catch (error) {
     console.error(error);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  carregarCategorias();
+  carregarProdutos();
+});
