@@ -53,31 +53,41 @@ async function buscarProdutoPeloLocalStorage() {
         totalItens += produtoQuantidade[produtoId];
         valorTotal += produto.preco * produtoQuantidade[produtoId];
 
-        const corSelecionada =
-          JSON.parse(localStorage.getItem("coresSelecionadas"))?.[produtoId]
-            ?.cor || "Não especificada";
+        const coresSelecionadasObj = JSON.parse(localStorage.getItem("coresSelecionadas")) || {};
+        const corSelecionadaObj = coresSelecionadasObj[produtoId];
+        const corSelecionada = corSelecionadaObj?.cor || "Não especificada";
+        const codigoCorSelecionada = corSelecionadaObj?.codigoCor || null;
+
+        // Se houver cor selecionada, usa a imagemFrente da cor, senão usa a imagem padrão do produto
+        let imagemProduto = produto.imagem;
+        if (corSelecionadaObj && produto.cores && Array.isArray(produto.cores)) {
+          const corObj = produto.cores.find(cor => cor.nomeCor === corSelecionadaObj.cor);
+          if (corObj && corObj.imagemFrente) {
+            imagemProduto = corObj.imagemFrente;
+          }
+        }
 
         const linhaProduto = `
           <div class="linha_produto">
-          
             <div class="pro_img">
-              <img src="${produto.imagem}" alt="${produto.nome}" />
+              <img src="${imagemProduto}" alt="${produto.nome}" />
             </div>
-
             <div class="nome_cor">
               <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${produto.id}'" title="${produto.nome}">
-               <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
+                <label id="nome_produto" style="cursor: pointer;">${produto.nome}</label>
               </div>
               <div class="cor">
-                <label id="cor_produto_${produtoId}" class="cor_sele_produto">${corSelecionada}</label>
+                ${
+                  codigoCorSelecionada
+                    ? `<span id="cor_produto_${produtoId}" class="cor_sele_produto" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${codigoCorSelecionada};border:1px solid #888;" title="${corSelecionada}"></span>`
+                    : `<span style="color:#888;">Incolor</span>`
+                }
               </div>
             </div>
-
             <div class="preco">
               <label id="valor_nome">valor</label>
               <label id="preco_produto_${produtoId}" class="preco_produto">R$ ${(produto.preco * produtoQuantidade[produtoId]).toFixed(2)}</label>
             </div>
-
             <div class="quantidade">
               <div class="input_qnt_container">
                 <div class="input_qnt_icon">
@@ -88,7 +98,6 @@ async function buscarProdutoPeloLocalStorage() {
                 <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${produtoId}')"></i>
               </div>
             </div>
-
           </div>`;
         tabelaCorpo.innerHTML += linhaProduto;
       } 
