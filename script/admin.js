@@ -42,17 +42,24 @@ async function carregarProdutos() {
       </thead>
       <tbody>
         ${produtosPorCategoria[categoria]
-          .map(
-            (produto) => `
+          .map((produto) => {
+            // Verificação e ajuste do caminho da imagem principal
+            let imagemPrincipal = produto.imagem;
+            if (!imagemPrincipal || imagemPrincipal === "undefined") {
+              imagemPrincipal =
+                "/opt/render/project/" +
+                (produto.imagem ? produto.imagem.replace(/^(\.\/|\/)?/, "") : "");
+            } else if (imagemPrincipal.startsWith("pags/")) {
+              imagemPrincipal = "/opt/render/project/" + imagemPrincipal;
+            }
+            return `
             <tr>
               <td>${produto.id}</td>
               <td>${produto.nome}</td>
               <td>${produto.composicao}</td>
               <td>${produto.descricao}</td>
               <td>${produto.subcategoria}</td>
-              <td><img src="${produto.imagem}" alt="${
-              produto.nome
-            }" width="50"></td>
+              <td><img src="${imagemPrincipal}" alt="${produto.nome}" width="50"></td>
               <td>
                 ${
                   Array.isArray(produto.cores)
@@ -99,8 +106,8 @@ async function carregarProdutos() {
                 <button onclick="removerProduto(${produto.id})">Excluir</button>
               </td>
             </tr>
-          `
-          )
+          `;
+          })
           .join("")}
       </tbody>
     `;
