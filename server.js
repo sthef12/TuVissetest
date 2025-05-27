@@ -7,6 +7,27 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
+// Configuração do Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET
+});
+
+// Configurar o storage do multer para enviar direto pro Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'produtos', // pasta dentro do Cloudinary
+    allowed_formats: ['jpg', 'png', 'jpeg']
+  }
+});
+
+// Configurar o multer usando o Cloudinary
+const upload = multer({ storage: storage });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,23 +46,6 @@ app.use(
   express.static(path.join(__dirname, "img/produtos_imagens"))
 );
 
-// Configuração do multer para salvar arquivos na pasta 'uploads'
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const produtoNome = req.body.nome.replace(/\s+/g, "_").toLowerCase(); // Substituir espaços por "_" e deixar em minúsculas
-    const dir = path.join(__dirname, `img/produtos_imagens/${produtoNome}`);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage });
-
 // Função para ler o arquivo JSON
 const lerProdutos = () => JSON.parse(fs.readFileSync(FILE_PATH));
 
@@ -59,26 +63,31 @@ const verificarToken = (req, res, next) => {
   });
 };
 
+// ✔️ Rota de upload simples (para teste)
+app.post("/upload", upload.single("imagem"), (req, res) => {
+  res.json({ url: req.file.path });
+});
+
 // Função para remover arquivos antigos
-const removerArquivo = (caminho) => {
-  if (fs.existsSync(caminho)) {
-    try {
-      fs.unlinkSync(caminho);
-    } catch (err) {
-      if (err.code === "EBUSY") {
-        setTimeout(() => {
-          try {
-            fs.unlinkSync(caminho);
-          } catch (err) {
-            console.error(`Erro ao remover arquivo: ${err.message}`);
-          }
-        }, 100);
-      } else {
-        console.error(`Erro ao remover arquivo: ${err.message}`);
-      }
-    }
-  }
-};
+// const removerArquivo = (caminho) => {
+//   if (fs.existsSync(caminho)) {
+//     try {
+//       fs.unlinkSync(caminho);
+//     } catch (err) {
+//       if (err.code === "EBUSY") {
+//         setTimeout(() => {
+//           try {
+//             fs.unlinkSync(caminho);
+//           } catch (err) {
+//             console.error(`Erro ao remover arquivo: ${err.message}`);
+//           }
+//         }, 100);
+//       } else {
+//         console.error(`Erro ao remover arquivo: ${err.message}`);
+//       }
+//     }
+//   }
+// };
 
 // Rota de login
 app.post("/login", (req, res) => {
@@ -103,57 +112,81 @@ app.get("/produtos", (req, res) => {
   res.json(lerProdutos());
 });
 
-// Adicionar um novo produto (apenas admin)
-app.post(
-  "/produtos",
-  upload.any(), // Aceita qualquer campo de arquivo ou texto
-  (req, res) => {
-    console.log(">>> Campos recebidos em req.body:");
-    Object.keys(req.body).forEach((key) => {
-      console.log("-", key);
-    });
+//  Adicionar produto (com imagens no Cloudinary)
+app.post("/produtos", upload.any(), (req, res) => {
+  const produto = req.body;
+  produto.cores = JSON.parse(req.body.cores || "[]");
 
-    console.log(">>> Arquivos recebidos:");
+  //  Processar imagens
+  if (req.files) {
     req.files.forEach((file) => {
-      console.log("-", file.fieldname);
-    });
-
-    const produto = req.body;
-
-    // Inicializa o campo cores como um array vazio
-    produto.cores = JSON.parse(req.body.cores || "[]");
-
-    // Processar os arquivos enviados
-    if (req.files) {
-      req.files.forEach((file) => {
-        const relativePath = path
-          .relative(__dirname, file.path)
-          .replace(/\\/g, "/");
-
-        if (file.fieldname.startsWith("cores")) {
-          const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
-          if (match) {
-            const index = parseInt(match[1], 10);
-            const field = match[2];
-
-            // Garante que o índice da cor existe no array
-            produto.cores[index] = produto.cores[index] || {};
-
-            // Adiciona o campo da imagem sem sobrescrever os campos existentes
-            console.log(
-              `Adicionando imagem ao campo cores[${index}][${field}]: ${relativePath}`
-            );
-            produto.cores[index][field] = relativePath;
-          }
-        } else if (file.fieldname === "imagem") {
-          console.log(`Adicionando imagem principal: ${relativePath}`);
-          produto.imagem = relativePath;
-        } else if (file.fieldname === "imagem_medidas") {
-          console.log(`Adicionando imagem de medidas: ${relativePath}`);
-          produto.imagem_medidas = relativePath;
+      if (file.fieldname.startsWith("cores")) {
+        const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
+        if (match) {
+          const index = parseInt(match[1], 10);
+          const field = match[2];
+          produto.cores[index] = produto.cores[index] || {};
+          produto.cores[index][field] = file.path; //  URL da imagem no Cloudinary
         }
-      });
-    }
+      } else if (file.fieldname === "imagem") {
+        produto.imagem = file.path;
+      } else if (file.fieldname === "imagem_medidas") {
+        produto.imagem_medidas = file.path;
+      }
+    });
+  }
+
+// // Adicionar um novo produto (apenas admin)
+// app.post(
+//   "/produtos",
+//   upload.any(), // Aceita qualquer campo de arquivo ou texto
+//   (req, res) => {
+//     console.log(">>> Campos recebidos em req.body:");
+//     Object.keys(req.body).forEach((key) => {
+//       console.log("-", key);
+//     });
+
+//     console.log(">>> Arquivos recebidos:");
+//     req.files.forEach((file) => {
+//       console.log("-", file.fieldname);
+//     });
+
+//     const produto = req.body;
+
+//     // Inicializa o campo cores como um array vazio
+//     produto.cores = JSON.parse(req.body.cores || "[]");
+
+//     // Processar os arquivos enviados
+//     if (req.files) {
+//       req.files.forEach((file) => {
+//         const relativePath = path
+//           .relative(__dirname, file.path)
+//           .replace(/\\/g, "/");
+
+//         if (file.fieldname.startsWith("cores")) {
+//           const match = file.fieldname.match(/cores\[(\d+)\]\[(.+)\]/);
+//           if (match) {
+//             const index = parseInt(match[1], 10);
+//             const field = match[2];
+
+//             // Garante que o índice da cor existe no array
+//             produto.cores[index] = produto.cores[index] || {};
+
+//             // Adiciona o campo da imagem sem sobrescrever os campos existentes
+//             console.log(
+//               `Adicionando imagem ao campo cores[${index}][${field}]: ${relativePath}`
+//             );
+//             produto.cores[index][field] = relativePath;
+//           }
+//         } else if (file.fieldname === "imagem") {
+//           console.log(`Adicionando imagem principal: ${relativePath}`);
+//           produto.imagem = relativePath;
+//         } else if (file.fieldname === "imagem_medidas") {
+//           console.log(`Adicionando imagem de medidas: ${relativePath}`);
+//           produto.imagem_medidas = relativePath;
+//         }
+//       });
+//     }
 
     Object.keys(req.body).forEach((key) => {
       console.log(key.startsWith("cores[") ? true : false);
