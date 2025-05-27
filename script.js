@@ -14,30 +14,29 @@ async function carregarCategorias() {
     });
 
     const corpoCategorias = document.getElementById("corpo_categorias");
-    
+    corpoCategorias.innerHTML = "";
 
     const menuL = document.createElement("div");
     menuL.className = "menuL";
-    menuL.innerHTML =
-      "<i class='fa-solid fa-xmark' style='display: none;' id='fechar' onclick='openMenu()'></i><h1>Categorias</h1>";
-
+    menuL.innerHTML ="<h1>Categorias</h1>";
+    
     Object.keys(categorias).forEach((categoria) => {
       const details = document.createElement("details");
       details.className = "links-categoria";
       details.innerHTML = `<summary>${categoria}</summary>`;
-
+      
       categorias[categoria].forEach((subcategoria) => {
         const li = document.createElement("li");
         li.innerHTML = `<a onclick="carregarProdutos('${categoria}', '${subcategoria}')" class="sub_itens">${subcategoria}</a>`;
         details.appendChild(li);
       });
-
+      
       menuL.appendChild(details);
     });
     menuL.innerHTML = "<div class='remover_filtro'><button id='remover-filtro'>Remover Filtro</button></div>"
-
+    
     corpoCategorias.appendChild(menuL);
-
+    
   } catch (error) {
     console.error(error);
   }
@@ -49,13 +48,6 @@ async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecio
     const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
     const produtosJson = await produtos.json();
 
-    // correção de caminho de imagem
-    produtosJson.forEach((produto) => {
-      if (produto.imagem.startsWith('../')) {
-        produto.imagem = produto.imagem.replace('../', './');
-      }
-    });
-
     if (produtosJson.length > 0) {
       const catalogo = document.getElementById("catalogo");
       catalogo.innerHTML = "";
@@ -65,8 +57,12 @@ async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecio
         const matchSubcategoria = subcategoriaSelecionada ? p.subcategoria === subcategoriaSelecionada : true;
         return matchCategoria && matchSubcategoria;
       });
+      
 
       for (const produto of produtosFiltrados) {
+        // Verifica se o preço é um número válido, caso contrário define como "0.00"
+        const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
+        //mostrando os produtos
         catalogo.innerHTML += `
         <a href="./pags/telaProduto.html?id=${produto.id}">
         <div class="produtos">
@@ -85,7 +81,7 @@ async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecio
               : "<p>Incolor</p>"
           }
           </div>
-          <h2>R$ ${produto.preco.toFixed(2)}</h2>
+          <h2>R$ ${precoProduto}</h2>
           </div>
           <button>Comprar</button>
         </div>

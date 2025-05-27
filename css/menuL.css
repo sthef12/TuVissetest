@@ -56,6 +56,7 @@
   height: 1.5rem;
   background-color: var(--secondary-color);
   color: #000000;
+  cursor: pointer;
 }
 
  @media (max-width: 767px) {
