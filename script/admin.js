@@ -45,13 +45,6 @@ async function carregarProdutos() {
           .map((produto) => {
             // Verificação e ajuste do caminho da imagem principal
             let imagemPrincipal = produto.imagem;
-            if (!imagemPrincipal || imagemPrincipal === "undefined") {
-              imagemPrincipal =
-                "/opt/render/project/" +
-                (produto.imagem ? produto.imagem.replace(/^(\.\/|\/)?/, "") : "");
-            } else if (imagemPrincipal.startsWith("pags/")) {
-              imagemPrincipal = "/opt/render/project/" + imagemPrincipal;
-            }
             return `
             <tr>
               <td>${produto.id}</td>
@@ -157,7 +150,7 @@ async function adicionarProduto() {
   console.log(imagemMedidas);
   if (imagemMedidas) {
     formData.append("imagem_medidas", imagemMedidas);
-
+  }
   // Adicionar campos das cores
   const coresLista = document.querySelectorAll(".cor-item");
   const listaCores = [];
@@ -197,12 +190,13 @@ async function adicionarProduto() {
     body: formData,
   });
   carregarProdutos();
+  limparFormulario();
 
   // Debug: Verificar o conteúdo do FormData
   for (let pair of formData.entries()) {
     console.log(pair[0], pair[1]);
   }
-}}
+}
 
 function adicionarCor() {
   const coresContainer = document.getElementById("cores-container");
@@ -400,7 +394,6 @@ async function atualizarProduto() {
     body: formData,
   });
   carregarProdutos();
-
   limparFormulario();
 
   document.getElementById("adicionar-btn").style.display = "inline-block";
@@ -441,6 +434,7 @@ function limparFormulario() {
   document.getElementById("medidas").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("subcategoria-select").value = "";
+  document.getElementById("nova-categoria").value = "";
   document.getElementById("imagem").value = "";
   document.getElementById("imagem_medidas").value = "";
 
