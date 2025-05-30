@@ -95,6 +95,7 @@
 
           if (produto) { //se tiver produto com o id especifico:
             const produto_view = document.getElementById("produto_view");
+            const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
             produto_view.innerHTML = `
             <div class="carrossel_img">
               <div class="imagem_principal_container">
@@ -138,7 +139,7 @@
               <div class="valor_button">
                 <div class="valor_preco">
                   <h4>Valor:</h4>
-                  <span id="valor_produto">R$ ${produto.preco.toFixed(2)}</span>
+                  <span id="valor_produto">R$ ${precoProduto}</span>
                 </div>
                 <div class="buttons">
                   <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
@@ -194,16 +195,33 @@
       }
     }
 
-    //adicionar produto ao carrinho
+    // Função para adicionar produto ao carrinho
     const addCarrinho = (produtoId) => {
-      const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-      if (!carrinho.includes(produtoId)) {
-        carrinho.push(produtoId);
-        localStorage.setItem("carrinho", JSON.stringify(carrinho));
-        alert("Produto adicionado ao carrinho");
-      } else {
-        alert("Produto já está no carrinho");
-      }
+      // Recupera as cores selecionadas do localStorage
+      const coresSelecionadas = JSON.parse(localStorage.getItem("coresSelecionadas")) || {};
+      const corSelecionada = coresSelecionadas[produtoId];
+
+      // Verifica se o produto possui cores e se uma cor foi selecionada
+      fetch("https://tuvissetest.onrender.com/produtos")
+        .then(response => response.json())
+        .then(produtosJson => {
+          const produto = produtosJson.find(p => p.id == produtoId);
+
+          if (produto && produto.cores && produto.cores.length > 0 && !corSelecionada) {
+            alert("Por favor, selecione uma cor antes de adicionar ao carrinho.");
+            return;
+          }
+
+          const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+          if (!carrinho.includes(produtoId)) {
+            carrinho.push(produtoId);
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            alert("Produto adicionado ao carrinho");
+          } else {
+            alert("Produto já está no carrinho");
+          }
+        })
+        .catch(error => console.error("Erro ao buscar produto:", error));
     }
 
     function selecionarCor(index) {
