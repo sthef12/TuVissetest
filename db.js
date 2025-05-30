@@ -2,7 +2,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 
 const pool = new Pool({
-  connectionString: 'postgresql://postgres:RxvlOmTsEZFOeIcYsJiPhBUpZrRrkGPE@caboose.proxy.rlwy.net:18052/railway',
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
