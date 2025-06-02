@@ -12,42 +12,89 @@ async function carregarProdutos() {
   const res = await fetch(url);
   const produtos = await res.json();
 
-  const tabela = document.getElementById("tabela-produtos");
-  tabela.innerHTML = "";
+  const container = document.getElementById("lista-produtos");
+  container.innerHTML = "";
 
-  produtos.forEach((produto) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${produto.id}</td>
-      <td>${produto.nome}</td>
-      <td>${produto.categoria}</td>
-      <td>${produto.subcategoria}</td>
-      <td>R$ ${parseFloat(produto.preco).toFixed(2)}</td>
-      <td><img src="${produto.imagem}" width="50"></td>
-      <td><img src="${produto.imagem_medidas}" width="50"></td>
-      <td>
-        ${
-          Array.isArray(produto.cores)
-            ? produto.cores
+  // Agrupa os produtos por categoria
+  const produtosPorCategoria = produtos.reduce((acc, produto) => {
+    const categoria = produto.categoria || "Sem categoria";
+    if (!acc[categoria]) {
+      acc[categoria] = [];
+    }
+    acc[categoria].push(produto);
+    return acc;
+  }, {});
+
+  // Cria uma tabela para cada categoria
+  for (const categoria in produtosPorCategoria) {
+    const categoriaDiv = document.createElement("div");
+    categoriaDiv.innerHTML = `<h2>${categoria}</h2>`;
+    const tabela = document.createElement("table");
+    tabela.innerHTML = `
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Composição</th>
+          <th>Categoria</th>
+          <th>Subcategoria</th>
+          <th>Imagem</th>
+          <th>Imagem Medidas</th>
+          <th>Cores</th>
+          <th>Tamanhos</th>
+          <th>Estoque</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${produtosPorCategoria[categoria]
+          .map((produto) => `
+            <tr>
+              <td>${produto.id}</td>
+              <td>${produto.nome}</td>
+              <td>${produto.descricao}</td>
+              <td>${produto.composicao}</td>
+              <td>${produto.categoria}</td>
+              <td>${produto.subcategoria}</td>
+              <td><img src="${produto.imagem}" width="50"></td>
+              <td><img src="${produto.imagem_medidas}" width="50"></td>
+              <td>
+              ${
+                Array.isArray(produto.cores)
+                ? produto.cores
                 .map(
                   (cor) => `
-                    <div>
-                      <p>${cor.nomeCor} (${cor.codigoCor})</p>
-                    </div>
+                  <div>
+                  <p>${cor.nomeCor} (${cor.codigoCor})</p>
+                  <img src="${cor.imagemFrente}" width="40" alt="Imagem Frente">
+                  <img src="${cor.imagemVerso}" width="40" alt="Imagem Verso">
+                  </div>
                   `
                 )
                 .join("")
-            : "N/A"
-        }
-      </td>
-      <td>
-        <button onclick="editarProduto(${produto.id})">Editar</button>
-        <button onclick="deletarProduto(${produto.id})">Excluir</button>
-      </td>
-    `;
-    tabela.appendChild(tr);
-  });
+                : "N/A"
+              }
+              </td>
+              <td>${listarTamanhosEMedidas(produto)}</td>
+              <td>${produto.estoque}</td>
+              <td>R$ ${parseFloat(produto.preco).toFixed(2)}</td>
+              <td>
+              <button onclick="editarProduto(${produto.id})">Editar</button>
+              <button onclick="deletarProduto(${produto.id})">Excluir</button>
+              </td>
+              </tr>
+              `)
+              .join("")}
+              </tbody>
+              `;
+              
+    categoriaDiv.appendChild(tabela);
+    container.appendChild(categoriaDiv);
+  }
 }
+
 
 // ➕ Adiciona produto
 async function adicionarProduto() {
@@ -133,5 +180,46 @@ function limparFormulario() {
   form.reset();
   document.getElementById("cores").innerHTML = "";
 }
+
+function listarTamanhosEMedidas(produto) {
+  const tamanhos = Array.isArray(produto.tamanhos)
+    ? produto.tamanhos.join(", ")
+    : produto.tamanhos;
+
+  let medidas = "";
+
+  let medidasArray = produto.medidas;
+
+  // 🔥 Se medidas vier como string, transformar em array
+  if (typeof medidasArray === 'string') {
+    try {
+      medidasArray = JSON.parse(medidasArray);
+    } catch {
+      medidasArray = [];
+    }
+  }
+
+  if (Array.isArray(medidasArray)) {
+    medidas = medidasArray
+      .map(
+        (m) => `
+          <div>
+            <strong>${m.tamanho}:</strong> ${m.medida}
+          </div>
+        `
+      )
+      .join("");
+  } else {
+    medidas = "N/A";
+  }
+
+  return `
+    <div>
+      <div><strong>Tamanhos:</strong> ${tamanhos}</div>
+      <div><strong>Medidas:</strong> ${medidas}</div>
+    </div>
+  `;
+}
+
 
 carregarProdutos();
