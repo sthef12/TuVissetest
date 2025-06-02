@@ -79,7 +79,7 @@ async function buscarProdutoPeloLocalStorage() {
               <div class="cor">
                 ${
                   codigoCorSelecionada
-                    ? `<span id="cor_produto_${produtoId}" class="cor_sele_produto" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${codigoCorSelecionada};border:1px solid #888;" title="${corSelecionada}"></span>`
+                    ? `<span id="cor_produto_${produtoId}" class="cor_sele_produto" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${codigoCorSelecionada};border:1px solid #888;" title="${corSelecionada}"></span><span style="color:#888;">${corSelecionada}</span>`
                     : `<span style="color:#888;">Incolor</span>`
                 }
               </div>

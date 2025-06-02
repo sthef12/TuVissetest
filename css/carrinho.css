@@ -35,9 +35,7 @@
     padding: 5px;
 }
 .pro_img img {
-
     width: 7rem;
-
 }
 .nome_cor {
     display:flex;
@@ -48,6 +46,11 @@
 }
 .nome_produto {
     text-align: left;
+}
+
+.cor{
+    display: flex;
+    gap: 5px;
 }
 .preco {
     display: flex;
