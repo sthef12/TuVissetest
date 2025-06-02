@@ -6,14 +6,6 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 import pool from "./db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import pkg from "pg";
-
-const { Pool } = pkg;
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
