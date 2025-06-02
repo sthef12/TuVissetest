@@ -1,3 +1,10 @@
+//verifica se o usuário está logado
+const token = localStorage.getItem('token');
+
+if (!token) {
+  window.location.href = 'login.html'; // 🔒 Bloqueia se não estiver logado
+}
+
 const url = "https://tuvissetest.onrender.com/produtos";
 
 // 🔥 Carrega os produtos do backend

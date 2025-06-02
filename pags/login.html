@@ -1,61 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login do Admin</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-
-        .container {
-            width: 300px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid black;
-        }
-
-        input,
-        button {
-            width: 100%;
-            margin: 5px 0;
-            padding: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      padding: 50px;
+    }
+    form {
+      background: white;
+      display: inline-block;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: gray;
+    }
+    .erro {
+      color: red;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <h2>Login do Admin</h2>
-        <input type="text" id="usuario" placeholder="Usuário" autocomplete="username">
-        <input type="password" id="senha" placeholder="Senha" autocomplete="current-password">
-        <button onclick="fazerLogin()">Entrar</button>
-        <p id="mensagem"></p>
-    </div>
 
-    <script>
-        async function fazerLogin() {
-            const usuario = document.getElementById("usuario").value;
-            const senha = document.getElementById("senha").value;
-            const res = await fetch("https://tuvissetest.onrender.com/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ usuario, senha })
-            });
-            const data = await res.json();
-            const mensagemEl = document.getElementById("mensagem");
-            if (data.sucesso) {
-                localStorage.setItem("token", data.token);
-                mensagemEl.textContent = "Login bem-sucedido!";
-                window.location.href = "admin.html";
-            } else {
-                mensagemEl.textContent = "Usuário ou senha incorretos";
-            }
-        }
-    </script>
+  <h1>Painel Admin - Login</h1>
+
+  <form id="form-login">
+    <input type="text" id="usuario" placeholder="Usuário" required />
+    <input type="password" id="senha" placeholder="Senha" required />
+    <button type="submit">Entrar</button>
+    <p id="mensagem" class="erro"></p>
+  </form>
+
+  <script>
+    const backend = 'https://tuvissetest.onrender.com'; 
+
+    const form = document.getElementById('form-login');
+    const mensagem = document.getElementById('mensagem');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const usuario = document.getElementById('usuario').value;
+      const senha = document.getElementById('senha').value;
+
+      const resposta = await fetch(`${backend}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usuario, senha })
+      });
+
+      const dados = await resposta.json();
+
+      if (dados.sucesso) {
+        // ✔️ Salvar token no localStorage
+        localStorage.setItem('token', dados.token);
+        // ✔️ Redirecionar para o painel admin
+        window.location.href = 'admin.html'; // 🔗 Trocar pelo seu painel admin
+      } else {
+        mensagem.textContent = dados.mensagem || 'Erro no login';
+      }
+    });
+  </script>
+
 </body>
-
 </html>
