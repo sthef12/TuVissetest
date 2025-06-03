@@ -43,7 +43,7 @@
                         <option value="">Selecione uma categoria</option>
                         <option value="nova">Adicionar uma nova categoria</option>
                     </select>
-                    <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;">
+                    <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;" />
                     <select id="subcategoria-select" title="Selecionar a subcategoria do produto">
                         <option value="">Selecione uma subcategoria</option>
                         <option value="Pronto">Produto Pronto</option>
@@ -56,22 +56,47 @@
                     <div id="cores-container">
                         <button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>
                     </div>
+                    <div id="cores"></div>
                     <div class="anexar_imagem_padrao">
                         <label for="imagem">Imagem Principal do Produto</label>
-                        <input type="file" id="imagem" accept=".jpg, .jpeg, .png" title="Fazer upload da imagem principal do produto">
+                        <input type="file" id="imagem" accept=".jpg, .jpeg, .png"
+                            title="Fazer upload da imagem principal do produto">
                     </div>
                 </div>
                 <div class="numeros_medidas">
                     <h2>Números e Medidas</h2>
-                    <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
+                    <!-- <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
                         title="Tamanhos disponíveis do produto">
                     <input type="text" id="medidas"
                         placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)"
-                        title="Medidas dos tamanhos disponíveis">
+                        title="Medidas dos tamanhos disponíveis"> -->
+                    <!-- 🔥 Área de tamanhos -->
+                    <div id="tamanhos-container">
+                        <label>Adicionar Tamanho</label>
+                        <input type="text" id="input-tamanho" placeholder="Ex.: P, M, G">
+                        <button type="button" onclick="adicionarTamanho()">Adicionar mais um tamanho</button>
+                        <div id="lista-tamanhos"></div>
+                    </div>
+
+                    <br>
+
+                    <!-- 🔥 Área de medidas -->
+                    <div id="medidas-container">
+                        <label>Adicionar Medida</label>
+                        <select id="select-tamanho-medida">
+                            <option value="">Selecione o tamanho</option>
+                        </select>
+                        <input type="text" id="input-medida" placeholder="Ex.: 54cm x 65cm">
+                        <button type="button" onclick="adicionarMedida()">Adicionar mais uma medida para um
+                            tamanho</button>
+                        <div id="lista-medidas"></div>
+                    </div>
+
+
                     <div class="anexar_imagem_medidas">
                         <label for="imagem_medidas">Imagem das medidas</label>
-                        <input type="file" id="imagem_medidas"
-                            accept=".jpg, .jpeg, .png" title="Fazer upload da imagem das medidas do produto">
+                        <input type="file" id="imagem_medidas" accept=".jpg, .jpeg, .png"
+                            title="Fazer upload da imagem das medidas do produto">
                     </div>
                     <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
                     <input type="number" id="preco" placeholder="Preço" title="Preço do produto">

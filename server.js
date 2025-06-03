@@ -65,11 +65,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ✅ Exemplo de rota protegida
-app.get('/admin', autenticarToken, (req, res) => {
-  res.send(`Bem-vindo, ${req.user.usuario}`);
-});
-
 // 🔗 Config Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -87,8 +82,13 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage });
 
-// ✔️ Middleware pra tratar JSON em outras rotas
-app.use(express.json());
+// ✔️ Configuração dos campos aceitos (CORRIGIDO!)
+const uploadFields = upload.fields([
+  { name: "imagem", maxCount: 1 },
+  { name: "imagem_medidas", maxCount: 1 },
+  { name: "imagemFrente" },
+  { name: "imagemVerso" },
+]);
 
 // 🚀 Rota GET (listar produtos)
 app.get("/produtos", async (req, res) => {
@@ -102,121 +102,124 @@ app.get("/produtos", async (req, res) => {
 });
 
 // ➕ Rota POST (adicionar produto com imagens)
-app.post(
-  "/produtos",
-  upload.fields([
-    { name: "imagem", maxCount: 1 },
-    { name: "imagem_medidas", maxCount: 1 },
-  ]),
-  async (req, res) => {
-    const {
-      nome,
-      descricao,
-      composicao,
-      categoria,
-      subcategoria,
-      preco,
-      estoque,
-      tamanhos,
-      medidas,
-    } = req.body;
+app.post("/produtos", uploadFields, async (req, res) => {
+  const {
+    nome,
+    descricao,
+    composicao,
+    categoria,
+    subcategoria,
+    preco,
+    estoque,
+    tamanhos,
+    medidas,
+  } = req.body;
 
-    // 🟦 Processar cores (enviadas como JSON string no FormData)
-    const cores = req.body.cores ? JSON.parse(req.body.cores) : [];
+  const cores = req.body.cores ? JSON.parse(req.body.cores) : [];
 
-    // 🟧 Pegar as imagens (se existirem)
-    const imagem = req.files["imagem"] ? req.files["imagem"][0].path : "";
-    const imagem_medidas = req.files["imagem_medidas"]
-      ? req.files["imagem_medidas"][0].path
-      : "";
+  const imagem = req.files["imagem"] ? req.files["imagem"][0].path : "";
+  const imagem_medidas = req.files["imagem_medidas"]
+    ? req.files["imagem_medidas"][0].path
+    : "";
 
-    try {
-      const result = await pool.query(
-        `INSERT INTO produtos 
+  // 🔥 Processa imagens de cores (se houver)
+  const imagensFrente = req.files["imagemFrente"] || [];
+  const imagensVerso = req.files["imagemVerso"] || [];
+
+  cores.forEach((cor, index) => {
+    cor.imagemFrente = imagensFrente[index] ? imagensFrente[index].path : "";
+    cor.imagemVerso = imagensVerso[index] ? imagensVerso[index].path : "";
+  });
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO produtos 
       (nome, descricao, composicao, categoria, subcategoria, preco, estoque, tamanhos, medidas, imagem, imagem_medidas, cores)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
-        [
-          nome,
-          descricao,
-          composicao,
-          categoria,
-          subcategoria,
-          preco,
-          estoque,
-          tamanhos,
-          medidas,
-          imagem,
-          imagem_medidas,
-          cores,
-        ]
-      );
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao salvar produto" });
-    }
+      [
+        nome,
+        descricao,
+        composicao,
+        categoria,
+        subcategoria,
+        preco,
+        estoque,
+        tamanhos,
+        medidas,
+        imagem,
+        imagem_medidas,
+        JSON.stringify(cores),
+      ]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao salvar produto" });
   }
-);
+});
 
 // ✏️ Rota PUT (atualizar produto)
-app.put(
-  "/produtos/:id",
-  upload.fields([
-    { name: "imagem", maxCount: 1 },
-    { name: "imagem_medidas", maxCount: 1 },
-  ]),
-  async (req, res) => {
-    const id = req.params.id;
-    const {
-      nome,
-      descricao,
-      composicao,
-      categoria,
-      subcategoria,
-      preco,
-      estoque,
-      tamanhos,
-      medidas,
-    } = req.body;
+app.put("/produtos/:id", uploadFields, async (req, res) => {
+  const id = req.params.id;
+  const {
+    nome,
+    descricao,
+    composicao,
+    categoria,
+    subcategoria,
+    preco,
+    estoque,
+    tamanhos,
+    medidas,
+  } = req.body;
 
-    const cores = req.body.cores ? JSON.parse(req.body.cores) : [];
+  const cores = req.body.cores ? JSON.parse(req.body.cores) : [];
 
-    const imagem = req.files["imagem"]
-      ? req.files["imagem"][0].path
-      : req.body.imagem;
-    const imagem_medidas = req.files["imagem_medidas"]
-      ? req.files["imagem_medidas"][0].path
-      : req.body.imagem_medidas;
+  const imagem = req.files["imagem"]
+    ? req.files["imagem"][0].path
+    : req.body.imagem;
+  const imagem_medidas = req.files["imagem_medidas"]
+    ? req.files["imagem_medidas"][0].path
+    : req.body.imagem_medidas;
 
-    try {
-      const result = await pool.query(
-        `UPDATE produtos SET 
+  const imagensFrente = req.files["imagemFrente"] || [];
+  const imagensVerso = req.files["imagemVerso"] || [];
+
+  cores.forEach((cor, index) => {
+    cor.imagemFrente =
+      imagensFrente[index] ? imagensFrente[index].path : cor.imagemFrente;
+    cor.imagemVerso =
+      imagensVerso[index] ? imagensVerso[index].path : cor.imagemVerso;
+  });
+
+  try {
+    const result = await pool.query(
+      `UPDATE produtos SET 
       nome=$1, descricao=$2, composicao=$3, categoria=$4, subcategoria=$5, 
       preco=$6, estoque=$7, tamanhos=$8, medidas=$9, imagem=$10, imagem_medidas=$11, cores=$12 
       WHERE id=$13 RETURNING *`,
-        [
-          nome,
-          descricao,
-          composicao,
-          categoria,
-          subcategoria,
-          preco,
-          estoque,
-          tamanhos,
-          medidas,
-          imagem,
-          imagem_medidas,
-          cores,
-          id,
-        ]
-      );
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao atualizar produto" });
-    }
+      [
+        nome,
+        descricao,
+        composicao,
+        categoria,
+        subcategoria,
+        preco,
+        estoque,
+        tamanhos,
+        medidas,
+        imagem,
+        imagem_medidas,
+        JSON.stringify(cores),
+        id,
+      ]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao atualizar produto" });
   }
-);
+});
 
 // ❌ Rota DELETE (remover produto)
 app.delete("/produtos/:id", async (req, res) => {

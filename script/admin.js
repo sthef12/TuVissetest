@@ -1,8 +1,8 @@
 //verifica se o usuário está logado
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 
 if (!token) {
-  window.location.href = 'login.html'; // 🔒 Bloqueia se não estiver logado
+  window.location.href = "login.html"; // 🔒 Bloqueia se não estiver logado
 }
 
 const url = "https://tuvissetest.onrender.com/produtos";
@@ -50,7 +50,8 @@ async function carregarProdutos() {
       </thead>
       <tbody>
         ${produtosPorCategoria[categoria]
-          .map((produto) => `
+          .map(
+            (produto) => `
             <tr>
               <td>${produto.id}</td>
               <td>${produto.nome}</td>
@@ -63,18 +64,18 @@ async function carregarProdutos() {
               <td>
               ${
                 Array.isArray(produto.cores)
-                ? produto.cores
-                .map(
-                  (cor) => `
+                  ? produto.cores
+                      .map(
+                        (cor) => `
                   <div>
                   <p>${cor.nomeCor} (${cor.codigoCor})</p>
                   <img src="${cor.imagemFrente}" width="40" alt="Imagem Frente">
                   <img src="${cor.imagemVerso}" width="40" alt="Imagem Verso">
                   </div>
                   `
-                )
-                .join("")
-                : "N/A"
+                      )
+                      .join("")
+                  : "N/A"
               }
               </td>
               <td>${listarTamanhosEMedidas(produto)}</td>
@@ -85,34 +86,42 @@ async function carregarProdutos() {
               <button onclick="deletarProduto(${produto.id})">Excluir</button>
               </td>
               </tr>
-              `)
-              .join("")}
+              `
+          )
+          .join("")}
               </tbody>
               `;
-              
+
     categoriaDiv.appendChild(tabela);
     container.appendChild(categoriaDiv);
   }
 }
 
-
 // ➕ Adiciona produto
 async function adicionarProduto() {
-  const form = document.getElementById("form-produto");
   const formData = new FormData();
 
-  formData.append("nome", form.nome.value);
-  formData.append("descricao", form.descricao.value);
-  formData.append("composicao", form.composicao.value);
-  formData.append("categoria", form.categoria.value);
-  formData.append("subcategoria", form.subcategoria.value);
-  formData.append("preco", parseFloat(form.preco.value));
-  formData.append("estoque", parseInt(form.estoque.value));
-  formData.append("tamanhos", form.tamanhos.value);
-  formData.append("medidas", form.medidas.value);
+  formData.append("nome", document.getElementById("nome").value);
+  formData.append("descricao", document.getElementById("descricao").value);
+  formData.append("composicao", document.getElementById("composicao").value);
+  formData.append(
+    "categoria",
+    document.getElementById("categoria-select").value
+  );
+  formData.append(
+    "subcategoria",
+    document.getElementById("subcategoria-select").value
+  );
+  formData.append("preco", parseFloat(document.getElementById("preco").value));
+  formData.append(
+    "estoque",
+    parseInt(document.getElementById("estoque").value)
+  );
+  formData.append("tamanhos", JSON.stringify(tamanhos));
+  formData.append("medidas", JSON.stringify(medidas));
 
-  const imagem = form.imagem.files[0];
-  const imagemMedidas = form.imagem_medidas.files[0];
+  const imagem = document.getElementById("imagem").files[0];
+  const imagemMedidas = document.getElementById("imagem_medidas").files[0];
 
   if (imagem) formData.append("imagem", imagem);
   if (imagemMedidas) formData.append("imagem_medidas", imagemMedidas);
@@ -127,8 +136,8 @@ async function adicionarProduto() {
     const imagemFrente = el.querySelector(".imagem-frente").files[0];
     const imagemVerso = el.querySelector(".imagem-verso").files[0];
 
-    if (imagemFrente) formData.append("imagemFrente[]", imagemFrente);
-    if (imagemVerso) formData.append("imagemVerso[]", imagemVerso);
+    if (imagemFrente) formData.append("imagemFrente", imagemFrente);
+    if (imagemVerso) formData.append("imagemVerso", imagemVerso);
 
     cores.push(cor);
   });
@@ -161,7 +170,7 @@ function adicionarCor() {
   div.classList.add("cor-item");
   div.innerHTML = `
     <input type="text" placeholder="Nome da cor" class="nome-cor" />
-    <input type="color" class="codigo-cor" />
+    <input type="color" class="codigo-cor" value="#ff0000"/>
     <input type="file" class="imagem-frente" />
     <input type="file" class="imagem-verso" />
     <button onclick="removerCor(this)">Remover</button>
@@ -191,7 +200,7 @@ function listarTamanhosEMedidas(produto) {
   let medidasArray = produto.medidas;
 
   // 🔥 Se medidas vier como string, transformar em array
-  if (typeof medidasArray === 'string') {
+  if (typeof medidasArray === "string") {
     try {
       medidasArray = JSON.parse(medidasArray);
     } catch {
@@ -221,5 +230,171 @@ function listarTamanhosEMedidas(produto) {
   `;
 }
 
+function verificarCategoria() {
+  const categoriaSelect = document.getElementById("categoria-select");
+  const novaCategoriaInput = document.getElementById("nova-categoria");
 
+  // Verifica se a opção selecionada é "nova"
+  if (categoriaSelect.value === "nova") {
+    novaCategoriaInput.style.display = "block"; // Exibe o input para nova categoria
+    novaCategoriaInput.required = true; // Torna o campo obrigatório
+  } else {
+    novaCategoriaInput.style.display = "none"; // Oculta o input para nova categoria
+    novaCategoriaInput.required = false; // Remove a obrigatoriedade
+  }
+}
+
+// Função para carregar categorias existentes
+async function carregarCategorias() {
+  const categoriaSelect = document.getElementById("categoria-select");
+
+  try {
+    const res = await fetch("https://tuvissetest.onrender.com/produtos");
+    const produtos = await res.json();
+
+    // Extrai categorias únicas dos produtos
+    const categorias = [
+      ...new Set(
+        produtos.map((produto) => produto.categoria || "Sem categoria")
+      ),
+    ];
+
+    // Adiciona as categorias ao select
+    categoriaSelect.innerHTML = `
+      <option value="">Selecione uma categoria</option>
+      <option value="nova">Adicionar uma nova categoria</option>
+      ${categorias
+        .map(
+          (categoria) => `<option value="${categoria}">${categoria}</option>`
+        )
+        .join("")}
+    `;
+  } catch (error) {
+    console.error("Erro ao carregar categorias:", error);
+  }
+}
+
+const tamanhos = [];
+const medidas = [];
+
+// ➕ Adicionar tamanho
+function adicionarTamanho() {
+  const input = document.getElementById("input-tamanho");
+  const tamanho = input.value.trim();
+
+  if (!tamanho) {
+    alert("Digite um tamanho.");
+    return;
+  }
+
+  if (tamanhos.includes(tamanho)) {
+    alert("Este tamanho já foi adicionado.");
+    input.value = "";
+    return;
+  }
+
+  tamanhos.push(tamanho);
+  atualizarListaTamanhos();
+  atualizarSelectTamanhos();
+
+  input.value = "";
+}
+
+// ➕ Adicionar medida vinculada ao tamanho
+function adicionarMedida() {
+  const tamanhoSelecionado = document.getElementById(
+    "select-tamanho-medida"
+  ).value;
+  const medidaTexto = document.getElementById("input-medida").value.trim();
+
+  if (!tamanhoSelecionado) {
+    alert("Selecione um tamanho para associar a medida.");
+    return;
+  }
+
+  if (!medidaTexto) {
+    alert("Digite a medida.");
+    return;
+  }
+
+  medidas.push({
+    tamanho: tamanhoSelecionado,
+    medida: medidaTexto,
+  });
+
+  atualizarListaMedidas();
+
+  document.getElementById("input-medida").value = "";
+}
+
+// 🔄 Atualizar visual dos tamanhos
+function atualizarListaTamanhos() {
+  const lista = document.getElementById("lista-tamanhos");
+  lista.innerHTML = "";
+
+  tamanhos.forEach((t) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${t}</strong> 
+      <button onclick="removerTamanho('${t}')">Remover</button>
+    `;
+    lista.appendChild(div);
+  });
+}
+
+// 🔄 Atualizar select dos tamanhos nas medidas
+function atualizarSelectTamanhos() {
+  const select = document.getElementById("select-tamanho-medida");
+  select.innerHTML = '<option value="">Selecione o tamanho</option>';
+
+  tamanhos.forEach((t) => {
+    const option = document.createElement("option");
+    option.value = t;
+    option.textContent = t;
+    select.appendChild(option);
+  });
+}
+
+// 🔄 Atualizar lista das medidas
+function atualizarListaMedidas() {
+  const lista = document.getElementById("lista-medidas");
+  lista.innerHTML = "";
+
+  medidas.forEach((m, index) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${m.tamanho}</strong>: ${m.medida}
+      <button onclick="removerMedida(${index})">Remover</button>
+    `;
+    lista.appendChild(div);
+  });
+}
+
+// ❌ Remover tamanho
+function removerTamanho(t) {
+  const index = tamanhos.indexOf(t);
+  if (index > -1) {
+    tamanhos.splice(index, 1);
+  }
+
+  // Remover também medidas vinculadas
+  for (let i = medidas.length - 1; i >= 0; i--) {
+    if (medidas[i].tamanho === t) {
+      medidas.splice(i, 1);
+    }
+  }
+
+  atualizarListaTamanhos();
+  atualizarSelectTamanhos();
+  atualizarListaMedidas();
+}
+
+// ❌ Remover medida
+function removerMedida(index) {
+  medidas.splice(index, 1);
+  atualizarListaMedidas();
+}
+
+// Chama a função ao carregar a página
+carregarCategorias();
 carregarProdutos();

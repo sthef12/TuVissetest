@@ -16,12 +16,11 @@ main{
     margin: auto;
 }
 
-.lista-produtos div{
+#lista-produtos {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100vw;
+    flex-direction: column;
 }
 
 input,
