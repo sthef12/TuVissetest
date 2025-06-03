@@ -85,79 +85,82 @@
   <script>
     async function buscarProdutoPelaURL() {
       const urlParams = new URLSearchParams(window.location.search);
-      const produtoId = urlParams.get('id');
+      const produtoId = urlParams.get("id");
 
-      if (produtoId) {
-        try {
-          const produtos = await fetch("https://tuvissetest.onrender.com/produtos");
-          const produtosJson = await produtos.json();
-          const produto = produtosJson.find(p => p.id == produtoId);
+      if (!produtoId) {
+        console.error("ID do produto não fornecido");
+        return;
+      }
 
-          if (produto) { //se tiver produto com o id especifico:
-            const produto_view = document.getElementById("produto_view");
-            const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
-            produto_view.innerHTML = `
-            <div class="carrossel_img">
-              <div class="imagem_principal_container">
-                <div class="imagem_principal">
-                  <img id="imagem_principal" src="${produto.imagem}" alt="${produto.nome}" />
-                </div>
-              </div>
-              <div class="carrossel_container">
-                <button id="cima" class="seta" onclick="moverCarrossel(-1)">&#10095;</button>
-                <div class="carrossel_view" id="carrossel">
-                  ${produto.cores && produto.cores.length > 0
-                ? produto.cores.map((cor, i) => `
-                        <img class="imagem_view" src="${cor.imagemFrente}" alt="Frente - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')">
-                        <img class="imagem_view" src="${cor.imagemVerso}" alt="Verso - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'verso')">
-                      `).join('')
-                : '<p>Nenhuma imagem disponível</p>'}
-                  ${produto.imagem_medidas && produto.imagem_medidas !== "undefined"
-                ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
-                : ''}
-                </div>
-                <button id="baixo" class="seta" onclick="moverCarrossel(1)">&#10095;</button>
+      try {
+        const res = await fetch("https://tuvissetest.onrender.com/produtos");
+        const produtosJson = await res.json();
+        const produto = produtosJson.find((p) => p.id == produtoId);
+
+        if (!produto) {
+          console.error("Produto não encontrado");
+          return;
+        }
+
+        const produto_view = document.getElementById("produto_view");
+        const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
+
+        produto_view.innerHTML = `
+          <div class="carrossel_img">
+            <div class="imagem_principal_container">
+              <div class="imagem_principal">
+                <img id="imagem_principal" src="${produto.imagem}" alt="${produto.nome}" />
               </div>
             </div>
-            <div class="descricao">
-              <div class="nome_descricao">
-                <span id="nome_produto">
-                  <h1>${produto.nome}</h1>
-                </span>
-                <h3>Descrição:</h3>
-                <span id="descricao_produto">
-                  <p>${produto.descricao}</p>
-                </span>
-                <div class="cores">
-                  ${produto.cores && produto.cores.length > 0
-                ? produto.cores.map((cor, i) => `
-                        <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarCor(${i})"></span>
-                      `).join('')
-                : '<p>Nenhuma cor disponível</p>'}
-                </div>
+            <div class="carrossel_container">
+              <button id="cima" class="seta" onclick="moverCarrossel(-1)">&#10095;</button>
+              <div class="carrossel_view" id="carrossel">
+                ${produto.cores && produto.cores.length > 0
+                  ? produto.cores.map((cor, i) => `
+                      <img class="imagem_view" src="${cor.imagemFrente}" alt="Frente - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')">
+                      <img class="imagem_view" src="${cor.imagemVerso}" alt="Verso - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'verso')">
+                    `).join("")
+                  : "<p>Nenhuma imagem disponível</p>"}
+                ${produto.imagem_medidas && produto.imagem_medidas !== "undefined"
+                  ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
+                  : ""}
               </div>
-              <div class="valor_button">
-                <div class="valor_preco">
-                  <h4>Valor:</h4>
-                  <span id="valor_produto">R$ ${precoProduto}</span>
-                </div>
-                <div class="buttons">
-                  <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
-                  <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>
-                </div>
-                </div>
-            </div>`;
-          } else {
-            console.error("Produto não encontrado");
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        console.error("ID do produto não fornecido");
+              <button id="baixo" class="seta" onclick="moverCarrossel(1)">&#10095;</button>
+            </div>
+          </div>
+          <div class="descricao">
+            <div class="nome_descricao">
+              <span id="nome_produto">
+                <h1>${produto.nome}</h1>
+              </span>
+              <h3>Descrição:</h3>
+              <span id="descricao_produto">
+                <p>${produto.descricao}</p>
+              </span>
+              <div class="cores">
+                ${produto.cores && produto.cores.length > 0
+                  ? produto.cores.map((cor, i) => `
+                      <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarCor(${i})"></span>
+                    `).join("")
+                  : "<p>Nenhuma cor disponível</p>"}
+              </div>
+            </div>
+            <div class="valor_button">
+              <div class="valor_preco">
+                <h4>Valor:</h4>
+                <span id="valor_produto">R$ ${precoProduto}</span>
+              </div>
+              <div class="buttons">
+                <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
+                <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>
+              </div>
+            </div>
+          </div>`;
+      } catch (error) {
+        console.error("Erro ao buscar produto:", error);
       }
     }
-    //ao carregar a pagina chama essa função:
+
     window.onload = buscarProdutoPelaURL;
 
     function selecionarImagem(index, tipo) {
@@ -213,12 +216,24 @@
           }
 
           const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-          if (!carrinho.includes(produtoId)) {
-            carrinho.push(produtoId);
+
+          // Adiciona o produto ao carrinho com a cor selecionada
+          const produtoComCor = {
+            id: produtoId,
+            cor: corSelecionada?.codigoCor || "Sem cor"
+          };
+
+          // Verifica se o produto com a mesma cor já está no carrinho
+          const produtoExistente = carrinho.find(
+            (item) => item.id === produtoComCor.id && item.cor === produtoComCor.cor
+          );
+
+          if (!produtoExistente) {
+            carrinho.push(produtoComCor);
             localStorage.setItem("carrinho", JSON.stringify(carrinho));
             alert("Produto adicionado ao carrinho");
           } else {
-            alert("Produto já está no carrinho");
+            alert("Este produto com a cor selecionada já está no carrinho");
           }
         })
         .catch(error => console.error("Erro ao buscar produto:", error));
@@ -250,6 +265,34 @@
 
             // Atualiza a imagem principal para a imagemFrente da cor selecionada
             document.getElementById("imagem_principal").src = corSelecionada.imagemFrente;
+
+            // Remove o ícone de seleção de todas as bolinhas
+            document.querySelectorAll('.cor_produto').forEach((element) => {
+              const checkIcon = element.querySelector('.fa-check');
+              if (checkIcon) {
+                checkIcon.remove();
+              }
+            });
+
+            // Adiciona o ícone de seleção na bolinha da cor selecionada
+            const bolinhaSelecionada = document.querySelectorAll('.cor_produto')[index];
+            const checkIcon = document.createElement('i');
+            checkIcon.className = 'fa-solid fa-check';
+            checkIcon.style.position = 'absolute';
+
+            // Define a cor do ícone com base na cor selecionada
+            if (corSelecionada.codigoCor.toLowerCase() === '#ffffff' || corSelecionada.codigoCor.toLowerCase() === 'white') {
+              checkIcon.style.color = 'gray'; // Ícone cinza para cor branca
+            } else {
+              checkIcon.style.color = 'white'; // Ícone branco para outras cores
+            }
+
+            checkIcon.style.fontSize = '16px';
+            checkIcon.style.top = '50%';
+            checkIcon.style.left = '50%';
+            checkIcon.style.transform = 'translate(-50%, -50%)';
+            bolinhaSelecionada.style.position = 'relative';
+            bolinhaSelecionada.appendChild(checkIcon);
 
             console.log(`Cor selecionada para o produto ${produtoId}:`, corInfo);
           } else {
