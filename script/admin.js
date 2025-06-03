@@ -185,9 +185,38 @@ function removerCor(botao) {
 
 // 🧹 Limpa o formulário
 function limparFormulario() {
-  const form = document.getElementById("form-produto");
-  form.reset();
-  document.getElementById("cores").innerHTML = "";
+  // Limpa os campos de texto e selects
+  document.getElementById("nome").value = "";
+  document.getElementById("composicao").value = "";
+  document.getElementById("descricao").value = "";
+  document.getElementById("preco").value = "";
+  document.getElementById("estoque").value = "";
+  document.querySelectorAll(".nome-cor").value = "";
+  document.getElementById("categoria-select").value = "";
+  document.getElementById("subcategoria-select").value = "";
+  document.getElementById("nova-categoria").value = "";
+
+  // Limpa os campos de tamanhos e medidas
+  const listaTamanhos = document.getElementById("lista-tamanhos");
+  const listaMedidas = document.getElementById("lista-medidas");
+  const selectTamanhoMedida = document.getElementById("select-tamanho-medida");
+
+  listaTamanhos.innerHTML = "";
+  listaMedidas.innerHTML = "";
+  selectTamanhoMedida.innerHTML =
+    '<option value="">Selecione o tamanho</option>';
+
+  // Limpa os arrays de tamanhos e medidas
+  tamanhos.length = 0;
+  medidas.length = 0;
+
+  // Limpa os campos de imagens
+  document.getElementById("imagem").value = "";
+  document.getElementById("imagem_medidas").value = "";
+
+  // Limpa o container de cores
+  const coresContainer = document.getElementById("cores-container");
+  coresContainer.innerHTML = `<button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>`;
 }
 
 function listarTamanhosEMedidas(produto) {
@@ -242,6 +271,32 @@ function verificarCategoria() {
     novaCategoriaInput.style.display = "none"; // Oculta o input para nova categoria
     novaCategoriaInput.required = false; // Remove a obrigatoriedade
   }
+}
+
+// Função para adicionar uma nova categoria ao select
+function adicionarNovaCategoria() {
+  const novaCategoriaInput = document.getElementById("nova-categoria");
+  const categoriaSelect = document.getElementById("categoria-select");
+
+  const novaCategoria = novaCategoriaInput.value.trim();
+
+  if (!novaCategoria) {
+    alert("Digite o nome da nova categoria.");
+    return;
+  }
+
+  // Adiciona a nova categoria ao select
+  const option = document.createElement("option");
+  option.value = novaCategoria;
+  option.textContent = novaCategoria;
+  categoriaSelect.appendChild(option);
+
+  // Define a nova categoria como selecionada
+  categoriaSelect.value = novaCategoria;
+
+  // Oculta o input e limpa o valor
+  novaCategoriaInput.style.display = "none";
+  novaCategoriaInput.value = "";
 }
 
 // Função para carregar categorias existentes
