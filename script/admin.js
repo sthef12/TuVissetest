@@ -262,12 +262,14 @@ function listarTamanhosEMedidas(produto) {
 function verificarCategoria() {
   const categoriaSelect = document.getElementById("categoria-select");
   const novaCategoriaInput = document.getElementById("nova-categoria");
-
+  const button = document.getElementById('adicionarNovaCategoria');
   // Verifica se a opção selecionada é "nova"
   if (categoriaSelect.value === "nova") {
     novaCategoriaInput.style.display = "block"; // Exibe o input para nova categoria
     novaCategoriaInput.required = true; // Torna o campo obrigatório
+    button.style.display = 'block'; // exibe o button para adicionar nova categoria
   } else {
+    button.style.display = 'none'; // oculta o button para adicionar nova categoria
     novaCategoriaInput.style.display = "none"; // Oculta o input para nova categoria
     novaCategoriaInput.required = false; // Remove a obrigatoriedade
   }
@@ -297,7 +299,9 @@ function adicionarNovaCategoria() {
   // Oculta o input e limpa o valor
   novaCategoriaInput.style.display = "none";
   novaCategoriaInput.value = "";
+
 }
+
 
 // Função para carregar categorias existentes
 async function carregarCategorias() {
@@ -449,6 +453,7 @@ function removerMedida(index) {
   medidas.splice(index, 1);
   atualizarListaMedidas();
 }
+
 
 // Chama a função ao carregar a página
 carregarCategorias();

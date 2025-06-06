@@ -31,7 +31,7 @@
     <main>
         <div class="opcoes-container">
             <div class="opcoes">
-                <div class="nome_descricao">
+                <div class="nome_descricao linha">
                     <h2>Nome e descrições</h2>
                     <input type="text" id="nome" placeholder="Nome do Produto" title="Nome do Produto">
                     <input type="text" id="composicao" placeholder="Composição do Produto"
@@ -44,7 +44,7 @@
                         <option value="nova">Adicionar uma nova categoria</option>
                     </select>
                     <input type="text" id="nova-categoria" placeholder="Nova Categoria" style="display: none;" />
-                    <button type="button" onclick="adicionarNovaCategoria()">Adicionar Categoria</button>
+                    <button id="adicionarNovaCategoria" type="button" onclick="adicionarNovaCategoria()">Adicionar Categoria</button>
                     <select id="subcategoria-select" title="Selecionar a subcategoria do produto">
                         <option value="">Selecione uma subcategoria</option>
                         <option value="Pronto">Produto Pronto</option>
@@ -52,7 +52,7 @@
                     </select>
                 </div>
 
-                <div class="imagens_cores">
+                <div class="imagens_cores linha-cores">
                     <h2>Imagens e Cores</h2>
                     <div id="cores-container">
                         <button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>
@@ -64,7 +64,7 @@
                             title="Fazer upload da imagem principal do produto">
                     </div>
                 </div>
-                <div class="numeros_medidas">
+                <div class="numeros_medidas ">
                     <h2>Números e Medidas</h2>
                     <!-- <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
                         title="Tamanhos disponíveis do produto">
@@ -99,8 +99,11 @@
                         <input type="file" id="imagem_medidas" accept=".jpg, .jpeg, .png"
                             title="Fazer upload da imagem das medidas do produto">
                     </div>
-                    <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
-                    <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
+                    <div class="estoque_preco">
+                        <input type="number" id="estoque" placeholder="Estoque" title="Quantidade disponível do produto">
+                        <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
+                    </div>
+                    
                 </div>
             </div>
             <div class="opcoes-botoes">
