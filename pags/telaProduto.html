@@ -120,7 +120,7 @@
                       <img class="imagem_view" src="${cor.imagemFrente}" alt="Frente - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')">
                       <img class="imagem_view" src="${cor.imagemVerso}" alt="Verso - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'verso')">
                     `).join("")
-                  : "<p>Nenhuma imagem disponível</p>"}
+                  : "<p>Sem variação de cor</p>"}
                 ${produto.imagem_medidas && produto.imagem_medidas !== "undefined"
                   ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
                   : ""}
@@ -142,7 +142,7 @@
                   ? produto.cores.map((cor, i) => `
                       <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarCor(${i})"></span>
                     `).join("")
-                  : "<p>Nenhuma cor disponível</p>"}
+                  : "<p>Cor única</p>"}
               </div>
             </div>
             <div class="valor_button">

@@ -68,7 +68,7 @@ async function carregarProdutos() {
                       .map(
                         (cor) => `
                   <div>
-                  <p>${cor.nomeCor} (${cor.codigoCor})</p>
+                  <p>${cor.nomeCor || "N/A"} (${cor.codigoCor || "N/A"})</p>
                   <img src="${cor.imagemFrente}" width="40" alt="Imagem Frente">
                   <img src="${cor.imagemVerso}" width="40" alt="Imagem Verso">
                   </div>
@@ -134,9 +134,9 @@ async function adicionarProduto() {
 
     // Só adiciona se o usuário preencher pelo menos um dos campos de cor
     if (nomeCor || codigoCor) {
-      const cor = { 
-        nomeCor: nomeCor || "N/A", 
-        codigoCor: codigoCor || "N/A" 
+      const cor = {
+        nomeCor: nomeCor || "N/A",
+        codigoCor: codigoCor || "N/A",
       };
 
       const imagemFrente = el.querySelector(".imagem-frente").files[0];
@@ -167,6 +167,7 @@ async function adicionarProduto() {
 
 // 🔄 Editar produto
 async function editarProduto(id) {
+  window.scrollTo({ top: 0, behavior: "smooth" }); // Rola suavemente para o topo da página
   try {
     const res = await fetch(`${url}/${id}`);
     const produto = await res.json();
@@ -183,16 +184,19 @@ async function editarProduto(id) {
     // Tamanhos
     tamanhos.length = 0;
     if (Array.isArray(produto.tamanhos)) {
-      produto.tamanhos.forEach(t => tamanhos.push(t));
+      produto.tamanhos.forEach((t) => tamanhos.push(t));
     }
     atualizarListaTamanhos();
     atualizarSelectTamanhos();
 
     // Medidas
     medidas.length = 0;
-    const medidasFormatadas = typeof produto.medidas === "string" ? JSON.parse(produto.medidas) : produto.medidas;
+    const medidasFormatadas =
+      typeof produto.medidas === "string"
+        ? JSON.parse(produto.medidas)
+        : produto.medidas;
     if (Array.isArray(medidasFormatadas)) {
-      medidasFormatadas.forEach(m => medidas.push(m));
+      medidasFormatadas.forEach((m) => medidas.push(m));
     }
     atualizarListaMedidas();
 
@@ -201,12 +205,14 @@ async function editarProduto(id) {
     coresContainer.innerHTML = "";
     const cores = Array.isArray(produto.cores) ? produto.cores : [];
 
-    cores.forEach(cor => {
+    cores.forEach((cor) => {
       const div = document.createElement("div");
       div.classList.add("cor-item");
       div.innerHTML = `
-        <input type="text" class="nome-cor" value="${cor.nomeCor || ''}" />
-        <input type="color" class="codigo-cor" value="${cor.codigoCor || '#000000'}" />
+        <input type="text" class="nome-cor" value="${cor.nomeCor || ""}" />
+        <input type="color" class="codigo-cor" value="${
+          cor.codigoCor || "#000000"
+        }" />
         <input type="file" class="imagem-frente" />
         <input type="file" class="imagem-verso" />
         <button onclick="removerCor(this)">Remover</button>
@@ -221,7 +227,6 @@ async function editarProduto(id) {
     document.getElementById("adicionar-btn").style.display = "none";
     document.getElementById("atualizar-btn").style.display = "inline-block";
     document.getElementById("voltar-btn").style.display = "inline-block";
-
   } catch (err) {
     console.error("Erro ao carregar produto para edição:", err);
   }
@@ -235,10 +240,19 @@ async function atualizarProduto() {
   formData.append("nome", document.getElementById("nome").value);
   formData.append("descricao", document.getElementById("descricao").value);
   formData.append("composicao", document.getElementById("composicao").value);
-  formData.append("categoria", document.getElementById("categoria-select").value);
-  formData.append("subcategoria", document.getElementById("subcategoria-select").value);
+  formData.append(
+    "categoria",
+    document.getElementById("categoria-select").value
+  );
+  formData.append(
+    "subcategoria",
+    document.getElementById("subcategoria-select").value
+  );
   formData.append("preco", parseFloat(document.getElementById("preco").value));
-  formData.append("estoque", parseInt(document.getElementById("estoque").value));
+  formData.append(
+    "estoque",
+    parseInt(document.getElementById("estoque").value)
+  );
   formData.append("tamanhos", JSON.stringify(tamanhos));
   formData.append("medidas", JSON.stringify(medidas));
 
@@ -290,7 +304,6 @@ function voltarProduto() {
   document.getElementById("voltar-btn").style.display = "none";
 }
 
-
 // ❌ Deletar produto
 async function deletarProduto(id) {
   await fetch(`${url}/${id}`, { method: "DELETE" });
@@ -303,9 +316,15 @@ function adicionarCor() {
   div.classList.add("cor-item");
   div.innerHTML = `
     <input type="text" placeholder="Nome da cor" class="nome-cor" />
-    <input type="color" class="codigo-cor" value="#ff0000"/>
-    <input type="file" class="imagem-frente" />
-    <input type="file" class="imagem-verso" />
+    <input type="color" class="codigo-cor" value="#ff0000" title="Cor que irá aparecer nas cores na página do produto"/>
+    <div class="imagem-container">
+      <label>Imagem de frente:</label>
+    <input type="file" class="imagem-frente" title="Imagem de frente"/>
+    </div>
+    <div class="imagem-container">
+      <label>Imagem de verso:</label>
+    <input type="file" class="imagem-verso" title="Imagem de verso"/>
+    </div>
     <button onclick="removerCor(this)">Remover</button>
   `;
   document.getElementById("cores").appendChild(div);
@@ -327,6 +346,7 @@ function limparFormulario() {
   document.querySelectorAll(".nome-cor").value = "";
   document.getElementById("categoria-select").value = "";
   document.getElementById("subcategoria-select").value = "";
+  document.getElementById("input-medida").value = "";
   document.getElementById("nova-categoria").value = "";
 
   // Limpa os campos de tamanhos e medidas
@@ -395,14 +415,14 @@ function listarTamanhosEMedidas(produto) {
 function verificarCategoria() {
   const categoriaSelect = document.getElementById("categoria-select");
   const novaCategoriaInput = document.getElementById("nova-categoria");
-  const button = document.getElementById('adicionarNovaCategoria');
+  const button = document.getElementById("adicionarNovaCategoria");
   // Verifica se a opção selecionada é "nova"
   if (categoriaSelect.value === "nova") {
     novaCategoriaInput.style.display = "block"; // Exibe o input para nova categoria
     novaCategoriaInput.required = true; // Torna o campo obrigatório
-    button.style.display = 'block'; // exibe o button para adicionar nova categoria
+    button.style.display = "block"; // exibe o button para adicionar nova categoria
   } else {
-    button.style.display = 'none'; // oculta o button para adicionar nova categoria
+    button.style.display = "none"; // oculta o button para adicionar nova categoria
     novaCategoriaInput.style.display = "none"; // Oculta o input para nova categoria
     novaCategoriaInput.required = false; // Remove a obrigatoriedade
   }
@@ -432,7 +452,6 @@ function adicionarNovaCategoria() {
   // Oculta o input e limpa o valor
   novaCategoriaInput.style.display = "none";
   novaCategoriaInput.value = "";
-
 }
 
 // Função para carregar categorias existentes
@@ -585,7 +604,6 @@ function removerMedida(index) {
   medidas.splice(index, 1);
   atualizarListaMedidas();
 }
-
 
 // Chama a função ao carregar a página
 carregarCategorias();

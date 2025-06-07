@@ -66,30 +66,24 @@
                 </div>
                 <div class="numeros_medidas ">
                     <h2>Números e Medidas</h2>
-                    <!-- <input type="text" id="tamanhos" placeholder="Tamanhos (ex: P, M, G)"
-                        title="Tamanhos disponíveis do produto">
-                    <input type="text" id="medidas"
-                        placeholder="Medidas dos Tamanhos (ex: P: 20cm x 30cm, M: 30cm x 40cm)"
-                        title="Medidas dos tamanhos disponíveis"> -->
-                    <!-- 🔥 Área de tamanhos -->
+                    <!-- tamanhos -->
                     <div id="tamanhos-container">
                         <label>Adicionar Tamanho</label>
-                        <input type="text" id="input-tamanho" placeholder="Ex.: P, M, G">
-                        <button type="button" onclick="adicionarTamanho()">Adicionar mais um tamanho</button>
+                        <input type="text" id="input-tamanho" placeholder="Ex.: P, M, G ou Único" title="Tamanho do produto">
+                        <button type="button" onclick="adicionarTamanho()">Adicionar tamanho</button>
                         <div id="lista-tamanhos"></div>
                     </div>
 
                     <br>
 
-                    <!-- 🔥 Área de medidas -->
+                    <!-- medidas -->
                     <div id="medidas-container">
                         <label>Adicionar Medida</label>
                         <select id="select-tamanho-medida">
                             <option value="">Selecione o tamanho</option>
                         </select>
-                        <input type="text" id="input-medida" placeholder="Ex.: 54cm x 65cm">
-                        <button type="button" onclick="adicionarMedida()">Adicionar mais uma medida para um
-                            tamanho</button>
+                        <input type="text" id="input-medida" placeholder="Ex.: 54cm x 65cm ou Único" title="Medida do produto">
+                        <button type="button" onclick="adicionarMedida()">Adicionar medida para um tamanho</button>
                         <div id="lista-medidas"></div>
                     </div>
 

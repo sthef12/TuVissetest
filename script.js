@@ -78,7 +78,7 @@ async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecio
               <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
                   )
                   .join("")
-              : "<p>Incolor</p>"
+              : "<p>Cor única</p>"
           }
           </div>
           <h2>R$ ${precoProduto}</h2>
