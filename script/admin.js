@@ -166,9 +166,130 @@ async function adicionarProduto() {
 }
 
 // 🔄 Editar produto
-function editarProduto(id) {
-  alert(`Editar produto ID: ${id}. Funcionalidade a implementar.`);
+async function editarProduto(id) {
+  try {
+    const res = await fetch(`${url}/${id}`);
+    const produto = await res.json();
+
+    // Preencher os campos
+    document.getElementById("nome").value = produto.nome;
+    document.getElementById("composicao").value = produto.composicao;
+    document.getElementById("descricao").value = produto.descricao;
+    document.getElementById("preco").value = produto.preco;
+    document.getElementById("estoque").value = produto.estoque;
+    document.getElementById("categoria-select").value = produto.categoria;
+    document.getElementById("subcategoria-select").value = produto.subcategoria;
+
+    // Tamanhos
+    tamanhos.length = 0;
+    if (Array.isArray(produto.tamanhos)) {
+      produto.tamanhos.forEach(t => tamanhos.push(t));
+    }
+    atualizarListaTamanhos();
+    atualizarSelectTamanhos();
+
+    // Medidas
+    medidas.length = 0;
+    const medidasFormatadas = typeof produto.medidas === "string" ? JSON.parse(produto.medidas) : produto.medidas;
+    if (Array.isArray(medidasFormatadas)) {
+      medidasFormatadas.forEach(m => medidas.push(m));
+    }
+    atualizarListaMedidas();
+
+    // Cores
+    const coresContainer = document.getElementById("cores");
+    coresContainer.innerHTML = "";
+    const cores = Array.isArray(produto.cores) ? produto.cores : [];
+
+    cores.forEach(cor => {
+      const div = document.createElement("div");
+      div.classList.add("cor-item");
+      div.innerHTML = `
+        <input type="text" class="nome-cor" value="${cor.nomeCor || ''}" />
+        <input type="color" class="codigo-cor" value="${cor.codigoCor || '#000000'}" />
+        <input type="file" class="imagem-frente" />
+        <input type="file" class="imagem-verso" />
+        <button onclick="removerCor(this)">Remover</button>
+      `;
+      coresContainer.appendChild(div);
+    });
+
+    // Guarda o ID atual
+    document.getElementById("atualizar-btn").setAttribute("data-id", id);
+
+    // Alternar botões
+    document.getElementById("adicionar-btn").style.display = "none";
+    document.getElementById("atualizar-btn").style.display = "inline-block";
+    document.getElementById("voltar-btn").style.display = "inline-block";
+
+  } catch (err) {
+    console.error("Erro ao carregar produto para edição:", err);
+  }
 }
+
+// 🔄 Atualizar produto
+async function atualizarProduto() {
+  const id = document.getElementById("atualizar-btn").getAttribute("data-id");
+
+  const formData = new FormData();
+  formData.append("nome", document.getElementById("nome").value);
+  formData.append("descricao", document.getElementById("descricao").value);
+  formData.append("composicao", document.getElementById("composicao").value);
+  formData.append("categoria", document.getElementById("categoria-select").value);
+  formData.append("subcategoria", document.getElementById("subcategoria-select").value);
+  formData.append("preco", parseFloat(document.getElementById("preco").value));
+  formData.append("estoque", parseInt(document.getElementById("estoque").value));
+  formData.append("tamanhos", JSON.stringify(tamanhos));
+  formData.append("medidas", JSON.stringify(medidas));
+
+  const imagem = document.getElementById("imagem").files[0];
+  const imagemMedidas = document.getElementById("imagem_medidas").files[0];
+  if (imagem) formData.append("imagem", imagem);
+  if (imagemMedidas) formData.append("imagem_medidas", imagemMedidas);
+
+  const cores = [];
+  document.querySelectorAll(".cor-item").forEach((el) => {
+    const nomeCor = el.querySelector(".nome-cor").value;
+    const codigoCor = el.querySelector(".codigo-cor").value;
+
+    const cor = {
+      nomeCor: nomeCor || "N/A",
+      codigoCor: codigoCor || "N/A",
+    };
+
+    const imagemFrente = el.querySelector(".imagem-frente").files[0];
+    const imagemVerso = el.querySelector(".imagem-verso").files[0];
+
+    if (imagemFrente) formData.append("imagemFrente", imagemFrente);
+    if (imagemVerso) formData.append("imagemVerso", imagemVerso);
+
+    cores.push(cor);
+  });
+
+  formData.append("cores", JSON.stringify(cores));
+
+  await fetch(`${url}/${id}`, {
+    method: "PUT",
+    body: formData,
+  });
+
+  limparFormulario();
+  carregarProdutos();
+
+  // Voltar para o modo de adicionar
+  document.getElementById("adicionar-btn").style.display = "inline-block";
+  document.getElementById("atualizar-btn").style.display = "none";
+  document.getElementById("voltar-btn").style.display = "none";
+}
+
+// 🔙 Voltar para o modo de adicionar produto
+function voltarProduto() {
+  limparFormulario();
+  document.getElementById("adicionar-btn").style.display = "inline-block";
+  document.getElementById("atualizar-btn").style.display = "none";
+  document.getElementById("voltar-btn").style.display = "none";
+}
+
 
 // ❌ Deletar produto
 async function deletarProduto(id) {
