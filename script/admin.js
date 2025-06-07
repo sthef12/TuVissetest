@@ -126,21 +126,33 @@ async function adicionarProduto() {
   if (imagem) formData.append("imagem", imagem);
   if (imagemMedidas) formData.append("imagem_medidas", imagemMedidas);
 
+  // Agora as cores são opcionais
   const cores = [];
   document.querySelectorAll(".cor-item").forEach((el) => {
     const nomeCor = el.querySelector(".nome-cor").value;
     const codigoCor = el.querySelector(".codigo-cor").value;
 
-    const cor = { nomeCor, codigoCor };
+    // Só adiciona se o usuário preencher pelo menos um dos campos de cor
+    if (nomeCor || codigoCor) {
+      const cor = { 
+        nomeCor: nomeCor || "N/A", 
+        codigoCor: codigoCor || "N/A" 
+      };
 
-    const imagemFrente = el.querySelector(".imagem-frente").files[0];
-    const imagemVerso = el.querySelector(".imagem-verso").files[0];
+      const imagemFrente = el.querySelector(".imagem-frente").files[0];
+      const imagemVerso = el.querySelector(".imagem-verso").files[0];
 
-    if (imagemFrente) formData.append("imagemFrente", imagemFrente);
-    if (imagemVerso) formData.append("imagemVerso", imagemVerso);
+      if (imagemFrente) formData.append("imagemFrente", imagemFrente);
+      if (imagemVerso) formData.append("imagemVerso", imagemVerso);
 
-    cores.push(cor);
+      cores.push(cor);
+    }
   });
+
+  // Se não houver cores, salva como N/A
+  if (cores.length === 0) {
+    cores.push({ nomeCor: "N/A", codigoCor: "N/A" });
+  }
 
   formData.append("cores", JSON.stringify(cores));
 
@@ -301,7 +313,6 @@ function adicionarNovaCategoria() {
   novaCategoriaInput.value = "";
 
 }
-
 
 // Função para carregar categorias existentes
 async function carregarCategorias() {
