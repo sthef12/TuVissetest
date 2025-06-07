@@ -102,22 +102,23 @@ app.get("/produtos", async (req, res) => {
 });
 
 // 🔍 Rota GET por ID (buscar produto específico)
-app.get('/produtos/:id', async (req, res) => {
+app.get("/produtos/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const result = await pool.query('SELECT * FROM produtos WHERE id = $1', [id]);
+    const result = await pool.query("SELECT * FROM produtos WHERE id = $1", [
+      id,
+    ]);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ erro: 'Produto não encontrado' });
+      return res.status(404).json({ erro: "Produto não encontrado" });
     }
 
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: 'Erro ao buscar produto' });
+    res.status(500).json({ erro: "Erro ao buscar produto" });
   }
 });
-
 
 // ➕ Rota POST (adicionar produto com imagens)
 app.post("/produtos", uploadFields, async (req, res) => {
@@ -179,6 +180,7 @@ app.post("/produtos", uploadFields, async (req, res) => {
 // ✏️ Rota PUT (atualizar produto)
 app.put("/produtos/:id", uploadFields, async (req, res) => {
   const id = req.params.id;
+
   const {
     nome,
     descricao,
@@ -193,29 +195,41 @@ app.put("/produtos/:id", uploadFields, async (req, res) => {
 
   const cores = req.body.cores ? JSON.parse(req.body.cores) : [];
 
-  const imagem = req.files["imagem"]
-    ? req.files["imagem"][0].path
-    : req.body.imagem;
-  const imagem_medidas = req.files["imagem_medidas"]
-    ? req.files["imagem_medidas"][0].path
-    : req.body.imagem_medidas;
-
-  const imagensFrente = req.files["imagemFrente"] || [];
-  const imagensVerso = req.files["imagemVerso"] || [];
-
-  cores.forEach((cor, index) => {
-    cor.imagemFrente =
-      imagensFrente[index] ? imagensFrente[index].path : cor.imagemFrente;
-    cor.imagemVerso =
-      imagensVerso[index] ? imagensVerso[index].path : cor.imagemVerso;
-  });
-
   try {
+    // 🔎 Buscar o produto atual no banco para pegar as imagens existentes
+    const produtoAtual = await pool.query("SELECT * FROM produtos WHERE id = $1", [id]);
+
+    if (produtoAtual.rows.length === 0) {
+      return res.status(404).json({ erro: "Produto não encontrado" });
+    }
+
+    const produtoExistente = produtoAtual.rows[0];
+
+    // 🔄 Se não foram enviadas novas imagens, manter as atuais
+    const imagem = req.files["imagem"]
+      ? req.files["imagem"][0].path
+      : produtoExistente.imagem;
+
+    const imagem_medidas = req.files["imagem_medidas"]
+      ? req.files["imagem_medidas"][0].path
+      : produtoExistente.imagem_medidas;
+
+    const imagensFrente = req.files["imagemFrente"] || [];
+    const imagensVerso = req.files["imagemVerso"] || [];
+
+    cores.forEach((cor, index) => {
+      cor.imagemFrente =
+        imagensFrente[index]?.path || cor.imagemFrente || "";
+      cor.imagemVerso =
+        imagensVerso[index]?.path || cor.imagemVerso || "";
+    });
+
+    // 💾 Atualizar o produto
     const result = await pool.query(
       `UPDATE produtos SET 
-      nome=$1, descricao=$2, composicao=$3, categoria=$4, subcategoria=$5, 
-      preco=$6, estoque=$7, tamanhos=$8, medidas=$9, imagem=$10, imagem_medidas=$11, cores=$12 
-      WHERE id=$13 RETURNING *`,
+        nome=$1, descricao=$2, composicao=$3, categoria=$4, subcategoria=$5, 
+        preco=$6, estoque=$7, tamanhos=$8, medidas=$9, imagem=$10, imagem_medidas=$11, cores=$12 
+        WHERE id=$13 RETURNING *`,
       [
         nome,
         descricao,
@@ -232,12 +246,14 @@ app.put("/produtos/:id", uploadFields, async (req, res) => {
         id,
       ]
     );
+
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro ao atualizar produto" });
   }
 });
+
 
 // ❌ Rota DELETE (remover produto)
 app.delete("/produtos/:id", async (req, res) => {
