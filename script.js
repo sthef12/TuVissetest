@@ -62,30 +62,38 @@ async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecio
       for (const produto of produtosFiltrados) {
         // Verifica se o preço é um número válido, caso contrário define como "0.00"
         const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
+
+        // Verifica estoque
+        const semEstoque = produto.estoque == 0;
+
         //mostrando os produtos
         catalogo.innerHTML += `
-        <a href="./pags/telaProduto.html?id=${produto.id}">
-        <div class="produtos">
-          <img src="${produto.imagem}" alt="${produto.nome}" />
-          <div class="nome_preco_produto">
-          <h1>${produto.nome}</h1>
-          <div class="cores">
-          ${
-            produto.cores && produto.cores.length > 0
-              ? produto.cores
-                  .map(
-                    (cor, i) => `
-              <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
-                  )
-                  .join("")
-              : "<p>Cor única</p>"
-          }
-          </div>
-          <h2>R$ ${precoProduto}</h2>
-          </div>
-          <button>Comprar</button>
-        </div>
-        </a>`;
+          <a href="./pags/telaProduto.html?id=${produto.id}">
+            <div class="produtos">
+              <img src="${produto.imagem}" alt="${produto.nome}" />
+              <div class="nome_preco_produto">
+                <h1>${produto.nome}</h1>
+                <div class="cores">
+                  ${
+                    produto.cores && produto.cores.length > 0
+                      ? produto.cores
+                          .map(
+                            (cor, i) => `
+                  <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')"></span>`
+                          )
+                          .join("")
+                      : "<p>Cor única</p>"
+                  }
+                </div>
+                <h2>R$ ${precoProduto}</h2>
+              </div>
+              <button 
+                style="background: ${semEstoque ? '#e0e0e0' : ''}; color: ${semEstoque ? '#888' : ''}; cursor: ${semEstoque ? 'not-allowed' : 'pointer'};" 
+                ${semEstoque ? 'disabled' : ''}>
+                ${semEstoque ? 'Não disponível' : 'Comprar'}
+              </button>
+            </div>
+          </a>`;
       }
 
       // Se nenhum produto for exibido (caso haja filtro e nada combine)

@@ -79,7 +79,13 @@ async function carregarProdutos() {
               }
               </td>
               <td>${listarTamanhosEMedidas(produto)}</td>
-              <td>${produto.estoque}</td>
+              <td>
+                ${
+                  produto.estoque == 0
+                    ? '<span style="color:red;">Produto não disponível no momento</span>'
+                    : produto.estoque
+                }
+              </td>
               <td>R$ ${parseFloat(produto.preco).toFixed(2)}</td>
               <td>
               <button onclick="editarProduto(${produto.id})">Editar</button>

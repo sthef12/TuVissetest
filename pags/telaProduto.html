@@ -105,6 +105,9 @@
         const produto_view = document.getElementById("produto_view");
         const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
 
+        // Verifica estoque
+        const semEstoque = produto.estoque == 0;
+
         produto_view.innerHTML = `
           <div class="carrossel_img">
             <div class="imagem_principal_container">
@@ -151,7 +154,18 @@
                 <span id="valor_produto">R$ ${precoProduto}</span>
               </div>
               <div class="buttons">
-                <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
+                <button
+                  id="btnAddCarrinho"
+                  onclick="addCarrinho(${produto.id})"
+                  style="
+                    background: ${semEstoque ? '#e0e0e0' : ''};
+                    color: ${semEstoque ? '#888' : ''};
+                    cursor: ${semEstoque ? 'not-allowed' : 'pointer'};
+                  "
+                  ${semEstoque ? 'disabled' : ''}
+                >
+                  ${semEstoque ? 'Não disponível no momento' : 'Adicionar ao carrinho'}
+                </button>
                 <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>
               </div>
             </div>
