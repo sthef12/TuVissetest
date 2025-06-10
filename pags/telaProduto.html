@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produto</title>
+  
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/carrossel.css" />
@@ -102,8 +103,14 @@
           return;
         }
 
+        // Atualiza o título da página com o nome do produto
+        document.title = produto.nome + " | Tu Visse Personalização";
+
         const produto_view = document.getElementById("produto_view");
         const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";
+
+        // Verifica estoque
+        const semEstoque = produto.estoque == 0;
 
         produto_view.innerHTML = `
           <div class="carrossel_img">
@@ -151,7 +158,18 @@
                 <span id="valor_produto">R$ ${precoProduto}</span>
               </div>
               <div class="buttons">
-                <button onclick="addCarrinho(${produto.id})">Adicionar ao carrinho</button>
+                <button
+                  id="btnAddCarrinho"
+                  onclick="addCarrinho(${produto.id})"
+                  style="
+                    background: ${semEstoque ? '#e0e0e0' : ''};
+                    color: ${semEstoque ? '#888' : ''};
+                    cursor: ${semEstoque ? 'not-allowed' : 'pointer'};
+                  "
+                  ${semEstoque ? 'disabled' : ''}
+                >
+                  ${semEstoque ? 'Não disponível no momento' : 'Adicionar ao carrinho'}
+                </button>
                 <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>
               </div>
             </div>
