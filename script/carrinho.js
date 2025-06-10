@@ -68,7 +68,7 @@ async function buscarProdutoPeloLocalStorage() {
           <div class="pro_img">
             <img src="${imagemProduto}" alt="${produto.nome}" />
           </div>
-          <div class="nome_cor">
+          
             <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${
               produto.id
             }'" title="${produto.nome}">
@@ -78,7 +78,7 @@ async function buscarProdutoPeloLocalStorage() {
               <span class="cor_sele_produto" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${corCodigo};border:1px solid #888;" title="${corNome}"></span>
               <span style="color:#888;">${corNome}</span>
             </div>
-          </div>
+          
           <div class="preco">
             <label>valor</label>
             <label>R$ ${(produto.preco * item.quantidade).toFixed(2)}</label>
@@ -86,26 +86,61 @@ async function buscarProdutoPeloLocalStorage() {
           <div class="quantidade">
             <div class="input_qnt_container">
               <div class="input_qnt_icon">
-                <i class="fa-solid fa-minus" onclick="alterarQuantidade('${
-                  item.id
-                }','${item.cor}',-1,${
-        produto.preco
-      })" style="cursor:pointer;"></i>
-                <input class="imput_qnt" type="number" value="${
-                  item.quantidade
-                }" min="1" onchange="alterarQuantidade('${item.id}','${
-        item.cor
-      }',0,${produto.preco},this.value)" />
-                <i class="fa-solid fa-plus" onclick="alterarQuantidade('${
-                  item.id
-                }','${item.cor}',1,${
-        produto.preco
-      })" style="cursor:pointer;"></i>
+                            <i class="fa-solid fa-minus" onclick="alterarQuantidade('${
+                              item.id
+                            }','${item.cor}',-1,${
+                    produto.preco
+                  })" style="cursor:pointer;"></i>
+                            <input class="imput_qnt" type="number" value="${
+                              item.quantidade
+                            }" min="1" onchange="alterarQuantidade('${item.id}','${
+                    item.cor
+                  }',0,${produto.preco},this.value)" />
+                            <i class="fa-solid fa-plus" onclick="alterarQuantidade('${
+                              item.id
+                            }','${item.cor}',1,${
+                    produto.preco
+                  })" style="cursor:pointer;"></i>
               </div>
               <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${
                 item.id
               }','${item.cor}')"></i>
             </div>
+            
+          </div>
+          <div class="qnt-tam">
+              <div class="box-qnt">
+                <div class="tam-item">
+                  P
+                </div>
+                <div>
+                  <input type="number" value="0">
+                </div>
+              </div>
+              <div class="box-qnt">
+                <div class="tam-item">
+                  M
+                </div>
+                <div>
+                  <input type="number" value="0">
+                </div>
+              </div>
+              <div class="box-qnt">
+                <div class="tam-item">
+                  G
+                </div>
+                <div>
+                  <input type="number" value="0">
+                </div>
+              </div>
+              <div class="box-qnt">
+                <div class="tam-item">
+                  GG
+                </div>
+                <div>
+                  <input type="number" value="0">
+                </div>
+              </div>
           </div>
         </div>`;
     });
