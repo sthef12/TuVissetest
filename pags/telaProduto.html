@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produto</title>
+  
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/carrossel.css" />
@@ -101,6 +102,9 @@
           console.error("Produto não encontrado");
           return;
         }
+
+        // Atualiza o título da página com o nome do produto
+        document.title = produto.nome + " | Tu Visse Personalização";
 
         const produto_view = document.getElementById("produto_view");
         const precoProduto = !isNaN(parseFloat(produto.preco)) ? parseFloat(produto.preco).toFixed(2) : "0.00";

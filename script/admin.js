@@ -312,8 +312,12 @@ function voltarProduto() {
 
 // ❌ Deletar produto
 async function deletarProduto(id) {
-  await fetch(`${url}/${id}`, { method: "DELETE" });
-  carregarProdutos();
+  if (!confirm("Tem certeza que deseja excluir este produto?")) {
+    return; // Cancela a exclusão se o usuário não confirmar
+  }else{
+    await fetch(`${url}/${id}`, { method: "DELETE" });
+    carregarProdutos();
+  }
 }
 
 // ➕ Adicionar cor
