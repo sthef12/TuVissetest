@@ -29,7 +29,7 @@
         </div>
     </header>
     <main>
-        <div class="opcoes-container">
+        <div class="opcoes-container"> 
             <div class="opcoes">
                 <div class="nome_descricao linha">
                     <h2>Nome e descrições</h2>
@@ -52,18 +52,6 @@
                     </select>
                 </div>
 
-                <div class="imagens_cores linha-cores">
-                    <h2>Imagens e Cores</h2>
-                    <div id="cores-container">
-                        <button type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>
-                    </div>
-                    <div id="cores"></div>
-                    <div class="anexar_imagem_padrao">
-                        <label for="imagem">Imagem Principal do Produto</label>
-                        <input type="file" id="imagem" accept=".jpg, .jpeg, .png"
-                            title="Fazer upload da imagem principal do produto">
-                    </div>
-                </div>
                 <div class="numeros_medidas ">
                     <h2>Números e Medidas</h2>
                     <!-- tamanhos -->
@@ -98,6 +86,19 @@
                         <input type="number" id="preco" placeholder="Preço" title="Preço do produto">
                     </div>
                     
+                </div>
+
+                <div class="imagens_cores linha-cores">
+                    <h2>Imagens e Cores</h2>
+                    <div id="cores-container">
+                        <button id="bntAddCores" type="button" onclick="adicionarCor()">Adicionar uma ou mais cores</button>
+                    </div>
+                    <div id="cores"></div>
+                    <div class="anexar_imagem_padrao">
+                        <label for="imagem">Imagem Principal do Produto</label>
+                        <input type="file" id="imagem" accept=".jpg, .jpeg, .png"
+                            title="Fazer upload da imagem principal do produto">
+                    </div>
                 </div>
             </div>
             <div class="opcoes-botoes">

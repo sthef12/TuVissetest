@@ -213,8 +213,9 @@ async function editarProduto(id) {
         <input type="color" class="codigo-cor" value="${
           cor.codigoCor || "#000000"
         }" />
+        
         <input type="file" class="imagem-frente" />
-        <input type="file" class="imagem-verso" />
+        <input type="file" class="imagem-verso" /> 
         <button onclick="removerCor(this)">Remover</button>
       `;
       coresContainer.appendChild(div);
@@ -315,13 +316,14 @@ function adicionarCor() {
   const div = document.createElement("div");
   div.classList.add("cor-item");
   div.innerHTML = `
+   <div> 
     <input type="text" placeholder="Nome da cor" class="nome-cor" />
     <input type="color" class="codigo-cor" value="#ff0000" title="Cor que irá aparecer nas cores na página do produto"/>
+   </div> 
     <div class="imagem-container">
       <label>Imagem de frente:</label>
     <input type="file" class="imagem-frente" title="Imagem de frente"/>
-    </div>
-    <div class="imagem-container">
+    
       <label>Imagem de verso:</label>
     <input type="file" class="imagem-verso" title="Imagem de verso"/>
     </div>
