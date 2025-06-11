@@ -17,6 +17,7 @@
 #itens_container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 20px;
 }
 
@@ -44,6 +45,8 @@
         grid-row: 1/5;
         align-items: center;
         justify-content: left;
+        display: flex;
+        height: 100%;
     }
     .pro_img img {
         width: 7rem;
@@ -66,6 +69,9 @@
         height: 100%;
     }
     .quantidade{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         grid-row: 2;
         grid-column: 4;
         height: 100%;
@@ -185,9 +191,58 @@
 
 
 @media (max-width: 767px) {
-
+.carrinho_container {
+    padding: 20px;
+    gap: 5px;
+}    
+.nome_carrinho {
+    padding-left: 0;
+    text-align: center;
 }
 
-    
+#itens_container {
+    width: 100%;
+}
+.linha_produto {
+    width: 100%;
+    gap: 5px;
+}
+.pro_img {
+    grid-column: 1;
+    grid-row: 1/4;
+    justify-content: center;
+    align-items: center;
+}
+.pro_img img {
+    width: 7rem;
+}
+.buttons {
+    padding: 10px;
+}
+    .cor {
+        grid-column: 2/4;
+    }
+    .preco {
+        margin-top: 15px;
+        justify-content: normal;
+        width: 5rem;
+        grid-column: 2;
+        grid-row: 3;
+    }
+    .quantidade{
+        max-width: 5rem;
+        grid-row: 3;
+        grid-column: 3;
+    }
+    .qnt-tam {
+        flex-wrap: wrap;
+        grid-column: 1/4;
+        grid-row: 4;
+    }
+    .cont {
+        padding-top: 60px;
+    }
+
+}
 
 

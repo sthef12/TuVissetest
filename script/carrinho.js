@@ -114,7 +114,7 @@ async function buscarProdutoPeloLocalStorage() {
                   P
                 </div>
                 <div>
-                  <input type="number" value="0">
+                  <input id="p" type="number" value="0">
                 </div>
               </div>
               <div class="box-qnt">
@@ -122,7 +122,7 @@ async function buscarProdutoPeloLocalStorage() {
                   M
                 </div>
                 <div>
-                  <input type="number" value="0">
+                  <input id="m" type="number" value="0">
                 </div>
               </div>
               <div class="box-qnt">
@@ -130,7 +130,7 @@ async function buscarProdutoPeloLocalStorage() {
                   G
                 </div>
                 <div>
-                  <input type="number" value="0">
+                  <input id="g" type="number" value="0">
                 </div>
               </div>
               <div class="box-qnt">
@@ -138,7 +138,7 @@ async function buscarProdutoPeloLocalStorage() {
                   GG
                 </div>
                 <div>
-                  <input type="number" value="0">
+                  <input id="gg" type="number" value="0">
                 </div>
               </div>
           </div>
