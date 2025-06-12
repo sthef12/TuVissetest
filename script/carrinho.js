@@ -63,6 +63,24 @@ async function buscarProdutoPeloLocalStorage() {
       const corCodigo = corObj?.codigoCor || "#fff";
       const imagemProduto = corObj?.imagemFrente || produto.imagem;
 
+      const produtoTamanho = produto.tamanhos;
+      console.log(Array.isArray(produtoTamanho));
+
+      let tamanhos = [];
+      if (typeof produtoTamanho === "string") {
+        try {
+          tamanhos = JSON.parse(produtoTamanho);
+          console.log(tamanhos)
+          if (!Array.isArray(tamanhos)) {
+            tamanhos = [];
+          }
+        } catch {
+          tamanhos = [];
+        }
+      } else if (Array.isArray(produtoTamanho)) {
+        tamanhos = produtoTamanho;
+      }
+
       tabelaCorpo.innerHTML += `
         <div class="linha_produto">
           <div class="pro_img">
@@ -89,18 +107,18 @@ async function buscarProdutoPeloLocalStorage() {
                             <i class="fa-solid fa-minus" onclick="alterarQuantidade('${
                               item.id
                             }','${item.cor}',-1,${
-                    produto.preco
-                  })" style="cursor:pointer;"></i>
+        produto.preco
+      })" style="cursor:pointer;"></i>
                             <input class="imput_qnt" type="number" value="${
                               item.quantidade
-                            }" min="1" onchange="alterarQuantidade('${item.id}','${
-                    item.cor
-                  }',0,${produto.preco},this.value)" />
+                            }" min="1" onchange="alterarQuantidade('${
+        item.id
+      }','${item.cor}',0,${produto.preco},this.value)" />
                             <i class="fa-solid fa-plus" onclick="alterarQuantidade('${
                               item.id
                             }','${item.cor}',1,${
-                    produto.preco
-                  })" style="cursor:pointer;"></i>
+        produto.preco
+      })" style="cursor:pointer;"></i>
               </div>
               <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${
                 item.id

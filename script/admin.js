@@ -81,9 +81,11 @@ async function carregarProdutos() {
               <td>${listarTamanhosEMedidas(produto)}</td>
               <td>
                 ${
-                  produto.estoque == 0
-                    ? '<span style="color:red;">Produto não disponível no momento</span>'
-                    : produto.estoque
+                  produto.estoque === undefined || produto.estoque === null || produto.estoque === ""
+                    ? '<span style="color:orange;">Sem estoque</span>'
+                    : produto.estoque == 0
+                      ? '<span style="color:red;">Produto não disponível no momento</span>'
+                      : produto.estoque
                 }
               </td>
               <td>R$ ${parseFloat(produto.preco).toFixed(2)}</td>
