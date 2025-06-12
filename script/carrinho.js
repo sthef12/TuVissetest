@@ -64,13 +64,11 @@ async function buscarProdutoPeloLocalStorage() {
       const imagemProduto = corObj?.imagemFrente || produto.imagem;
 
       const produtoTamanho = produto.tamanhos;
-      console.log(Array.isArray(produtoTamanho));
 
       let tamanhos = [];
       if (typeof produtoTamanho === "string") {
         try {
           tamanhos = JSON.parse(produtoTamanho);
-          console.log(tamanhos)
           if (!Array.isArray(tamanhos)) {
             tamanhos = [];
           }
@@ -80,6 +78,17 @@ async function buscarProdutoPeloLocalStorage() {
       } else if (Array.isArray(produtoTamanho)) {
         tamanhos = produtoTamanho;
       }
+
+      function mostrarTamanho(){
+        
+      for( i of tamanhos){
+        console.log(i);
+        
+        
+      }
+      return i;
+      }
+      
 
       tabelaCorpo.innerHTML += `
         <div class="linha_produto">
@@ -127,38 +136,10 @@ async function buscarProdutoPeloLocalStorage() {
             
           </div>
           <div class="qnt-tam">
-              <div class="box-qnt">
-                <div class="tam-item">
-                  P
-                </div>
-                <div>
-                  <input id="p" type="number" value="0">
-                </div>
-              </div>
-              <div class="box-qnt">
-                <div class="tam-item">
-                  M
-                </div>
-                <div>
-                  <input id="m" type="number" value="0">
-                </div>
-              </div>
-              <div class="box-qnt">
-                <div class="tam-item">
-                  G
-                </div>
-                <div>
-                  <input id="g" type="number" value="0">
-                </div>
-              </div>
-              <div class="box-qnt">
-                <div class="tam-item">
-                  GG
-                </div>
-                <div>
-                  <input id="gg" type="number" value="0">
-                </div>
-              </div>
+            <div class="box-qnt">  
+              <div class="tam-item">    
+                ${mostrarTamanho()}  
+              </div>  <div>    <input id="p" type="number" value="0">  </div></div>
           </div>
         </div>`;
     });
