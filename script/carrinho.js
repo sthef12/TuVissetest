@@ -78,16 +78,30 @@ async function buscarProdutoPeloLocalStorage() {
       } else if (Array.isArray(produtoTamanho)) {
         tamanhos = produtoTamanho;
       }
+      //mostrar tamanho
+      const idTamanhos = `tamanhos-container-${item.id}`;
+function mostrarTamanhos(idContainer, tamanhos) {
+  const container = document.getElementById(idContainer);
+  if (!container) return;
+  container.innerHTML = "";
 
-      function mostrarTamanho(){
-        
-      for( i of tamanhos){
-        console.log(i);
-        
-        
-      }
-      return i;
-      }
+  tamanhos.forEach((tam) => {
+    const div = document.createElement("div");
+    div.classList.add("tamanho-item");
+
+    const label = document.createElement("label");
+    label.textContent = tam;
+
+    const input = document.createElement("input");
+    input.type = "number";
+    input.value = 0;
+    input.min = 0;
+
+    div.appendChild(label);
+    div.appendChild(input);
+    container.appendChild(div);
+  });
+}
       
 
       tabelaCorpo.innerHTML += `
@@ -136,12 +150,10 @@ async function buscarProdutoPeloLocalStorage() {
             
           </div>
           <div class="qnt-tam">
-            <div class="box-qnt">  
-              <div class="tam-item">    
-                ${mostrarTamanho()}  
-              </div>  <div>    <input id="p" type="number" value="0">  </div></div>
+            <div class="box-qnt" id="${idTamanhos}"></div>
           </div>
         </div>`;
+        mostrarTamanhos(idTamanhos, tamanhos);
     });
 
     document.getElementById("total_itens").textContent = totalItens;
