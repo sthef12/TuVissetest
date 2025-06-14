@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produto</title>
-  
+
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.7.2/css/all.css" />
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/carrossel.css" />
@@ -123,14 +123,14 @@
               <button id="cima" class="seta" onclick="moverCarrossel(-1)">&#10095;</button>
               <div class="carrossel_view" id="carrossel">
                 ${produto.cores && produto.cores.length > 0
-                  ? produto.cores.map((cor, i) => `
+            ? produto.cores.map((cor, i) => `
                       <img class="imagem_view" src="${cor.imagemFrente}" alt="Frente - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'frente')">
                       <img class="imagem_view" src="${cor.imagemVerso}" alt="Verso - ${cor.nomeCor}" onclick="selecionarImagem(${i}, 'verso')">
                     `).join("")
-                  : "<p>Sem variação de cor</p>"}
+            : "<p>Sem variação de cor</p>"}
                 ${produto.imagem_medidas && produto.imagem_medidas !== "undefined"
-                  ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
-                  : ""}
+            ? `<img class="imagem_view" src="${produto.imagem_medidas}" alt="Imagem de Medidas" onclick="selecionarImagem(null, 'medidas')">`
+            : ""}
               </div>
               <button id="baixo" class="seta" onclick="moverCarrossel(1)">&#10095;</button>
             </div>
@@ -146,11 +146,15 @@
               </span>
               <div class="cores">
                 ${produto.cores && produto.cores.length > 0
-                  ? produto.cores.map((cor, i) => `
+            ? produto.cores.map((cor, i) => `
                       <span class="cor_produto" style="background-color: ${cor.codigoCor};" title="${cor.nomeCor}" onclick="selecionarCor(${i})"></span>
                     `).join("")
-                  : "<p>Cor única</p>"}
+            : "<p>Cor única</p>"}
               </div>
+              <div class="tamanhos">
+            <label style="font-weight:bold;">Tamanhos:</label>
+            <div id="tamanhos-opcoes" style="display:flex;gap:12px;margin:8px 0;"></div>
+          </div>
             </div>
             <div class="valor_button">
               <div class="valor_preco">
@@ -173,7 +177,44 @@
                 <button onclick="window.location.href= '../index.html'">Continuar Comprando</button>
               </div>
             </div>
-          </div>`;
+          </div>
+          `;
+
+        // Transforme tamanhos em array, caso venha como string
+        let tamanhosArray = [];
+        if (produto.tamanhos) {
+          if (Array.isArray(produto.tamanhos)) {
+            tamanhosArray = produto.tamanhos;
+          } else if (typeof produto.tamanhos === "string" && produto.tamanhos.trim() !== "") {
+            try {
+              tamanhosArray = JSON.parse(produto.tamanhos);
+              if (!Array.isArray(tamanhosArray)) {
+                tamanhosArray = [produto.tamanhos];
+              }
+            } catch {
+              tamanhosArray = produto.tamanhos.split(",").map(t => t.trim()).filter(Boolean);
+            }
+          }
+        }
+
+        const tamanhosOpcoes = document.getElementById("tamanhos-opcoes");
+        if (tamanhosArray.length > 0) {
+          tamanhosOpcoes.innerHTML = tamanhosArray.map(tam => `
+              <div style="display:flex;align-items:center;gap:4px;">
+                <span class="badge-tamanho" style="min-width:32px;text-align:center;">${tam}</span>
+                <input 
+                  type="number" 
+                  class="input-qtd-tamanho" 
+                  min="0" 
+                  value="0" 
+                  data-tamanho="${tam}" 
+                  style="width:48px;text-align:center;border-radius:4px;border:1px solid #ccc;"
+                />
+              </div>
+            `).join('');
+        } else {
+          tamanhosOpcoes.innerHTML = '<span style="color:#888;">Tamanho único</span>';
+        }
       } catch (error) {
         console.error("Erro ao buscar produto:", error);
       }
@@ -217,44 +258,50 @@
     }
 
     // Função para adicionar produto ao carrinho
-    const addCarrinho = (produtoId) => {
-      // Recupera as cores selecionadas do localStorage
+    function addCarrinho(produtoId) {
       const coresSelecionadas = JSON.parse(localStorage.getItem("coresSelecionadas")) || {};
-      const corSelecionada = coresSelecionadas[produtoId];
+      const corInfo = coresSelecionadas[produtoId];
+      const corSelecionada = corInfo ? corInfo.codigoCor : null;
+      const nomeCorSelecionada = corInfo ? corInfo.cor : null;
 
-      // Verifica se o produto possui cores e se uma cor foi selecionada
-      fetch("https://tuvissetest.onrender.com/produtos")
-        .then(response => response.json())
-        .then(produtosJson => {
-          const produto = produtosJson.find(p => p.id == produtoId);
+      const inputs = document.querySelectorAll('.input-qtd-tamanho');
+      let algumSelecionado = false;
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-          if (produto && produto.cores && produto.cores.length > 0 && !corSelecionada) {
-            alert("Por favor, selecione uma cor antes de adicionar ao carrinho.");
-            return;
-          }
-
-          const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-          // Adiciona o produto ao carrinho com a cor selecionada
-          const produtoComCor = {
+      inputs.forEach(input => {
+        const qtd = parseInt(input.value, 10) || 0;
+        const tamanho = input.getAttribute('data-tamanho');
+        if (qtd > 0) {
+          algumSelecionado = true;
+          carrinho = carrinho.filter(item => !(item.id == produtoId && item.cor == corSelecionada && item.tamanho == tamanho));
+          carrinho.push({
             id: produtoId,
-            cor: corSelecionada?.codigoCor || "Sem cor"
-          };
+            cor: corSelecionada,
+            nomeCor: nomeCorSelecionada,
+            tamanho: tamanho,
+            quantidade: qtd
+          });
+        }
+      });
 
-          // Verifica se o produto com a mesma cor já está no carrinho
-          const produtoExistente = carrinho.find(
-            (item) => item.id === produtoComCor.id && item.cor === produtoComCor.cor
-          );
+      if (inputs.length === 0) {
+        carrinho.push({
+          id: produtoId,
+          cor: corSelecionada,
+          nomeCor: nomeCorSelecionada,
+          tamanho: "Tamanho único",
+          quantidade: 1
+        });
+        algumSelecionado = true;
+      }
 
-          if (!produtoExistente) {
-            carrinho.push(produtoComCor);
-            localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            alert("Produto adicionado ao carrinho");
-          } else {
-            alert("Este produto com a cor selecionada já está no carrinho");
-          }
-        })
-        .catch(error => console.error("Erro ao buscar produto:", error));
+      if (!algumSelecionado) {
+        alert("Selecione a quantidade de pelo menos um tamanho para adicionar ao carrinho.");
+        return;
+      }
+
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      alert("Produto(s) adicionado(s) ao carrinho!");
     }
 
     function selecionarCor(index) {
@@ -319,6 +366,19 @@
         })
         .catch(error => console.error(error));
     }
+
+    // Função global para seleção visual e lógica do tamanho
+    window.selecionarTamanho = function (tam, el) {
+      document.querySelectorAll('.btn-tamanho').forEach(b => {
+        b.style.background = "#fff";
+        b.style.color = "#222";
+        b.style.border = "1px solid #ccc";
+      });
+      el.style.background = "var(--tertiary-color)";
+      el.style.color = "var(--lab2-color)";
+      el.style.border = "2px solid var(--lab3-color)";
+      localStorage.setItem("tamanhoSelecionado", tam);
+    };
   </script>
 </body>
 

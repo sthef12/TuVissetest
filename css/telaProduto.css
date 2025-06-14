@@ -152,6 +152,24 @@
     font-size: large;
 }
 
+.btn-tamanho {
+  transition: all 0.2s;
+}
+.btn-tamanho:active {
+  transform: scale(0.97);
+}
+
+.badge-tamanho {
+  display: inline-block;
+  background: #eee;
+  color: #333;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-right: 2px;
+  font-size: 0.95em;
+  font-weight: bold;
+}
+
 @media (max-width: 768px) {
     #produto_view {
         flex-direction: column;
