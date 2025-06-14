@@ -80,29 +80,28 @@ async function buscarProdutoPeloLocalStorage() {
       }
       //mostrar tamanho
       const idTamanhos = `tamanhos-container-${item.id}`;
-function mostrarTamanhos(idContainer, tamanhos) {
-  const container = document.getElementById(idContainer);
-  if (!container) return;
-  container.innerHTML = "";
+      function mostrarTamanhos(idContainer, tamanhos) {
+        const container = document.getElementById(idContainer);
+        if (!container) return;
+        container.innerHTML = "";
 
-  tamanhos.forEach((tam) => {
-    const div = document.createElement("div");
-    div.classList.add("tamanho-item");
+        tamanhos.forEach((tam) => {
+          const div = document.createElement("div");
+          div.classList.add("tamanho-item");
 
-    const label = document.createElement("label");
-    label.textContent = tam;
+          const label = document.createElement("label");
+          label.textContent = tam;
 
-    const input = document.createElement("input");
-    input.type = "number";
-    input.value = 0;
-    input.min = 0;
+          const input = document.createElement("input");
+          input.type = "number";
+          input.value = 0;
+          input.min = 0;
 
-    div.appendChild(label);
-    div.appendChild(input);
-    container.appendChild(div);
-  });
-}
-      
+          div.appendChild(label);
+          div.appendChild(input);
+          container.appendChild(div);
+        });
+      }
 
       tabelaCorpo.innerHTML += `
         <div class="linha_produto">
@@ -153,7 +152,7 @@ function mostrarTamanhos(idContainer, tamanhos) {
             <div class="box-qnt" id="${idTamanhos}"></div>
           </div>
         </div>`;
-        mostrarTamanhos(idTamanhos, tamanhos);
+      mostrarTamanhos(idTamanhos, tamanhos);
     });
 
     document.getElementById("total_itens").textContent = totalItens;

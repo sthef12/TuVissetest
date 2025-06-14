@@ -68,7 +68,7 @@ async function carregarProdutos(categoriaSelecionada = null, subcategoriaSelecio
 
         //mostrando os produtos
         catalogo.innerHTML += `
-          <a href="./pags/telaProduto.html?id=${produto.id}">
+          <a href="telaProduto.html?id=${produto.id}">
             <div class="produtos">
               <img src="${produto.imagem}" alt="${produto.nome}" />
               <div class="nome_preco_produto">
