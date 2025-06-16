@@ -20,6 +20,10 @@
     justify-content: center;
     gap: 20px;
 }
+#tabela_corpo {
+    display: block;
+    gap: 20px;
+}
 
 .linha_produto {
         display: grid;
@@ -27,10 +31,10 @@
         grid-template-rows: 1.5rem 3rem auto;
         gap: 10px; 
         align-items: center;
-        padding: 20px;
+        padding: 5px;
         justify-content: center;
         width: 40rem;
-        height: 10rem;
+        min-height: 2rem;
         font-size: 15px;
     }
     .nome_produto {
@@ -39,6 +43,9 @@
         text-align: left;
         height: 100%;
         font-size: 20px;
+    }
+    .nome_produto label {
+        vertical-align: baseline;
     }
     .pro_img {
         grid-column: 1;
@@ -88,15 +95,13 @@
         display: flex;
         align-items: center;
         gap: 2px;
+        padding: 10px;
     }
-    .tam-item {
-        background-color: var(--lab3-color);
-        padding: 5px;
-        width: 2rem;
-        text-align: center;
-        border-radius: 50%;
+    .tamanho-carrinho {
+       display:inline-block;
+       margin-right:8px;
     }
-    .box-qnt input {
+    .tamanho-carrinho input {
         width: 2rem;
     }
 

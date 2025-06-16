@@ -29,7 +29,7 @@ async function buscarProdutoPeloLocalStorage() {
     // Estrutura inicial
     itens_container.innerHTML = `
       <div class="itens_list" style="display: flex; flex-direction: column;">
-        <div id="tabela_corpo"></div>
+        <div id="tabela_corpo" style="display: flex; flex-direction: column; gap: 20px;"></div>
       </div>
       <div class="cont">
         <div class="total_itens">
@@ -92,7 +92,7 @@ async function buscarProdutoPeloLocalStorage() {
         tamanhosHtml = tamanhos
           .map(
             (tam) => `
-          <div class="tamanho-carrinho" style="display:inline-block;margin-right:8px;">
+          <div class="tamanho-carrinho" >
             <span class="badge-tamanho">${tam}</span>
             <input 
               type="number" 
@@ -110,7 +110,7 @@ async function buscarProdutoPeloLocalStorage() {
           .join("");
       } else {
         tamanhosHtml = `
-          <div class="tamanho-carrinho" style="display:inline-block;margin-right:8px;">
+          <div class="tamanho-carrinho" >
             <span class="badge-tamanho">Tamanho único</span>
             <input 
               type="number" 
