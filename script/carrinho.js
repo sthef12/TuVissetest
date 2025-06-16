@@ -450,16 +450,16 @@ function finalizarPedido() {
         if (totalPorProduto > 0) {
           totalItens += totalPorProduto;
           valorTotal += produto ? produto.preco * totalPorProduto : 0;
-          produtosMsg += `${idx}. ${nomeProduto} \nQuantitade: ${totalPorProduto}\nCor: ${corNome}\nTamanhos:\n${tamanhosMsg}\n\n`;
+          produtosMsg += `${idx}. ${nomeProduto} \nQuantitade: ${totalPorProduto}\nCor: ${corNome}\nTamanhos:\n${tamanhosMsg}\n`;
           idx++;
         }
       });
 
       const mensagem = `Olá! Segue meu pedido: 
-*- Produtos:*
+- *Produtos:*
 ${produtosMsg}
-*- Total de itens: ${totalItens} *
-*- Valor total: R$ ${valorTotal.toFixed(2)} *
+- *Total de itens: ${totalItens} *
+- *Valor total: R$ ${valorTotal.toFixed(2)} *
 
 Desejo conversar e combinar sobre o pagamento. 
 Aguardo retorno para poder finalizar a compra.`;
