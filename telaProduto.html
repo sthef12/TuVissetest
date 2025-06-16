@@ -268,6 +268,26 @@
       let algumSelecionado = false;
       let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
+      // Verifica se uma cor foi selecionada
+      if (!corSelecionada) {
+        alert("Por favor, selecione uma cor antes de adicionar ao carrinho.");
+        return;
+      }
+
+      // Verifica se pelo menos um tamanho foi selecionado
+      let tamanhoSelecionado = false;
+      inputs.forEach(input => {
+        const qtd = parseInt(input.value, 10) || 0;
+        if (qtd > 0) {
+          tamanhoSelecionado = true;
+        }
+      });
+
+      if (!tamanhoSelecionado && inputs.length > 0) {
+        alert("Por favor, selecione a quantidade de pelo menos um tamanho antes de adicionar ao carrinho.");
+        return;
+      }
+
       inputs.forEach(input => {
         const qtd = parseInt(input.value, 10) || 0;
         const tamanho = input.getAttribute('data-tamanho');
