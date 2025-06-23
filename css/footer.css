@@ -97,7 +97,9 @@ footer {
   text-decoration: none;
   color: var(--lab2-color);
 }
-
+.linkDev:hover {
+  text-decoration: underline;
+}
 
 @media (max-width: 767px) {
   .footerFundo {
