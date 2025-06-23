@@ -33,7 +33,7 @@
         align-items: center;
         padding: 5px;
         justify-content: center;
-        width: 40rem;
+        min-width: 20rem;
         min-height: 2rem;
         font-size: 15px;
     }
@@ -88,6 +88,7 @@
         grid-column: 2/5;
         grid-row: 3/5;
         height: 100%;
+        min-width: 22.5rem;
         display: flex;
         gap: 5px;
     }
