@@ -464,7 +464,7 @@ ${produtosMsg}
 Desejo conversar e combinar sobre o pagamento. 
 Aguardo retorno para poder finalizar a compra.`;
 
-      const urlWhatsApp = `https://api.whatsapp.com/send?phone=5581988841669&text=${encodeURIComponent(
+      const urlWhatsApp = `https://api.whatsapp.com/send?phone=5581999543880&text=${encodeURIComponent(
         mensagem
       )}`;
       window.open(urlWhatsApp, "_blank");
