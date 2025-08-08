@@ -265,34 +265,20 @@
       const nomeCorSelecionada = corInfo ? corInfo.cor : null;
 
       const inputs = document.querySelectorAll('.input-qtd-tamanho');
-      let algumSelecionado = false;
       let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      let algumSelecionado = false;
 
-      // Verifica se uma cor foi selecionada
       if (!corSelecionada) {
         alert("Por favor, selecione uma cor antes de adicionar ao carrinho.");
         return;
       }
 
-      // Verifica se pelo menos um tamanho foi selecionado
-      let tamanhoSelecionado = false;
-      inputs.forEach(input => {
-        const qtd = parseInt(input.value, 10) || 0;
-        if (qtd > 0) {
-          tamanhoSelecionado = true;
-        }
-      });
+      // 🔥 Verifica se tem inputs (tamanhos) e se só há 1 tamanho
+      if (inputs.length === 1) {
+        const qtd = parseInt(inputs[0].value, 10) || 0;
+        const tamanho = inputs[0].getAttribute('data-tamanho') || "Tamanho único";
 
-      if (!tamanhoSelecionado && inputs.length > 0) {
-        alert("Por favor, selecione a quantidade de pelo menos um tamanho antes de adicionar ao carrinho.");
-        return;
-      }
-
-      inputs.forEach(input => {
-        const qtd = parseInt(input.value, 10) || 0;
-        const tamanho = input.getAttribute('data-tamanho');
         if (qtd > 0) {
-          algumSelecionado = true;
           carrinho = carrinho.filter(item => !(item.id == produtoId && item.cor == corSelecionada && item.tamanho == tamanho));
           carrinho.push({
             id: produtoId,
@@ -301,10 +287,39 @@
             tamanho: tamanho,
             quantidade: qtd
           });
+          algumSelecionado = true;
+        } else {
+          alert("Por favor, selecione uma quantidade válida.");
+          return;
         }
-      });
 
-      if (inputs.length === 0) {
+      } else if (inputs.length > 1) {
+        // 🔧 Produto com vários tamanhos
+        inputs.forEach(input => {
+          const qtd = parseInt(input.value, 10) || 0;
+          const tamanho = input.getAttribute('data-tamanho');
+
+          if (qtd > 0) {
+            carrinho = carrinho.filter(item => !(item.id == produtoId && item.cor == corSelecionada && item.tamanho == tamanho));
+            carrinho.push({
+              id: produtoId,
+              cor: corSelecionada,
+              nomeCor: nomeCorSelecionada,
+              tamanho: tamanho,
+              quantidade: qtd
+            });
+            algumSelecionado = true;
+          }
+        });
+
+        if (!algumSelecionado) {
+          alert("Por favor, selecione a quantidade de pelo menos um tamanho.");
+          return;
+        }
+
+      } else {
+        // 🔥 Produto sem tamanhos (realmente tamanho único)
+        carrinho = carrinho.filter(item => !(item.id == produtoId && item.cor == corSelecionada && item.tamanho == "Tamanho único"));
         carrinho.push({
           id: produtoId,
           cor: corSelecionada,
@@ -315,14 +330,10 @@
         algumSelecionado = true;
       }
 
-      if (!algumSelecionado) {
-        alert("Selecione a quantidade de pelo menos um tamanho para adicionar ao carrinho.");
-        return;
-      }
-
       localStorage.setItem("carrinho", JSON.stringify(carrinho));
       alert("Produto(s) adicionado(s) ao carrinho!");
     }
+
 
     function selecionarCor(index) {
       const produtoId = new URLSearchParams(window.location.search).get('id');

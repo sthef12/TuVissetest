@@ -46,7 +46,7 @@ async function buscarProdutoPeloLocalStorage() {
         <button class="button" id="continuar" onclick="window.location.href= 'index.html'">Continuar Comprando</button>
       </div>
       <div class="direction">
-        <p>Ao clicar no botão “Finalizar produto”, você será redirecionado para o WhatsApp da loja.</p>
+        <p>Ao clicar no botão “Finalizar Pedido”, você será redirecionado para o WhatsApp da loja.</p>
       </div>`;
 
     const tabelaCorpo = document.getElementById("tabela_corpo");
@@ -55,7 +55,6 @@ async function buscarProdutoPeloLocalStorage() {
       const produto = produtosJson.find((p) => p.id == item.id);
       if (!produto) return;
 
-      // Soma total de itens desse produto/cor (tamanhos definidos + não definidos)
       const totalPorProduto = Object.values(item.tamanhos).reduce(
         (a, b) => a + b,
         0
@@ -86,98 +85,105 @@ async function buscarProdutoPeloLocalStorage() {
         tamanhos = produto.tamanhos;
       }
 
-      // Inputs de tamanhos
+      // Inputs de tamanhos OU apenas nome do tamanho se só houver um
       let tamanhosHtml = "";
-      if (tamanhos.length > 0) {
+      if (tamanhos.length === 0 || tamanhos.length === 1) {
+        tamanhosHtml = `
+      <div class="tamanho-carrinho">
+        <span class="badge-tamanho">Tamanho único</span>
+      </div>
+    `;
+      } else if (tamanhos.length > 1) {
         tamanhosHtml = tamanhos
           .map(
             (tam) => `
-          <div class="tamanho-carrinho" >
-            <span class="badge-tamanho">${tam}</span>
-            <input 
-              type="number" 
-              class="input-qtd-tamanho" 
-              min="0" 
-              value="${item.tamanhos[tam] || 0}" 
-              data-produto="${item.id}" 
-              data-cor="${item.cor}" 
-              data-tamanho="${tam}"
-              style="width:40px;text-align:center;"
-            />
-          </div>
-        `
+      <div class="tamanho-carrinho">
+        <span class="badge-tamanho">${tam}</span>
+        <input 
+          type="number" 
+          class="input-qtd-tamanho" 
+          min="0" 
+          value="${item.tamanhos[tam] || 0}" 
+          data-produto="${item.id}" 
+          data-cor="${item.cor}" 
+          data-tamanho="${tam}"
+          style="width:40px;text-align:center;"
+        />
+      </div>
+    `
           )
           .join("");
       } else {
         tamanhosHtml = `
-          <div class="tamanho-carrinho" >
-            <span class="badge-tamanho">Tamanho único</span>
-            <input 
-              type="number" 
-              class="input-qtd-tamanho" 
-              min="0" 
-              value="${item.tamanhos["Tamanho único"] || 0}" 
-              data-produto="${item.id}" 
-              data-cor="${item.cor}" 
-              data-tamanho="Tamanho único"
-              style="width:40px;text-align:center;"
-            />
-          </div>
-        `;
+      <div class="tamanho-carrinho">
+        <span class="badge-tamanho">Tamanho único</span>
+      </div>
+    `;
       }
 
+      // BLOQUEIA input_qnt e botões caso tenha mais de um tamanho
+      let inputQntDisabled = tamanhos.length > 1 ? "disabled" : "";
+
       tabelaCorpo.innerHTML += `
-        <div class="linha_produto" id="produto_${item.id}_${item.cor}_${
+    <div class="linha_produto" id="produto_${item.id}_${item.cor}_${
         item.tamanho
       }">
-          <div class="pro_img">
-            <img src="${imagemProduto}" alt="${produto.nome}" />
-          </div>
-          <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='../produto.html?id=${
-            produto.id
-          }'" title="${produto.nome}">
-            <label>${produto.nome}</label>
-          </div>
-          <div class="cor">
-            <span class="cor_sele_produto" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${corCodigo};border:1px solid #888;" title="${corNome}"></span>
-            <span style="color:#888;">${corNome}</span>
-          </div>
-          <div class="preco">
-            <label>valor</label>
-            <label class="valor-total" data-produto="${item.id}" data-cor="${
+      <div class="pro_img">
+        <img src="${imagemProduto}" alt="${produto.nome}" />
+      </div>
+      <div class="nome_produto" style="cursor: pointer;" onclick="window.location.href='/produto.html?id=${
+        produto.id
+      }'" title="${produto.nome}">
+        <label>${produto.nome}</label>
+      </div>
+      <div class="cor">
+        <span class="cor_sele_produto" style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${corCodigo};border:1px solid #888;" title="${corNome}"></span>
+        <span style="color:#888;">${corNome}</span>
+      </div>
+      <div class="preco">
+        <label>valor</label>
+        <label class="valor-total" data-produto="${item.id}" data-cor="${
         item.cor
       }">R$ ${(produto.preco * totalPorProduto).toFixed(2)}</label>
+      </div>
+      <div class="quantidade">
+        <div class="input_qnt_container">
+          <div class="input_qnt_icon">
+            <i class="fa-solid fa-minus"
+              onclick="${tamanhos.length > 1
+                ? "alert('Por favor, altere a quantidade diretamente nos tamanhos.')"
+                : `alterarQuantidade('${item.id}','${item.cor}','${item.tamanho || "Tamanho único"}',-1,${produto.preco})`}"
+              style="cursor:pointer;" ${inputQntDisabled}></i>
+            <input
+              class="imput_qnt"
+              type="number"
+              value="${totalPorProduto}"
+              min="1"
+              data-produto="${item.id}"
+              data-cor="${item.cor}"
+              onchange="${tamanhos.length > 1
+                ? "alert('Por favor, altere a quantidade diretamente nos tamanhos.')"
+                : `alterarQuantidade('${item.id}','${item.cor}','${item.tamanho || "Tamanho único"}',0,${produto.preco},this.value)`}"
+              ${inputQntDisabled}
+            />
+            <i class="fa-solid fa-plus"
+              onclick="${tamanhos.length > 1
+                ? "alert('Por favor, altere a quantidade diretamente nos tamanhos.')"
+                : `alterarQuantidade('${item.id}','${item.cor}','${item.tamanho || "Tamanho único"}',1,${produto.preco})`}"
+              style="cursor:pointer;" ${inputQntDisabled}></i>
           </div>
-          <div class="quantidade">
-            <div class="input_qnt_container">
-              <div class="input_qnt_icon">
-                <i class="fa-solid fa-minus" onclick="alterarQuantidade('${
-                  item.id
-                }','${item.cor}',null,-1,${
-        produto.preco
-      })" style="cursor:pointer;"></i>
-                <input class="imput_qnt" type="number" value="${totalPorProduto}" min="1"
-                  data-produto="${item.id}" data-cor="${item.cor}"
-                  onchange="alterarQuantidade('${item.id}','${
-        item.cor
-      }',null,0,${produto.preco},this.value)" />
-                <i class="fa-solid fa-plus" onclick="alterarQuantidade('${
-                  item.id
-                }','${item.cor}',null,1,${
-        produto.preco
-      })" style="cursor:pointer;"></i>
-              </div>
-              <i class="fa-solid fa-trash" style="cursor:pointer;" onclick="removerProduto('${
-                item.id
-              }','${item.cor}',null)"></i>
-            </div>
-          </div>
-          <div class="qnt-tam">
-            <div class="box-qnt">
-              ${tamanhosHtml}
-            </div>
-          </div>
-        </div>`;
+          <i class="fa-solid fa-trash"
+            style="cursor:pointer;"
+            onclick="removerProduto('${item.id}','${item.cor}','${item.tamanho || "Tamanho único"}')"
+          ></i>
+        </div>
+      </div>
+      <div class="qnt-tam">
+        <div class="box-qnt">
+          ${tamanhosHtml}
+        </div>
+      </div>
+    </div>`;
     });
 
     document.getElementById("total_itens").textContent = totalItens;
@@ -289,85 +295,105 @@ function alterarQuantidade(
   preco,
   valorManual = null
 ) {
-  // Se o usuário tentar adicionar/subtrair pelo input_qnt_icon (tamanho indefinido)
-  if (tamanho === null || tamanho === "null" || tamanho === undefined) {
-    alert(
-      "Por favor, selecione a quantidade desejada diretamente nos campos de tamanho do produto."
-    );
-    return;
-  }
+  fetch("https://tuvissetest.onrender.com/produtos")
+    .then((res) => res.json())
+    .then((produtosJson) => {
+      const produto = produtosJson.find((p) => p.id == produtoId);
+      let tamanhos = [];
 
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-  let tamanhoFinal = tamanho;
-  const key = (item) =>
-    item.id == produtoId && item.cor == cor && item.tamanho == tamanhoFinal;
-  let novaQuantidade = valorManual !== null ? parseInt(valorManual) : null;
-
-  // Remove todos do tipo
-  carrinho = carrinho.filter((item) => !key(item));
-
-  // Adiciona de volta a quantidade correta
-  if (delta === 0 && novaQuantidade > 0) {
-    carrinho.push({
-      id: produtoId,
-      cor,
-      tamanho: tamanhoFinal,
-      quantidade: novaQuantidade,
-    });
-  } else {
-    let atual = (JSON.parse(localStorage.getItem("carrinho")) || [])
-      .filter(key)
-      .reduce((acc, item) => acc + (item.quantidade || 1), 0);
-    let nova = atual + delta;
-    if (nova <= 0) {
-      if (confirm("Deseja remover este produto do carrinho?")) {
-        removerProduto(produtoId, cor);
-      } else {
-        nova = 1;
+      if (produto) {
+        if (typeof produto.tamanhos === "string") {
+          try {
+            tamanhos = JSON.parse(produto.tamanhos);
+            if (!Array.isArray(tamanhos)) tamanhos = [];
+          } catch {
+            tamanhos = [];
+          }
+        } else if (Array.isArray(produto.tamanhos)) {
+          tamanhos = produto.tamanhos;
+        }
       }
-    }
-    if (nova > 0) {
-      carrinho.push({
-        id: produtoId,
-        cor,
-        tamanho: tamanhoFinal,
-        quantidade: nova,
-      });
-    }
-  }
 
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
-  buscarProdutoPeloLocalStorage();
+      const temVariosTamanhos = tamanhos.length > 1;
+      if (temVariosTamanhos && !tamanho) {
+        alert("Por favor, altere a quantidade diretamente nos tamanhos.");
+        return;
+      }
+
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      const key = (item) =>
+        item.id == produtoId && item.cor == cor && item.tamanho == tamanho;
+
+      const atual = carrinho
+        .filter(key)
+        .reduce((acc, item) => acc + item.quantidade, 0);
+
+      const nova = valorManual !== null ? parseInt(valorManual) : atual + delta;
+
+      carrinho = carrinho.filter((item) => !key(item));
+
+      if (nova > 0) {
+        carrinho.push({
+          id: produtoId,
+          cor,
+          tamanho,
+          quantidade: nova,
+        });
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        buscarProdutoPeloLocalStorage();
+      } else {
+        const confirmar = confirm("Deseja remover este produto do carrinho?");
+        if (confirmar) {
+          removerProduto(produtoId, cor, tamanho);
+        } else {
+          carrinho.push({
+            id: produtoId,
+            cor,
+            tamanho,
+            quantidade: 1,
+          });
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          buscarProdutoPeloLocalStorage();
+        }
+      }
+    });
 }
 
 // Função para remover produto
-function removerProduto(produtoId, cor) {
-  if (!confirm("Deseja remover este produto do carrinho?")) return;
-
+function removerProduto(produtoId, cor, tamanho = null) {
   let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-  // Remove todos os itens com mesmo id e cor
-  const novoCarrinho = carrinho.filter(
-    (item) => !(item.id == produtoId && item.cor == cor)
-  );
+  // Remove por id + cor + tamanho (se tiver tamanho definido)
+  const novoCarrinho = carrinho.filter((item) => {
+    if (tamanho !== null) {
+      return !(
+        item.id == produtoId &&
+        item.cor == cor &&
+        item.tamanho == tamanho
+      );
+    } else {
+      return !(item.id == produtoId && item.cor == cor);
+    }
+  });
 
   localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
 
-  // Remove do DOM os elementos correspondentes
+  // Remove do DOM
   const linhas = document.querySelectorAll(
-    `[id^="produto_${produtoId}_${cor}"]`
+    tamanho !== null
+      ? `[id="produto_${produtoId}_${cor}_${tamanho}"]`
+      : `[id^="produto_${produtoId}_${cor}"]`
   );
   linhas.forEach((linha) => linha.remove());
 
   atualizarTotais();
 
-  // ✅ Se carrinho ficou vazio, exibe mensagem e botão
   if (novoCarrinho.length === 0) {
     const itens_container = document.getElementById("itens_container");
     itens_container.innerHTML = `
       <p>Seu carrinho está vazio.</p>
       <div class="buttons">
-        <button class="button" id="continuar" onclick="window.location.href= 'index.html'">Continuar Comprando</button>
+        <button class="button" id="continuar" onclick="window.location.href='index.html'">Continuar Comprando</button>
       </div>
     `;
   }
@@ -389,10 +415,13 @@ async function atualizarTotais() {
     valorTotal += preco * (item.quantidade || 1);
   });
 
-  document.getElementById("total_itens").textContent = totalItens;
-  document.getElementById("valor_total").textContent = `R$ ${valorTotal.toFixed(
-    2
-  )}`;
+  const totalItensEl = document.getElementById("total_itens");
+  const valorTotalEl = document.getElementById("valor_total");
+
+  if (totalItensEl && valorTotalEl) {
+    totalItensEl.textContent = totalItens;
+    valorTotalEl.textContent = `R$ ${valorTotal.toFixed(2)}`;
+  }
 }
 
 function finalizarPedido() {
