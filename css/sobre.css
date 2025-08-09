@@ -58,7 +58,8 @@ main h1 {
     flex-direction: column;
     align-items: center;
     background-color: var(--footer-color);
-    width: 20rem;
+    width: 25rem;
+    height: 23rem;
     padding: 25px;
     border-radius: 25px;
     color: var(--lab2-color);
@@ -69,4 +70,8 @@ main h1 {
     .cards_container{
         flex-direction: column;
     }
+     .card {
+        width: 20rem;
+    }
 }
+
