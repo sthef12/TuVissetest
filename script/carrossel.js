@@ -45,9 +45,9 @@ function updateCarouselImage() {
       carouselImage2.src = './img/pequena2.png'; // Caminho da imagem menor
       carouselImage3.src = './img/pequena3.png'; // Caminho da imagem menor
   } else {
-      carouselImage.src = './img/banner.png'; // Caminho da imagem maior
-      carouselImage2.src = './img/banner2.png'; // Caminho da imagem maior
-      carouselImage3.src = './img/banner3.png'; // Caminho da imagem maior
+      carouselImage.src = './img/banner/1.png'; // Caminho da imagem maior
+      carouselImage2.src = './img/banner/2.png'; // Caminho da imagem maior
+      carouselImage3.src = './img/banner/3.png'; // Caminho da imagem maior
   }
 }
 

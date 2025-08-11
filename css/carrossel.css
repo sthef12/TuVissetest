@@ -61,15 +61,15 @@
     left: 45vw;
 }
 
-.carrossel__container img {
-    width: 100%;
-    height: 100%;
+#Banner{
+    background-color: #ffcb04;
+    z-index: 1;
 }
 
 /* Classes de imagens */
 
 .img-1 {
-    z-index: -1;
+    z-index: 1;
 }
 
 .img-2,
